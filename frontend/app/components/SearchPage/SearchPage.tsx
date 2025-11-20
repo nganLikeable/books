@@ -1,11 +1,7 @@
 "use client";
+import { Book } from "@/app/types/book";
 import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
-export interface Book {
-  key: string;
-  title: string;
-  author_name?: string[];
-}
 export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
