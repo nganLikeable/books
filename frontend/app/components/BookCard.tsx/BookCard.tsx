@@ -7,7 +7,7 @@ export default function BookCard({ book }: { book: Book }) {
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
     : "no_cover.jpg";
   return (
-    <div className={styles.bookCard}>
+    <div className={styles.card}>
       <h3>{book.title}</h3>
       <img src={coverURL}></img>
     </div>
