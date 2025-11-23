@@ -1,7 +1,9 @@
 "use client";
 import { Book } from "@/app/types/book";
 import { useEffect, useState } from "react";
+import BookList from "../BookList/BookList";
 import SearchBar from "../SearchBar/SearchBar";
+
 export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -36,11 +38,7 @@ export default function SearchPage() {
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {results.map((book) => (
-        <div key={book.key}>
-          <h3>{book.title}</h3>
-        </div>
-      ))}
+      <BookList books={results} />
     </div>
   );
 }
