@@ -9,6 +9,7 @@ export default function SearchPage() {
   const [error, setError] = useState(null);
   const [results, setResults] = useState<Book[]>([]);
   const [query, setQuery] = useState("");
+  const [count, setCount] = useState(0); // n.o results
 
   const handleSearch = async (searchTerm: string) => {
     if (!searchTerm.trim()) return;
@@ -20,6 +21,7 @@ export default function SearchPage() {
       if (res.ok) {
         const data = await res.json();
         setResults(data.docs as Book[]);
+        setCount(data.numFound);
       }
     } catch (e) {
       console.error("Error fetching books:", e);

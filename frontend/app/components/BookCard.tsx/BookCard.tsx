@@ -8,9 +8,19 @@ export default function BookCard({ book }: { book: Book }) {
     : "no_cover.jpg";
   return (
     <div className={styles.card}>
-      <h3>{book.title}</h3>
-      <p>{book.author_name}</p>
-      <img src={coverURL}></img>
+      <div className={styles.item}>
+        <div className={styles.cover}>
+          {" "}
+          <img src={coverURL}></img>
+        </div>
+      </div>
+      <div className={styles.item}>
+        <div className={styles.info}>
+          {" "}
+          <h3>{book.title} </h3>
+          <p>{book.author_name && `by ${book.author_name}`}</p>
+        </div>
+      </div>
     </div>
   );
 }
