@@ -9,6 +9,7 @@ export default function BookCard({ book }: { book: Book }) {
   return (
     <div className={styles.card}>
       <h3>{book.title}</h3>
+      <p>{book.author_name}</p>
       <img src={coverURL}></img>
     </div>
   );
