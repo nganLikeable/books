@@ -7,6 +7,7 @@ export default function BookCard({ book }: { book: Book }) {
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
     : "no_cover.jpg";
   return (
+    // <div className={styles.container}>
     <div className={styles.card}>
       <div className={styles.item}>
         <div className={styles.cover}>
@@ -22,5 +23,7 @@ export default function BookCard({ book }: { book: Book }) {
         </div>
       </div>
     </div>
+    //   <hr />
+    // </div>
   );
 }
