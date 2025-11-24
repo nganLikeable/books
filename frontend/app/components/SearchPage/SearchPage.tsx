@@ -13,6 +13,7 @@ export default function SearchPage() {
   const [count, setCount] = useState(0); // n.o results
 
   const searchParams = useSearchParams(); // get current url
+  const q = searchParams.get("q");
 
   const handleSearch = async (searchTerm: string) => {
     if (!searchTerm.trim()) return;
@@ -32,9 +33,12 @@ export default function SearchPage() {
     }
   };
 
+  // auto search when query q changes
   useEffect(() => {
-    handleSearch(query);
-  }, []);
+    if (q) {
+      handleSearch(q);
+    }
+  }, [q]);
 
   return (
     <div>
