@@ -1,5 +1,6 @@
 "use client";
 import { Book } from "@/app/types/book";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import BookList from "../BookList/BookList";
 import SearchBar from "../SearchBar/SearchBar";
@@ -10,6 +11,8 @@ export default function SearchPage() {
   const [results, setResults] = useState<Book[]>([]);
   const [query, setQuery] = useState("");
   const [count, setCount] = useState(0); // n.o results
+
+  const searchParams = useSearchParams(); // get current url
 
   const handleSearch = async (searchTerm: string) => {
     if (!searchTerm.trim()) return;

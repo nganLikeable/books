@@ -8,7 +8,7 @@ export default function SearchBar({ onSearch }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearch(query); // pass from parent component
-    router.push(`/search?q=${encodeURIComponent(query)}`);
+    router.push(`?q=${query}`); // add query parameter to url
   };
 
   return (
