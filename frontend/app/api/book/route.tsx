@@ -14,7 +14,9 @@ export async function OPTIONS() {
 }
 
 export async function GET(request: NextRequest) {
-  const bookId = "";
+  const url = request.nextUrl; // get current url
+  const pathname = url.pathname;
+  const bookId = pathname[1];
 
   if (!bookId) {
     return NextResponse.json(
