@@ -1,4 +1,5 @@
 import { Book } from "@/app/types/book";
+import Link from "next/link";
 import styles from "./BookCard.module.css";
 export default function BookCard({ book }: { book: Book }) {
   // destructuring book obj
@@ -18,7 +19,7 @@ export default function BookCard({ book }: { book: Book }) {
       <div className={styles.item}>
         <div className={styles.info}>
           {" "}
-          <h3>{book.title} </h3>
+          <Link href={`/book/${book.key.split("/")[2]}`}>{book.title} </Link>
           <p>{book.author_name && `by ${book.author_name}`}</p>
         </div>
       </div>
