@@ -14,22 +14,23 @@ export async function OPTIONS() {
 }
 
 export async function GET(request: NextRequest) {
-  const url = request.nextUrl; // get url obj of request, for example: https://openlibrary.org/search.json?q=the+lord+of+the+rings
-  const searchParams = url.searchParams; // get search parameters object of the URL representing query string, for ex: {'q': 'the lord of the rings'}
-  const query = searchParams.get("q"); // get query string
+  const bookId = "";
 
-  if (!query) {
+  if (!bookId) {
     return NextResponse.json(
       { error: "Missing query" },
       { status: 400, headers: corsHeaders }
     );
   }
+
   try {
     const response = await fetch(
-      `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`
+      `https://openlibrary.org/works/${bookId}.json`
     );
-    const data = await response.json();
-    return NextResponse.json(data, { headers: corsHeaders });
+    if (response.ok) {
+      const data = response.json();
+      return NextResponse.json(data, { headers: corsHeaders });
+    }
   } catch (e) {
     console.error(e);
     return new NextResponse("Invalid request body", {
