@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function BookDetails() {
-  const [details, setDetails] = useState("Description unavailable");
+  const [details, setDetails] = useState("");
   const pathname = usePathname();
   const bookId = pathname ? pathname.split("/")[2] : "";
 
@@ -15,9 +15,10 @@ export default function BookDetails() {
 
       if (res.ok) {
         const data = await res.json();
+        let desc = "Description unavailable";
 
         if (typeof data.description === "string") {
-          setDetails(data.description);
+          desc = data.description;
 
           // description in json could be an obj
         } else if (
@@ -25,8 +26,9 @@ export default function BookDetails() {
           typeof data.description === "object" &&
           "value" in data.description
         ) {
-          setDetails(data.description.value);
+          desc = data.description.value;
         }
+        setDetails(desc);
         console.log(details);
       }
     } catch (e) {
