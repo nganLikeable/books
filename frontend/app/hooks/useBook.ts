@@ -1,24 +1,19 @@
-"use client";
-import { Book } from "@/app/types/book";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-export default function BookDetails() {
+function useBook() {
   const [description, setDescription] = useState("");
   const [cover, setCover] = useState("");
+  const [authorIds, setAuthorIds] = useState<string[]>([]);
   const pathname = usePathname();
   const bookId = pathname ? pathname.split("/")[2] : "";
-  const [book, setBook] = useState<Book | null>(null);
-  const [authors, setAuthors] = useState<string[]>([]);
 
-  const getBookDetails = async (bookId: string) => {
+  const fetchBook = async (bookId: string) => {
     if (!bookId) return;
-
     try {
       const res = await fetch(`/api/book/${bookId}`);
 
       if (res.ok) {
         const data = await res.json();
-
         // get description
         let desc = "Description unavailable";
         if (typeof data.description === "string") {
@@ -42,41 +37,20 @@ export default function BookDetails() {
 
         // get author
         const authorEntries = data.authors || [];
-        const authorIds = authorEntries.map((a: any) =>
-          a.author.key.split("/").pop()
-        );
-        const authorNames: string[] = [];
-        await Promise.all(
-          authorIds.map(async (id: string) => {
-            const authorRes = await fetch(`/api/author/${id}`);
-            if (authorRes.ok) {
-              const authorData = await authorRes.json();
-              authorNames.push(authorData.name);
-            }
-          })
-        );
-        setAuthors(authorNames);
+        const authorIds =
+          data.authors || [].map((a: any) => a.author.key.split("/").pop());
+        setAuthorIds(authorIds);
       }
     } catch (e) {
       console.error("Error fetching book details", e);
       return;
     }
+
+    // fetch automatically when id changes/component loads
+    useEffect(() => {
+      fetchBook(bookId);
+    }, [bookId]);
+
+    return { description, cover, authorIds };
   };
-
-  // fetch automatically when id changes/component loads
-  useEffect(() => {
-    getBookDetails(bookId);
-  }, [bookId]);
-
-  return (
-    <div>
-      {cover && <img src={cover} alt="Book cover"></img>}
-      <p>{description}</p>
-      <p>
-        {authors.map((a: string) => (
-          <span key={a}>{a}</span>
-        ))}
-      </p>
-    </div>
-  );
 }
