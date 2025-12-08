@@ -8,7 +8,7 @@ export default function BookDetails() {
   const pathname = usePathname();
   const bookId = pathname ? pathname.split("/")[2] : "";
   const [book, setBook] = useState<Book | null>(null);
-  const [authors, setAuthors] = useState("");
+  const [authors, setAuthors] = useState<string[]>([]);
 
   const getBookDetails = async (bookId: string) => {
     if (!bookId) return;
@@ -41,8 +41,21 @@ export default function BookDetails() {
         setCover(coverURL);
 
         // // get author
-        const authors = data.authors;
-        console.log(data);
+        const authorEntries = data.authors || [];
+        const authorIds = authorEntries.map((a: any) =>
+          a.author.key.split("/").pop()
+        );
+        const authorNames: string[] = [];
+        await Promise.all(
+          authorIds.map(async (id: string) => {
+            const authorRes = await fetch(`/api/author/${id}`);
+            if (authorRes.ok) {
+              const authorData = await authorRes.json();
+              authorNames.push(authorData.name);
+            }
+          })
+        );
+        setAuthors(authorNames);
       }
     } catch (e) {
       console.error("Error fetching book details", e);
@@ -59,6 +72,11 @@ export default function BookDetails() {
     <div>
       {cover && <img src={cover} alt="Book cover"></img>}
       <p>{description}</p>
+      <p>
+        {authors.map((a: string) => (
+          <span key={a}>{a}</span>
+        ))}
+      </p>
     </div>
   );
 }

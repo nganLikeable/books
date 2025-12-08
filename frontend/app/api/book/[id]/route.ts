@@ -16,7 +16,7 @@ export async function GET(
   const { id } = await params;
   if (!id) {
     return NextResponse.json(
-      { error: "Missing query" },
+      { error: "Missing book id" },
       { status: 400, headers: corsHeaders }
     );
   }
