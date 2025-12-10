@@ -1,11 +1,8 @@
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-function useBook() {
+export function useBook(bookId: string) {
   const [description, setDescription] = useState("");
   const [cover, setCover] = useState("");
   const [authorIds, setAuthorIds] = useState<string[]>([]);
-  const pathname = usePathname();
-  const bookId = pathname ? pathname.split("/")[2] : "";
 
   const fetchBook = async (bookId: string) => {
     if (!bookId) return;
