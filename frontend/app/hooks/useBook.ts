@@ -3,51 +3,49 @@ export function useBook(bookId: string) {
   const [description, setDescription] = useState("");
   const [cover, setCover] = useState("");
   const [authorIds, setAuthorIds] = useState<string[]>([]);
+  // fetch automatically when id changes/component loads
 
-  const fetchBook = async (bookId: string) => {
-    if (!bookId) return;
-    try {
-      const res = await fetch(`/api/book/${bookId}`);
+  useEffect(() => {
+    const fetchBook = async () => {
+      if (!bookId) return;
+      try {
+        const res = await fetch(`/api/book/${bookId}`);
 
-      if (res.ok) {
-        const data = await res.json();
-        // get description
-        let desc = "Description unavailable";
-        if (typeof data.description === "string") {
-          desc = data.description;
-          // description in json could be an obj
-        } else if (
-          data.description &&
-          typeof data.description === "object" &&
-          "value" in data.description
-        ) {
-          desc = data.description.value;
+        if (res.ok) {
+          const data = await res.json();
+          // get description
+          let desc = "Description unavailable";
+          if (typeof data.description === "string") {
+            desc = data.description;
+            // description in json could be an obj
+          } else if (
+            data.description &&
+            typeof data.description === "object" &&
+            "value" in data.description
+          ) {
+            desc = data.description.value;
+          }
+          setDescription(desc);
+
+          // get cover url
+          const coverId = data?.covers?.[0];
+          const coverURL = coverId
+            ? `https://covers.openlibrary.org/b/id/${data.covers[0]}-M.jpg`
+            : "no_cover.jpg";
+          setCover(coverURL);
+
+          // get author
+          const authorIds = (data.authors || []).map((a: any) =>
+            a.author.key.split("/").pop()
+          );
+          setAuthorIds(authorIds);
         }
-        setDescription(desc);
-
-        // get cover url
-        const coverId = data?.covers?.[0];
-        const coverURL = coverId
-          ? `https://covers.openlibrary.org/b/id/${data.covers[0]}-M.jpg`
-          : "no_cover.jpg";
-        setCover(coverURL);
-
-        // get author
-        const authorEntries = data.authors || [];
-        const authorIds =
-          data.authors || [].map((a: any) => a.author.key.split("/").pop());
-        setAuthorIds(authorIds);
+      } catch (e) {
+        console.error("Error fetching book details", e);
       }
-    } catch (e) {
-      console.error("Error fetching book details", e);
-      return;
-    }
+    };
+    fetchBook();
+  }, [bookId]);
 
-    // fetch automatically when id changes/component loads
-    useEffect(() => {
-      fetchBook(bookId);
-    }, [bookId]);
-
-    return { description, cover, authorIds };
-  };
+  return { description, cover, authorIds };
 }
