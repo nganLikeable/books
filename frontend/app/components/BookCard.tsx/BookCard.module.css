@@ -1,5 +1,11 @@
 .container {
   max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 .card {
   display: flex;
@@ -10,11 +16,7 @@
 .cover img {
   width: 80px;
 }
-/* .info {
-  word-break: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
-} */
+
 .info h3 {
   font-weight: bold;
   font-size: 15px;
@@ -22,11 +24,9 @@
 
 .info p {
   font-size: 13px;
-  /* word-break: break-word;
-  overflow-wrap: anywhere; */
 }
 
-.container hr {
+/* .container hr {
   display: block;
   height: 1px;
   width: 700px;
@@ -34,4 +34,4 @@
   border-top: 1px solid #ccc;
   margin: 1em 0;
   padding: 0;
-}
+} */

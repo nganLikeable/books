@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.searchBar {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  gap: 0.5rem;
+}
+
+.searchBar input {
+  padding: 0.6rem 1rem;
+  width: 600px;
+  font-size: 1rem;
+}
+
+.searchBar button {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: rgb(182, 221, 226);
+  border-radius: 7px;
+}
+
+.searchBar button:hover {
+  background-color: rgb(119, 185, 211);
+}
