@@ -22,6 +22,7 @@ export function useAuthors(authorIds: string[]) {
         console.log("error fetching authors");
       }
     };
+    getAuthors(), [authorIds];
   });
   return authors;
 }

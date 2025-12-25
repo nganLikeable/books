@@ -3,6 +3,7 @@ export function useBook(bookId: string) {
   const [description, setDescription] = useState("");
   const [cover, setCover] = useState("");
   const [authorIds, setAuthorIds] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
   // fetch automatically when id changes/component loads
 
   useEffect(() => {
