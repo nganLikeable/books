@@ -34,7 +34,7 @@ export default function BookDetails() {
             ))}
           </h2>
         )}
-        {loading ? <Skeleton /> : <p>{description}</p>}
+        {loading ? <Skeleton count={6} height={40} /> : <p>{description}</p>}
       </div>
     </div>
   );
