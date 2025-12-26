@@ -16,7 +16,7 @@ export default function SearchPage() {
       <SearchBar />
       {loading ? (
         <div className={styles.grid}>
-          {Array.from({ length: 12 }).map((_, i) => (
+          {Array.from({ length: 40 }).map((_, i) => (
             <BookCardSkeleton key={i} />
           ))}
         </div>

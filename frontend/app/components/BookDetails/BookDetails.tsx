@@ -24,7 +24,7 @@ export default function BookDetails() {
         )}
       </div>
       <div className={styles.right_col}>
-        {loading ? <Skeleton /> : <h1>{title}</h1>}
+        {loading ? <Skeleton height={70} /> : <h1>{title}</h1>}
         {loading_a ? (
           <Skeleton />
         ) : (
@@ -34,7 +34,7 @@ export default function BookDetails() {
             ))}
           </h2>
         )}
-        {loading ? <Skeleton count={6} height={40} /> : <p>{description}</p>}
+        {loading ? <Skeleton count={8} height={50} /> : <p>{description}</p>}
       </div>
     </div>
   );
