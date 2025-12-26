@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 export function useBook(bookId: string) {
+  const [title, setTitle] = useState();
   const [description, setDescription] = useState("");
   const [cover, setCover] = useState("");
   const [authorIds, setAuthorIds] = useState<string[]>([]);
@@ -40,6 +41,10 @@ export function useBook(bookId: string) {
             a.author.key.split("/").pop()
           );
           setAuthorIds(authorIds);
+
+          // get title
+          const book_title = data.title || "Error loading title";
+          setTitle(book_title);
         }
       } catch (e) {
         console.error("Error fetching book details", e);
@@ -48,5 +53,5 @@ export function useBook(bookId: string) {
     fetchBook();
   }, [bookId]);
 
-  return { description, cover, authorIds };
+  return { title, description, cover, authorIds };
 }
