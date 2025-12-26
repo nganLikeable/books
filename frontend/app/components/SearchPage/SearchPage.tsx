@@ -1,53 +1,15 @@
 "use client";
-import { Book } from "@/app/types/book";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import useSearchBooks from "@/app/hooks/useSearchBooks";
+import Skeleton from "react-loading-skeleton";
 import BookList from "../BookList/BookList";
 import SearchBar from "../SearchBar/SearchBar";
-
 export default function SearchPage() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [results, setResults] = useState<Book[]>([]);
-  const [query, setQuery] = useState("");
-  const [count, setCount] = useState(0); // n.o results
-
-  const searchParams = useSearchParams(); // get current url
-  const q = searchParams.get("q");
-
-  const handleSearch = async (searchTerm: string) => {
-    if (!searchTerm.trim()) return;
-    setQuery(searchTerm);
-    try {
-      const res = await fetch(
-        `/api/search/?q=${encodeURIComponent(searchTerm)}`
-      ); // encode term, handling characters like spaces, &, ?, =
-      if (res.ok) {
-        const data = await res.json();
-        setResults(data.docs as Book[]);
-        setCount(data.numFound);
-      }
-    } catch (e) {
-      console.error("Error fetching books:", e);
-      return;
-    }
-  };
-
-  // auto search when query q changes
-  useEffect(() => {
-    if (q) {
-      handleSearch(q);
-    }
-  }, [q]);
+  const { loading, results } = useSearchBooks();
 
   return (
     <div>
-      <SearchBar onSearch={handleSearch} />
-
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <BookList books={results} />
+      <SearchBar />
+      {loading ? <Skeleton /> : <BookList books={results} />}
     </div>
   );
 }

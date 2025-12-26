@@ -2,12 +2,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styles from "./SearchBar.module.css";
-export default function SearchBar({ onSearch }) {
+export default function SearchBar() {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(query); // pass from parent component
+    // onSearch(query); // pass from parent component
     router.push(`?q=${query}`); // add query parameter to url
   };
 
