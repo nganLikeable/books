@@ -18,7 +18,7 @@ export default function BookDetails() {
     <div className={styles.container}>
       <div className={styles.left_col}>
         {loading ? (
-          <Skeleton />
+          <Skeleton height={500} />
         ) : (
           cover && <img src={cover} alt="Book cover" loading="lazy"></img>
         )}
