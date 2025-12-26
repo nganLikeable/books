@@ -12,7 +12,7 @@ export default function BookCard({ book }: { book: Book }) {
       <div className={styles.item}>
         <div className={styles.cover}>
           <Link href={`/book/${book.key.split("/")[2]}`}>
-            <img src={coverURL}></img>
+            <img src={coverURL} loading="lazy"></img>
           </Link>
         </div>
       </div>

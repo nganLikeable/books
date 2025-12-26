@@ -10,6 +10,7 @@ export function useBook(bookId: string) {
   useEffect(() => {
     const fetchBook = async () => {
       if (!bookId) return;
+      setLoading(true);
       try {
         const res = await fetch(`/api/book/${bookId}`);
 
@@ -48,10 +49,12 @@ export function useBook(bookId: string) {
         }
       } catch (e) {
         console.error("Error fetching book details", e);
+      } finally {
+        setLoading(false);
       }
     };
     fetchBook();
   }, [bookId]);
 
-  return { title, description, cover, authorIds };
+  return { title, description, cover, authorIds, loading };
 }

@@ -1,4 +1,4 @@
-.container {
+/* .container {
   max-width: 900px;
   margin: 0 auto;
   display: flex;
@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-}
+} */
 .card {
   display: flex;
   gap: 0.5rem;
@@ -25,13 +25,3 @@
 .info p {
   font-size: 13px;
 }
-
-/* .container hr {
-  display: block;
-  height: 1px;
-  width: 700px;
-  border: 0;
-  border-top: 1px solid #ccc;
-  margin: 1em 0;
-  padding: 0;
-} */

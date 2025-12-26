@@ -2,7 +2,7 @@ import { Book } from "@/app/types/book";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function useSearchBooks(searchTerm: string) {
+export default function useSearchBooks() {
   const [loading, setLoading] = useState(false);
   //   const [error, setError] = useState(null);
   const [results, setResults] = useState<Book[]>([]);
