@@ -2,13 +2,16 @@
 import { useAuthors } from "@/app/hooks/useAuthors";
 import { useBook } from "@/app/hooks/useBook";
 import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 import styles from "./BookDetails.module.css";
 export default function BookDetails() {
   const pathname = usePathname();
   const bookId = pathname ? pathname.split("/")[2] : "";
 
   const { title, description, cover, authorIds } = useBook(bookId);
-  const authors = useAuthors(authorIds);
+  const stableAuthorIds = useMemo(() => authorIds, [authorIds.join(",")]);
+
+  const authors = useAuthors(stableAuthorIds);
 
   return (
     <div className={styles.container}>
