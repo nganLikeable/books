@@ -3,15 +3,39 @@
 import { useState } from "react";
 import styles from "./SignUpForm.module.css";
 
+import { auth } from "@/app/firebase/config";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth);
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const handleSignUp = async () => {
+    try {
+      const res = await createUserWithEmailAndPassword(email, password);
+      console.log(res);
+
+      setEmail("");
+      setPassword("");
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className={styles.signupContainer}>
-      <form className={styles.signupForm}>
+      <form
+        className={styles.signupForm}
+        onSubmit={(e) => {
+          e.preventDefault(); // prevent page reload
+          handleSignUp();
+        }}
+      >
         <h2 className={styles.signupTitle}>Create An Account</h2>
 
         <div className={styles.formGroup}>
