@@ -1,42 +1,46 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./SignUpForm.module.css";
+import styles from "./Form.module.css";
 
 import { auth } from "@/app/firebase/config";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-export default function SignUpForm() {
+import { useRouter } from "next/navigation";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+export default function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [createUserWithEmailAndPassword] =
-    useCreateUserWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+
+  const router = useRouter();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignUp = async () => {
+  const handleSignIn = async () => {
     try {
-      const res = await createUserWithEmailAndPassword(email, password);
-      console.log(res);
+      const res = await signInWithEmailAndPassword(email, password);
+      console.log({ res });
 
       setEmail("");
       setPassword("");
+
+      router.push("/");
     } catch (e) {
       console.error(e);
     }
   };
 
   return (
-    <div className={styles.signupContainer}>
+    <div className={styles.container}>
       <form
-        className={styles.signupForm}
+        className={styles.form}
         onSubmit={(e) => {
           e.preventDefault(); // prevent page reload
-          handleSignUp();
+          handleSignIn();
         }}
       >
-        <h2 className={styles.signupTitle}>Create An Account</h2>
+        <h2 className={styles.title}>Sign In</h2>
 
         <div className={styles.formGroup}>
           <input
@@ -63,11 +67,11 @@ export default function SignUpForm() {
         </div>
 
         <button
-          className={styles.signupButton}
+          className={styles.submitButton}
           type="submit"
           disabled={loading}
         >
-          {loading ? "Creating..." : "Sign Up"}
+          {loading ? "Logging in...." : "Sign In"}
         </button>
 
         {error && <p className={styles.errorText}>{error}</p>}

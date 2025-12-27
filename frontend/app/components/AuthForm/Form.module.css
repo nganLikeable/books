@@ -1,11 +1,11 @@
-.signupContainer {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
 
-.signupForm {
+.form {
   width: 100%;
   max-width: 480px;
   padding: 2.5rem;
@@ -13,7 +13,7 @@
   border-radius: 10px;
 }
 
-.signupTitle {
+.title {
   margin-bottom: 2rem;
   text-align: center;
   font-size: 1.6rem;
@@ -35,7 +35,7 @@
   background-color: #f7f7f7;
 }
 
-.signupButton {
+.submitButton {
   width: 100%;
   padding: 0.9rem;
   margin-top: 1.5rem;
@@ -45,11 +45,11 @@
   border-radius: 6px;
 }
 
-.signupButton:hover {
+.submitButton:hover {
   background-color: rgb(255, 230, 175);
 }
 
-.signupButton:disabled {
+.submitButton:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
