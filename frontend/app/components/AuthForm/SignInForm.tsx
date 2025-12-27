@@ -25,7 +25,9 @@ export default function SignInForm() {
       setEmail("");
       setPassword("");
 
-      router.push("/");
+      if (res?.user) {
+        router.push("/");
+      }
     } catch (e) {
       console.error(e);
     }

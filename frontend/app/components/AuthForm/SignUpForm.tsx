@@ -10,13 +10,10 @@ export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [createUserWithEmailAndPassword] =
+  const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
   const router = useRouter();
-
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleSignUp = async () => {
     try {
@@ -68,6 +65,7 @@ export default function SignUpForm() {
             required
           />
         </div>
+        {error && <p className={styles.errorText}>{error.message}</p>}
 
         <button
           className={styles.submitButton}
@@ -76,8 +74,6 @@ export default function SignUpForm() {
         >
           {loading ? "Creating..." : "Sign Up"}
         </button>
-
-        {error && <p className={styles.errorText}>{error}</p>}
       </form>
     </div>
   );
