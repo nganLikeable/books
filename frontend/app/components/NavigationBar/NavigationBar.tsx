@@ -1,14 +1,16 @@
+"use client";
+import { auth } from "@/app/firebase/config";
 import Link from "next/link";
+import { useAuthState } from "react-firebase-hooks/auth";
+import LogOutButton from "../LogOutButton/LogOutButton";
 import styles from "./NavigationBar.module.css";
 
 export default function NavBar() {
+  const [user, loading, error] = useAuthState(auth);
+
   return (
     <nav className={styles.nav}>
       <div className={styles.container}>
-        {/* <div className={styles.logo}>
-          <Link href="/">NganBooks</Link>
-        </div> */}
-
         <Link href="/" className={styles.logo}>
           <img
             src="/logo_yel.png"
@@ -25,12 +27,21 @@ export default function NavBar() {
           <Link className={styles.link} href="/browse">
             Browse
           </Link>
-          <Link className={styles.link} href="/sign-up">
-            Sign Up
-          </Link>
-          <Link className={`${styles.link} ${styles.primary}`} href="/sign-in">
-            Sign In
-          </Link>
+          {user ? (
+            <LogOutButton />
+          ) : (
+            <div>
+              <Link className={styles.link} href="/sign-up">
+                Sign Up
+              </Link>
+              <Link
+                className={`${styles.link} ${styles.primary}`}
+                href="/sign-in"
+              >
+                Sign In
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>
