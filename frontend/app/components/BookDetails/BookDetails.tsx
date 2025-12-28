@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+import BackButton from "../BackButton/BackButton";
+
 import styles from "./BookDetails.module.css";
 export default function BookDetails() {
   const pathname = usePathname();
@@ -16,14 +18,18 @@ export default function BookDetails() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.left_col}>
+      <div className={styles.col}>
+        <BackButton />
+      </div>
+
+      <div className={styles.col}>
         {loading ? (
           <Skeleton height={500} />
         ) : (
           cover && <img src={cover} alt="Book cover" loading="lazy"></img>
         )}
       </div>
-      <div className={styles.right_col}>
+      <div className={styles.col}>
         {loading ? <Skeleton height={70} /> : <h1>{title}</h1>}
         {loading_a ? (
           <Skeleton />
