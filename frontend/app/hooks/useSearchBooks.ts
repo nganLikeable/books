@@ -12,34 +12,44 @@ export default function useSearchBooks() {
   const searchParams = useSearchParams(); // get current url
   const q = searchParams.get("q");
 
-  const handleSearch = async (searchTerm: string) => {
-    if (!searchTerm.trim()) return;
-
-    setQuery(searchTerm);
-    setLoading(true);
-
-    try {
-      const res = await fetch(
-        `/api/search/?q=${encodeURIComponent(searchTerm)}`
-      ); // encode term, handling characters like spaces, &, ?, =
-      if (res.ok) {
-        const data = await res.json();
-        setResults(data.docs as Book[]);
-        setCount(data.numFound);
-      }
-    } catch (e) {
-      console.error("Error fetching books:", e);
-      return;
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // auto search when query q changes
   useEffect(() => {
-    if (q) {
-      handleSearch(q);
-    }
+    if (!q) return;
+    const handleSearch = async () => {
+      setQuery(q);
+      setLoading(true);
+
+      const cachedData = sessionStorage.getItem(q);
+
+      // if cached
+      if (cachedData) {
+        const parsed = JSON.parse(cachedData); // parse to obj
+        setResults(parsed.docs as Book[]);
+        setCount(parsed.numFound);
+        setLoading(false);
+        return;
+      }
+
+      // fetch if not cached
+      try {
+        const res = await fetch(`/api/search/?q=${encodeURIComponent(q)}`); // encode term, handling characters like spaces, &, ?, =
+        if (res.ok) {
+          const data = await res.json();
+          setResults(data.docs as Book[]);
+          setCount(data.numFound);
+          setLoading(false);
+
+          // save item to storage for next time
+          sessionStorage.setItem(q, JSON.stringify(data));
+        }
+      } catch (e) {
+        console.error("Error fetching books:", e);
+        return;
+      } finally {
+        setLoading(false);
+      }
+    };
+    handleSearch();
   }, [q]);
 
   return { loading, results, query, count };
