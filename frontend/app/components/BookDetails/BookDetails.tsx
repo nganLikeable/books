@@ -35,8 +35,8 @@ export default function BookDetails() {
           <Skeleton />
         ) : (
           <h2>
-            {authors.map((a: string) => (
-              <span key={a}>{a}</span>
+            {authors.map((a: string, index: number) => (
+              <span key={`${a}-${index}`}>{a}</span>
             ))}
           </h2>
         )}
