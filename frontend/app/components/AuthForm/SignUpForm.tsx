@@ -18,6 +18,8 @@ export default function SignUpForm() {
   const handleSignUp = async () => {
     try {
       const res = await createUserWithEmailAndPassword(email, password);
+      console.log("Signed up successfully");
+
       console.log({ res });
 
       setEmail("");

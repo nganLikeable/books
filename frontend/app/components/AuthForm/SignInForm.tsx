@@ -20,6 +20,7 @@ export default function SignInForm() {
   const handleSignIn = async () => {
     try {
       const res = await signInWithEmailAndPassword(email, password);
+      console.log("Signed in successfully");
       console.log({ res });
 
       setEmail("");
