@@ -30,14 +30,11 @@ export default function NavBar() {
           {user ? (
             <LogOutButton />
           ) : (
-            <div>
+            <div className={styles.authLinks}>
               <Link className={styles.link} href="/sign-up">
                 Sign Up
               </Link>
-              <Link
-                className={`${styles.link} ${styles.primary}`}
-                href="/sign-in"
-              >
+              <Link className={styles.link} href="/sign-in">
                 Sign In
               </Link>
             </div>

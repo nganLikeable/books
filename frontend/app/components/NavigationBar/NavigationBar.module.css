@@ -26,6 +26,11 @@
   gap: 1.25rem;
   align-items: center;
 }
+.authLinks {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
 
 .link {
   text-decoration: none;
@@ -35,15 +40,4 @@
 .link:hover {
   color: #043b68;
   font-weight: bold;
-}
-
-.primary {
-  padding: 0.4rem 0.75rem;
-  border: 1px solid #111;
-  border-radius: 6px;
-}
-
-.primary:hover {
-  background-color: #111;
-  color: #fff;
 }
