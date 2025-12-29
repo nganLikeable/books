@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id 
   email String @unique
   name String?
   userBooks UserBook[]
@@ -23,14 +23,14 @@ model User {
 model Book {
   id Int @id @default(autoincrement())
   title String 
-  author String 
+  authora String[] 
   description String? 
   cover String?
   userBooks UserBook[]
 }
 
 model UserBook {
-  userId Int 
+  userId String 
   user User @relation(fields: [userId], references: [id])
 
   bookId Int 
@@ -48,5 +48,4 @@ enum ReadingStatus {
   WANT_TO_READ
   CURRENTLY_READING
   READ 
-
 }

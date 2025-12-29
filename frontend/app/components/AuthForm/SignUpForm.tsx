@@ -6,6 +6,7 @@ import styles from "./Form.module.css";
 import { auth } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
