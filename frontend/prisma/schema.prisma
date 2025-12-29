@@ -23,8 +23,8 @@ model User {
 model Book {
   id Int @id @default(autoincrement())
   title String 
-  authora String[] 
-  description String? 
+  authors String[] 
+  // description String? 
   cover String?
   userBooks UserBook[]
 }
