@@ -1,0 +1,20 @@
+/* SaveToShelfButton.module.css */
+
+.btn {
+  position: relative;
+  display: inline-block;
+}
+
+.button {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #1e40af;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.button:hover {
+  background: #1c3aa9;
+}
