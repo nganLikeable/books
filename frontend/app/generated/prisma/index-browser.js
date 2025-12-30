@@ -129,8 +129,7 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.BookScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  authora: 'authora',
-  description: 'description',
+  authors: 'authors',
   cover: 'cover'
 };
 

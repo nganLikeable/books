@@ -21,20 +21,20 @@ model User {
 }
 
 model Book {
-  id          Int        @id @default(autoincrement())
-  title       String
-  authora     String[]
-  description String?
-  cover       String?
-  userBooks   UserBook[]
+  id        String     @id
+  title     String
+  authors   String[]
+  // description String? 
+  cover     String?
+  userBooks UserBook[]
 }
 
 model UserBook {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  bookId Int
-  book   Book @relation(fields: [bookId], references: [id])
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id])
 
   status ReadingStatus @default(WANT_TO_READ)
 
