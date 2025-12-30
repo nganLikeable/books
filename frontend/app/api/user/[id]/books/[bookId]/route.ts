@@ -14,13 +14,15 @@ export async function POST(request: NextRequest) {
     const { id, title, authors, cover } = await request.json();
 
     if (!id || !title || !authors) {
-      return new NextResponse("Missing title", {
+      return new NextResponse("Missing body", {
         status: 400,
         headers: corsHeaders,
       });
     }
-    const newBook = await prisma.book.create({
-      data: { id, title, authors, cover },
+    const newBook = await prisma.book.upsert({
+      where: { id },
+      update: {},
+      create: { id, title, authors, cover },
     });
     return NextResponse.json(newBook, { status: 201, headers: corsHeaders });
   } catch (e) {
