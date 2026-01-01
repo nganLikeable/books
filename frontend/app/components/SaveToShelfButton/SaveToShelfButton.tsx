@@ -1,34 +1,16 @@
 "use client";
-import { useState } from "react";
-import ShelfModal from "../ShelfModal/ShelfModal";
 import styles from "./SaveToShelfButton.module.css";
 
 interface SaveToShelfButtonProps {
-  bookId: string;
-  userId: string;
+  onClick: () => void;
 }
 
-export default function SaveToShelfButton({
-  bookId,
-  userId,
-}: SaveToShelfButtonProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleSave = () => {
-    console.log("Clicked");
-    setIsModalOpen(true);
-  };
+export default function SaveToShelfButton({ onClick }: SaveToShelfButtonProps) {
   return (
     <div className={styles.btn}>
-      <button className={styles.button} onClick={handleSave}>
+      <button className={styles.button} onClick={onClick}>
         Save to shelf
       </button>
-      {isModalOpen && (
-        <ShelfModal
-          bookId={bookId}
-          userId={userId}
-          onClose={() => setIsModalOpen}
-        />
-      )}
     </div>
   );
 }
