@@ -3,7 +3,15 @@ import { useState } from "react";
 import ShelfModal from "../ShelfModal/ShelfModal";
 import styles from "./SaveToShelfButton.module.css";
 
-export default function SaveToShelfButton() {
+interface SaveToShelfButtonProps {
+  bookId: string;
+  userId: string;
+}
+
+export default function SaveToShelfButton({
+  bookId,
+  userId,
+}: SaveToShelfButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleSave = () => {
     console.log("Clicked");
@@ -14,7 +22,13 @@ export default function SaveToShelfButton() {
       <button className={styles.button} onClick={handleSave}>
         Save to shelf
       </button>
-      {isModalOpen && <ShelfModal />}
+      {isModalOpen && (
+        <ShelfModal
+          bookId={bookId}
+          userId={userId}
+          onClose={() => setIsModalOpen}
+        />
+      )}
     </div>
   );
 }

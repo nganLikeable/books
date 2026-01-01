@@ -48,7 +48,7 @@ export async function POST(
       );
     }
 
-    const { bookId } = await request.json();
+    const { bookId, status } = await request.json();
 
     if (!authenticatedId || !bookId) {
       return new NextResponse("Missing body", {
@@ -57,10 +57,10 @@ export async function POST(
       });
     }
     const newUserBook = await prisma.userBook.upsert({
-      // composite key pattern
       where: { userId_bookId: { userId: authenticatedId, bookId } },
-      update: {},
-      create: { userId: authenticatedId, bookId },
+      // composite key pattern
+      update: { status: status }, // if exist, update
+      create: { userId: authenticatedId, bookId, status: status },
     });
     return NextResponse.json(newUserBook, {
       status: 201,

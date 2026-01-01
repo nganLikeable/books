@@ -1,8 +1,8 @@
 "use client";
 import { useAuthors } from "@/app/hooks/useAuthors";
 import { useBook } from "@/app/hooks/useBook";
+import useGetUser from "@/app/hooks/useGetUser";
 import { usePathname } from "next/navigation";
-
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -16,7 +16,7 @@ export default function BookDetails() {
 
   const { title, description, cover, authorIds, loading } = useBook(bookId);
   const { authors, loading_a } = useAuthors(authorIds);
-
+  const { user, userId, userLoading } = useGetUser();
   return (
     <div className={styles.container}>
       <div className={styles.col}>
@@ -32,7 +32,7 @@ export default function BookDetails() {
           )}
         </div>
         <div className={styles.item}>
-          <SaveToShelfButton />
+          <SaveToShelfButton bookId={bookId} userId={userId || ""} />{" "}
         </div>
       </div>
       <div className={styles.col}>
