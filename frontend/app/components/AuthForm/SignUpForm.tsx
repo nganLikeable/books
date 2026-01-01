@@ -6,6 +6,8 @@ import styles from "./Form.module.css";
 import { auth } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+
+const APIURL = "http://localhost:3000";
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,9 +27,18 @@ export default function SignUpForm() {
       setEmail("");
       setPassword("");
 
+      // if created successfully, added user to db
       if (res?.user) {
-        router.push("/sign-in");
+        await fetch(`${APIURL}/api/user`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            uid: res.user.uid,
+            email: res.user.email,
+          }),
+        });
       }
+      router.push("/sign-in");
     } catch (e) {
       console.error(e);
     }

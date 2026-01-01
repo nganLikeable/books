@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "./Form.module.css";
 
-import { auth } from "@/app/firebase/config";
+import { auth } from "@/app/firebase/firebase-config";
 import { setCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";

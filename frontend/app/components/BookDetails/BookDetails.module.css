@@ -1,27 +1,32 @@
 .container {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: auto 300px 1fr;
   gap: 2rem;
+  max-width: 1200px;
 
-  max-width: 900px;
   margin: 3rem auto;
   padding: 0 1.5rem;
 }
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-.left_col img {
+.col img {
   width: 100%;
   max-width: 300px;
   border-radius: 8px;
 }
 
-.right_col h1 {
+.col h1 {
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 2rem;
   font-weight: bold;
 }
 
-.right_col h2 {
+.col h2 {
   line-height: 1.6;
   margin-bottom: 1rem;
   font-size: 1rem;

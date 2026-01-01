@@ -34,7 +34,7 @@ export function useBook(bookId: string) {
           const coverId = data?.covers?.[0];
           const coverURL = coverId
             ? `https://covers.openlibrary.org/b/id/${data.covers[0]}-M.jpg`
-            : "no_cover.jpg";
+            : "/no_cover.jpg";
           setCover(coverURL);
 
           // get author
