@@ -1,22 +1,53 @@
 "use client";
+import { NextResponse } from "next/server";
 import { useState } from "react";
 import styles from "./ShelfModal.module.css";
 
 interface ShelfModalProps {
   bookId: string;
   userId: string;
+  title: string;
+  authors: string[];
+  cover: string;
   onClose: () => void;
 }
 
 export default function ShelfModal({
   bookId,
   userId,
+  title,
+  authors,
+  cover,
   onClose,
 }: ShelfModalProps) {
   const [loading, setLoading] = useState(false);
   const handleAddToShelf = async (status: string) => {
     setLoading(true);
+
+    // add book info to the db
     try {
+      const responseBook = await fetch(`/api/book/${bookId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: bookId,
+          title: title,
+          authors: authors,
+          cover: cover,
+        }),
+      });
+      console.log(responseBook);
+      if (!responseBook.ok) {
+        return new NextResponse("Failed to add book to database");
+      }
+      console.log("Successfully added book to database");
+
+      // save user-book relationship
+      // } catch (e) {
+      //   console.error("Error adding book info", e);
+      // }
+
+      // try {
       const response = await fetch(`/api/user/${userId}/books`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -24,13 +55,13 @@ export default function ShelfModal({
       });
       console.log(response);
       if (!response.ok) {
-        throw new Error("Failed to add book to shelf");
+        return new NextResponse("Failed to add book to user's shelf");
       }
       const data = await response.json();
-      console.log("Book added:", data);
+      console.log("Book added to user's library:", data);
       onClose();
     } catch (e) {
-      console.error("Error adding book:", e);
+      console.error("Book-user adding failed", e);
     } finally {
       setLoading(false);
     }

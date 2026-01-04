@@ -43,6 +43,9 @@ export default function BookDetails() {
           <ShelfModal
             bookId={bookId}
             userId={userId}
+            title={title}
+            authors={authors}
+            cover={cover}
             onClose={() => setIsModalOpen(false)}
           />
         )}
