@@ -43,11 +43,6 @@ export default function ShelfModal({
       console.log("Successfully added book to database");
 
       // save user-book relationship
-      // } catch (e) {
-      //   console.error("Error adding book info", e);
-      // }
-
-      // try {
       const response = await fetch(`/api/user/${userId}/books`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -58,7 +53,7 @@ export default function ShelfModal({
         return new NextResponse("Failed to add book to user's shelf");
       }
       const data = await response.json();
-      console.log("Book added to user's library:", data);
+      console.log("Book added to/modified in user's library:", data);
       onClose();
     } catch (e) {
       console.error("Book-user adding failed", e);
