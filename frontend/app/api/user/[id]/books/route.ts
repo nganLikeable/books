@@ -1,6 +1,5 @@
-import { adminAuth } from "@/lib/firebase-admin-config";
+import { getAuthenticatedId } from "@/lib/auth-helper";
 import { prisma } from "@/lib/prisma";
-import { cookies } from "next/headers";
 
 import { NextRequest, NextResponse } from "next/server";
 const corsHeaders = {
@@ -17,22 +16,7 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    // get token from cookie
-    const cookieStore = await cookies();
-
-    // return cookie obj, then extract the string
-    const token = cookieStore.get("auth-token")?.value;
-
-    if (!token) {
-      return new NextResponse("No cookie found", {
-        status: 401,
-        headers: corsHeaders,
-      });
-    }
-
-    // retrieve user id from firebase admin
-    const decodedToken = await adminAuth.verifyIdToken(token);
-    const authenticatedId = decodedToken.uid;
+    const authenticatedId = await getAuthenticatedId();
 
     // get id in url to compare
     const { id } = await params;
@@ -64,6 +48,51 @@ export async function POST(
     });
     return NextResponse.json(newUserBook, {
       status: 201,
+      headers: corsHeaders,
+    });
+  } catch (e) {
+    console.error(e);
+    return new NextResponse("Invalid request body", {
+      status: 400,
+      headers: corsHeaders,
+    });
+  }
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const authenticatedId = await getAuthenticatedId();
+
+    // get id in url to compare
+    const { id } = await params;
+
+    // security check: url id must match token id from firebase
+    if (id !== authenticatedId) {
+      return new NextResponse(
+        "Forbidden: You cannot modify another user's profile",
+        {
+          status: 403,
+          headers: corsHeaders,
+        }
+      );
+    }
+
+    const { bookId } = await request.json();
+    if (!authenticatedId || !bookId) {
+      return new NextResponse("Missing body", {
+        status: 400,
+        headers: corsHeaders,
+      });
+    }
+
+    const deletedBook = await prisma.userBook.delete({
+      where: { userId_bookId: { userId: authenticatedId, bookId: bookId } },
+    });
+    return NextResponse.json(deletedBook, {
+      status: 204,
       headers: corsHeaders,
     });
   } catch (e) {
