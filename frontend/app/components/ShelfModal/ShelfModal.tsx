@@ -21,6 +21,28 @@ export default function ShelfModal({
   onClose,
 }: ShelfModalProps) {
   const [loading, setLoading] = useState(false);
+  const handleRemove = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/user/${userId}/books`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bookId,
+        }),
+      });
+      if (!response.ok) {
+        return new NextResponse("Failed to delete book");
+      }
+      console.log(response);
+      console.log("Successfully deleted book ");
+    } catch (e) {
+      console.error(e);
+      return new NextResponse("Error deleting book");
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleAddToShelf = async (status: string) => {
     setLoading(true);
 
@@ -56,7 +78,7 @@ export default function ShelfModal({
       console.log("Book added to/modified in user's library:", data);
       onClose();
     } catch (e) {
-      console.error("Book-user adding failed", e);
+      console.error("Error adding book-user", e);
     } finally {
       setLoading(false);
     }
@@ -83,7 +105,10 @@ export default function ShelfModal({
         <button className={styles.btn} onClick={() => handleAddToShelf("READ")}>
           Read
         </button>
-        <button className={`${styles.btn} ${styles.removeBtn}`}>
+        <button
+          className={`${styles.btn} ${styles.removeBtn}`}
+          onClick={handleRemove}
+        >
           🗑️ Remove from my shelf
         </button>
       </div>

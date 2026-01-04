@@ -92,7 +92,7 @@ export async function DELETE(
       where: { userId_bookId: { userId: authenticatedId, bookId: bookId } },
     });
     return NextResponse.json(deletedBook, {
-      status: 204,
+      status: 200,
       headers: corsHeaders,
     });
   } catch (e) {
