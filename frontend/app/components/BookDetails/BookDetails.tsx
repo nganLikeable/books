@@ -1,13 +1,16 @@
 "use client";
 import { useAuthors } from "@/app/hooks/useAuthors";
 import { useBook } from "@/app/hooks/useBook";
+import useGetUser from "@/app/hooks/useGetUser";
 import { usePathname } from "next/navigation";
-
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import BackButton from "../BackButton/BackButton";
+import ShelfModal from "../ShelfModal/ShelfModal";
 
+import { useState } from "react";
+import SaveToShelfButton from "../SaveToShelfButton/SaveToShelfButton";
 import styles from "./BookDetails.module.css";
 export default function BookDetails() {
   const pathname = usePathname();
@@ -15,6 +18,9 @@ export default function BookDetails() {
 
   const { title, description, cover, authorIds, loading } = useBook(bookId);
   const { authors, loading_a } = useAuthors(authorIds);
+  const { user, userId, userLoading } = useGetUser();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className={styles.container}>
@@ -23,10 +29,25 @@ export default function BookDetails() {
       </div>
 
       <div className={styles.col}>
-        {loading ? (
-          <Skeleton height={500} />
-        ) : (
-          cover && <img src={cover} alt="Book cover" loading="lazy"></img>
+        <div className={styles.item}>
+          {loading ? (
+            <Skeleton height={500} />
+          ) : (
+            cover && <img src={cover} alt="Book cover" loading="lazy"></img>
+          )}
+        </div>
+        <div className={styles.item}>
+          <SaveToShelfButton onClick={() => setIsModalOpen(true)} />
+        </div>
+        {isModalOpen && userId && (
+          <ShelfModal
+            bookId={bookId}
+            userId={userId}
+            title={title}
+            authors={authors}
+            cover={cover}
+            onClose={() => setIsModalOpen(false)}
+          />
         )}
       </div>
       <div className={styles.col}>

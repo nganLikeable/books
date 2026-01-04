@@ -30,7 +30,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "app/components/BookCard",
-    "app/firebase/config.js"
+    "app/firebase/firebase-config.js"
   ],
   "exclude": ["node_modules"]
 }

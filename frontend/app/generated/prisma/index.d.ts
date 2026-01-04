@@ -2173,71 +2173,47 @@ export namespace Prisma {
 
   export type AggregateBook = {
     _count: BookCountAggregateOutputType | null
-    _avg: BookAvgAggregateOutputType | null
-    _sum: BookSumAggregateOutputType | null
     _min: BookMinAggregateOutputType | null
     _max: BookMaxAggregateOutputType | null
   }
 
-  export type BookAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type BookSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type BookMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     title: string | null
-    description: string | null
     cover: string | null
   }
 
   export type BookMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     title: string | null
-    description: string | null
     cover: string | null
   }
 
   export type BookCountAggregateOutputType = {
     id: number
     title: number
-    authora: number
-    description: number
+    authors: number
     cover: number
     _all: number
   }
 
 
-  export type BookAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type BookSumAggregateInputType = {
-    id?: true
-  }
-
   export type BookMinAggregateInputType = {
     id?: true
     title?: true
-    description?: true
     cover?: true
   }
 
   export type BookMaxAggregateInputType = {
     id?: true
     title?: true
-    description?: true
     cover?: true
   }
 
   export type BookCountAggregateInputType = {
     id?: true
     title?: true
-    authora?: true
-    description?: true
+    authors?: true
     cover?: true
     _all?: true
   }
@@ -2280,18 +2256,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: BookAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: BookSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: BookMinAggregateInputType
@@ -2322,21 +2286,16 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: BookCountAggregateInputType | true
-    _avg?: BookAvgAggregateInputType
-    _sum?: BookSumAggregateInputType
     _min?: BookMinAggregateInputType
     _max?: BookMaxAggregateInputType
   }
 
   export type BookGroupByOutputType = {
-    id: number
+    id: string
     title: string
-    authora: string[]
-    description: string | null
+    authors: string[]
     cover: string | null
     _count: BookCountAggregateOutputType | null
-    _avg: BookAvgAggregateOutputType | null
-    _sum: BookSumAggregateOutputType | null
     _min: BookMinAggregateOutputType | null
     _max: BookMaxAggregateOutputType | null
   }
@@ -2358,8 +2317,7 @@ export namespace Prisma {
   export type BookSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    authora?: boolean
-    description?: boolean
+    authors?: boolean
     cover?: boolean
     userBooks?: boolean | Book$userBooksArgs<ExtArgs>
     _count?: boolean | BookCountOutputTypeDefaultArgs<ExtArgs>
@@ -2368,28 +2326,25 @@ export namespace Prisma {
   export type BookSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    authora?: boolean
-    description?: boolean
+    authors?: boolean
     cover?: boolean
   }, ExtArgs["result"]["book"]>
 
   export type BookSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    authora?: boolean
-    description?: boolean
+    authors?: boolean
     cover?: boolean
   }, ExtArgs["result"]["book"]>
 
   export type BookSelectScalar = {
     id?: boolean
     title?: boolean
-    authora?: boolean
-    description?: boolean
+    authors?: boolean
     cover?: boolean
   }
 
-  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "authora" | "description" | "cover", ExtArgs["result"]["book"]>
+  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "authors" | "cover", ExtArgs["result"]["book"]>
   export type BookInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userBooks?: boolean | Book$userBooksArgs<ExtArgs>
     _count?: boolean | BookCountOutputTypeDefaultArgs<ExtArgs>
@@ -2403,10 +2358,9 @@ export namespace Prisma {
       userBooks: Prisma.$UserBookPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       title: string
-      authora: string[]
-      description: string | null
+      authors: string[]
       cover: string | null
     }, ExtArgs["result"]["book"]>
     composites: {}
@@ -2832,10 +2786,9 @@ export namespace Prisma {
    * Fields of the Book model
    */
   interface BookFieldRefs {
-    readonly id: FieldRef<"Book", 'Int'>
+    readonly id: FieldRef<"Book", 'String'>
     readonly title: FieldRef<"Book", 'String'>
-    readonly authora: FieldRef<"Book", 'String[]'>
-    readonly description: FieldRef<"Book", 'String'>
+    readonly authors: FieldRef<"Book", 'String[]'>
     readonly cover: FieldRef<"Book", 'String'>
   }
     
@@ -3273,23 +3226,13 @@ export namespace Prisma {
 
   export type AggregateUserBook = {
     _count: UserBookCountAggregateOutputType | null
-    _avg: UserBookAvgAggregateOutputType | null
-    _sum: UserBookSumAggregateOutputType | null
     _min: UserBookMinAggregateOutputType | null
     _max: UserBookMaxAggregateOutputType | null
   }
 
-  export type UserBookAvgAggregateOutputType = {
-    bookId: number | null
-  }
-
-  export type UserBookSumAggregateOutputType = {
-    bookId: number | null
-  }
-
   export type UserBookMinAggregateOutputType = {
     userId: string | null
-    bookId: number | null
+    bookId: string | null
     status: $Enums.ReadingStatus | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3297,7 +3240,7 @@ export namespace Prisma {
 
   export type UserBookMaxAggregateOutputType = {
     userId: string | null
-    bookId: number | null
+    bookId: string | null
     status: $Enums.ReadingStatus | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3312,14 +3255,6 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type UserBookAvgAggregateInputType = {
-    bookId?: true
-  }
-
-  export type UserBookSumAggregateInputType = {
-    bookId?: true
-  }
 
   export type UserBookMinAggregateInputType = {
     userId?: true
@@ -3384,18 +3319,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: UserBookAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserBookSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserBookMinAggregateInputType
@@ -3426,21 +3349,17 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserBookCountAggregateInputType | true
-    _avg?: UserBookAvgAggregateInputType
-    _sum?: UserBookSumAggregateInputType
     _min?: UserBookMinAggregateInputType
     _max?: UserBookMaxAggregateInputType
   }
 
   export type UserBookGroupByOutputType = {
     userId: string
-    bookId: number
+    bookId: string
     status: $Enums.ReadingStatus
     createdAt: Date
     updatedAt: Date
     _count: UserBookCountAggregateOutputType | null
-    _avg: UserBookAvgAggregateOutputType | null
-    _sum: UserBookSumAggregateOutputType | null
     _min: UserBookMinAggregateOutputType | null
     _max: UserBookMaxAggregateOutputType | null
   }
@@ -3519,7 +3438,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       userId: string
-      bookId: number
+      bookId: string
       status: $Enums.ReadingStatus
       createdAt: Date
       updatedAt: Date
@@ -3949,7 +3868,7 @@ export namespace Prisma {
    */
   interface UserBookFieldRefs {
     readonly userId: FieldRef<"UserBook", 'String'>
-    readonly bookId: FieldRef<"UserBook", 'Int'>
+    readonly bookId: FieldRef<"UserBook", 'String'>
     readonly status: FieldRef<"UserBook", 'ReadingStatus'>
     readonly createdAt: FieldRef<"UserBook", 'DateTime'>
     readonly updatedAt: FieldRef<"UserBook", 'DateTime'>
@@ -4393,8 +4312,7 @@ export namespace Prisma {
   export const BookScalarFieldEnum: {
     id: 'id',
     title: 'title',
-    authora: 'authora',
-    description: 'description',
+    authors: 'authors',
     cover: 'cover'
   };
 
@@ -4456,20 +4374,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'ReadingStatus'
    */
   export type EnumReadingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReadingStatus'>
@@ -4498,16 +4402,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'Int'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
   /**
-   * Reference to a field of type 'Float[]'
+   * Reference to a field of type 'Int[]'
    */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
   /**
    * Deep Input Types
@@ -4563,10 +4467,9 @@ export namespace Prisma {
     AND?: BookWhereInput | BookWhereInput[]
     OR?: BookWhereInput[]
     NOT?: BookWhereInput | BookWhereInput[]
-    id?: IntFilter<"Book"> | number
+    id?: StringFilter<"Book"> | string
     title?: StringFilter<"Book"> | string
-    authora?: StringNullableListFilter<"Book">
-    description?: StringNullableFilter<"Book"> | string | null
+    authors?: StringNullableListFilter<"Book">
     cover?: StringNullableFilter<"Book"> | string | null
     userBooks?: UserBookListRelationFilter
   }
@@ -4574,20 +4477,18 @@ export namespace Prisma {
   export type BookOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    authora?: SortOrder
-    description?: SortOrderInput | SortOrder
+    authors?: SortOrder
     cover?: SortOrderInput | SortOrder
     userBooks?: UserBookOrderByRelationAggregateInput
   }
 
   export type BookWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     AND?: BookWhereInput | BookWhereInput[]
     OR?: BookWhereInput[]
     NOT?: BookWhereInput | BookWhereInput[]
     title?: StringFilter<"Book"> | string
-    authora?: StringNullableListFilter<"Book">
-    description?: StringNullableFilter<"Book"> | string | null
+    authors?: StringNullableListFilter<"Book">
     cover?: StringNullableFilter<"Book"> | string | null
     userBooks?: UserBookListRelationFilter
   }, "id">
@@ -4595,24 +4496,20 @@ export namespace Prisma {
   export type BookOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    authora?: SortOrder
-    description?: SortOrderInput | SortOrder
+    authors?: SortOrder
     cover?: SortOrderInput | SortOrder
     _count?: BookCountOrderByAggregateInput
-    _avg?: BookAvgOrderByAggregateInput
     _max?: BookMaxOrderByAggregateInput
     _min?: BookMinOrderByAggregateInput
-    _sum?: BookSumOrderByAggregateInput
   }
 
   export type BookScalarWhereWithAggregatesInput = {
     AND?: BookScalarWhereWithAggregatesInput | BookScalarWhereWithAggregatesInput[]
     OR?: BookScalarWhereWithAggregatesInput[]
     NOT?: BookScalarWhereWithAggregatesInput | BookScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Book"> | number
+    id?: StringWithAggregatesFilter<"Book"> | string
     title?: StringWithAggregatesFilter<"Book"> | string
-    authora?: StringNullableListFilter<"Book">
-    description?: StringNullableWithAggregatesFilter<"Book"> | string | null
+    authors?: StringNullableListFilter<"Book">
     cover?: StringNullableWithAggregatesFilter<"Book"> | string | null
   }
 
@@ -4621,7 +4518,7 @@ export namespace Prisma {
     OR?: UserBookWhereInput[]
     NOT?: UserBookWhereInput | UserBookWhereInput[]
     userId?: StringFilter<"UserBook"> | string
-    bookId?: IntFilter<"UserBook"> | number
+    bookId?: StringFilter<"UserBook"> | string
     status?: EnumReadingStatusFilter<"UserBook"> | $Enums.ReadingStatus
     createdAt?: DateTimeFilter<"UserBook"> | Date | string
     updatedAt?: DateTimeFilter<"UserBook"> | Date | string
@@ -4645,7 +4542,7 @@ export namespace Prisma {
     OR?: UserBookWhereInput[]
     NOT?: UserBookWhereInput | UserBookWhereInput[]
     userId?: StringFilter<"UserBook"> | string
-    bookId?: IntFilter<"UserBook"> | number
+    bookId?: StringFilter<"UserBook"> | string
     status?: EnumReadingStatusFilter<"UserBook"> | $Enums.ReadingStatus
     createdAt?: DateTimeFilter<"UserBook"> | Date | string
     updatedAt?: DateTimeFilter<"UserBook"> | Date | string
@@ -4660,10 +4557,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserBookCountOrderByAggregateInput
-    _avg?: UserBookAvgOrderByAggregateInput
     _max?: UserBookMaxOrderByAggregateInput
     _min?: UserBookMinOrderByAggregateInput
-    _sum?: UserBookSumOrderByAggregateInput
   }
 
   export type UserBookScalarWhereWithAggregatesInput = {
@@ -4671,7 +4566,7 @@ export namespace Prisma {
     OR?: UserBookScalarWhereWithAggregatesInput[]
     NOT?: UserBookScalarWhereWithAggregatesInput | UserBookScalarWhereWithAggregatesInput[]
     userId?: StringWithAggregatesFilter<"UserBook"> | string
-    bookId?: IntWithAggregatesFilter<"UserBook"> | number
+    bookId?: StringWithAggregatesFilter<"UserBook"> | string
     status?: EnumReadingStatusWithAggregatesFilter<"UserBook"> | $Enums.ReadingStatus
     createdAt?: DateTimeWithAggregatesFilter<"UserBook"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"UserBook"> | Date | string
@@ -4724,59 +4619,55 @@ export namespace Prisma {
   }
 
   export type BookCreateInput = {
+    id: string
     title: string
-    authora?: BookCreateauthoraInput | string[]
-    description?: string | null
+    authors?: BookCreateauthorsInput | string[]
     cover?: string | null
     userBooks?: UserBookCreateNestedManyWithoutBookInput
   }
 
   export type BookUncheckedCreateInput = {
-    id?: number
+    id: string
     title: string
-    authora?: BookCreateauthoraInput | string[]
-    description?: string | null
+    authors?: BookCreateauthorsInput | string[]
     cover?: string | null
     userBooks?: UserBookUncheckedCreateNestedManyWithoutBookInput
   }
 
   export type BookUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    authora?: BookUpdateauthoraInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    authors?: BookUpdateauthorsInput | string[]
     cover?: NullableStringFieldUpdateOperationsInput | string | null
     userBooks?: UserBookUpdateManyWithoutBookNestedInput
   }
 
   export type BookUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    authora?: BookUpdateauthoraInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    authors?: BookUpdateauthorsInput | string[]
     cover?: NullableStringFieldUpdateOperationsInput | string | null
     userBooks?: UserBookUncheckedUpdateManyWithoutBookNestedInput
   }
 
   export type BookCreateManyInput = {
-    id?: number
+    id: string
     title: string
-    authora?: BookCreateauthoraInput | string[]
-    description?: string | null
+    authors?: BookCreateauthorsInput | string[]
     cover?: string | null
   }
 
   export type BookUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    authora?: BookUpdateauthoraInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    authors?: BookUpdateauthorsInput | string[]
     cover?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    authora?: BookUpdateauthoraInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    authors?: BookUpdateauthorsInput | string[]
     cover?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -4790,7 +4681,7 @@ export namespace Prisma {
 
   export type UserBookUncheckedCreateInput = {
     userId: string
-    bookId: number
+    bookId: string
     status?: $Enums.ReadingStatus
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4806,7 +4697,7 @@ export namespace Prisma {
 
   export type UserBookUncheckedUpdateInput = {
     userId?: StringFieldUpdateOperationsInput | string
-    bookId?: IntFieldUpdateOperationsInput | number
+    bookId?: StringFieldUpdateOperationsInput | string
     status?: EnumReadingStatusFieldUpdateOperationsInput | $Enums.ReadingStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4814,7 +4705,7 @@ export namespace Prisma {
 
   export type UserBookCreateManyInput = {
     userId: string
-    bookId: number
+    bookId: string
     status?: $Enums.ReadingStatus
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4828,7 +4719,7 @@ export namespace Prisma {
 
   export type UserBookUncheckedUpdateManyInput = {
     userId?: StringFieldUpdateOperationsInput | string
-    bookId?: IntFieldUpdateOperationsInput | number
+    bookId?: StringFieldUpdateOperationsInput | string
     status?: EnumReadingStatusFieldUpdateOperationsInput | $Enums.ReadingStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4933,17 +4824,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
@@ -4955,47 +4835,20 @@ export namespace Prisma {
   export type BookCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    authora?: SortOrder
-    description?: SortOrder
+    authors?: SortOrder
     cover?: SortOrder
-  }
-
-  export type BookAvgOrderByAggregateInput = {
-    id?: SortOrder
   }
 
   export type BookMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    description?: SortOrder
     cover?: SortOrder
   }
 
   export type BookMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    description?: SortOrder
     cover?: SortOrder
-  }
-
-  export type BookSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumReadingStatusFilter<$PrismaModel = never> = {
@@ -5028,7 +4881,7 @@ export namespace Prisma {
 
   export type UserBookUserIdBookIdCompoundUniqueInput = {
     userId: string
-    bookId: number
+    bookId: string
   }
 
   export type UserBookCountOrderByAggregateInput = {
@@ -5037,10 +4890,6 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type UserBookAvgOrderByAggregateInput = {
-    bookId?: SortOrder
   }
 
   export type UserBookMaxOrderByAggregateInput = {
@@ -5057,10 +4906,6 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type UserBookSumOrderByAggregateInput = {
-    bookId?: SortOrder
   }
 
   export type EnumReadingStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -5137,7 +4982,7 @@ export namespace Prisma {
     deleteMany?: UserBookScalarWhereInput | UserBookScalarWhereInput[]
   }
 
-  export type BookCreateauthoraInput = {
+  export type BookCreateauthorsInput = {
     set: string[]
   }
 
@@ -5155,7 +5000,7 @@ export namespace Prisma {
     connect?: UserBookWhereUniqueInput | UserBookWhereUniqueInput[]
   }
 
-  export type BookUpdateauthoraInput = {
+  export type BookUpdateauthorsInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -5172,14 +5017,6 @@ export namespace Prisma {
     update?: UserBookUpdateWithWhereUniqueWithoutBookInput | UserBookUpdateWithWhereUniqueWithoutBookInput[]
     updateMany?: UserBookUpdateManyWithWhereWithoutBookInput | UserBookUpdateManyWithWhereWithoutBookInput[]
     deleteMany?: UserBookScalarWhereInput | UserBookScalarWhereInput[]
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserBookUncheckedUpdateManyWithoutBookNestedInput = {
@@ -5316,33 +5153,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedEnumReadingStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ReadingStatus | EnumReadingStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ReadingStatus[] | ListEnumReadingStatusFieldRefInput<$PrismaModel>
@@ -5393,7 +5203,7 @@ export namespace Prisma {
   }
 
   export type UserBookUncheckedCreateWithoutUserInput = {
-    bookId: number
+    bookId: string
     status?: $Enums.ReadingStatus
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5430,7 +5240,7 @@ export namespace Prisma {
     OR?: UserBookScalarWhereInput[]
     NOT?: UserBookScalarWhereInput | UserBookScalarWhereInput[]
     userId?: StringFilter<"UserBook"> | string
-    bookId?: IntFilter<"UserBook"> | number
+    bookId?: StringFilter<"UserBook"> | string
     status?: EnumReadingStatusFilter<"UserBook"> | $Enums.ReadingStatus
     createdAt?: DateTimeFilter<"UserBook"> | Date | string
     updatedAt?: DateTimeFilter<"UserBook"> | Date | string
@@ -5494,17 +5304,16 @@ export namespace Prisma {
   }
 
   export type BookCreateWithoutUserBooksInput = {
+    id: string
     title: string
-    authora?: BookCreateauthoraInput | string[]
-    description?: string | null
+    authors?: BookCreateauthorsInput | string[]
     cover?: string | null
   }
 
   export type BookUncheckedCreateWithoutUserBooksInput = {
-    id?: number
+    id: string
     title: string
-    authora?: BookCreateauthoraInput | string[]
-    description?: string | null
+    authors?: BookCreateauthorsInput | string[]
     cover?: string | null
   }
 
@@ -5548,22 +5357,21 @@ export namespace Prisma {
   }
 
   export type BookUpdateWithoutUserBooksInput = {
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    authora?: BookUpdateauthoraInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    authors?: BookUpdateauthorsInput | string[]
     cover?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookUncheckedUpdateWithoutUserBooksInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    authora?: BookUpdateauthoraInput | string[]
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    authors?: BookUpdateauthorsInput | string[]
     cover?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserBookCreateManyUserInput = {
-    bookId: number
+    bookId: string
     status?: $Enums.ReadingStatus
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5577,14 +5385,14 @@ export namespace Prisma {
   }
 
   export type UserBookUncheckedUpdateWithoutUserInput = {
-    bookId?: IntFieldUpdateOperationsInput | number
+    bookId?: StringFieldUpdateOperationsInput | string
     status?: EnumReadingStatusFieldUpdateOperationsInput | $Enums.ReadingStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserBookUncheckedUpdateManyWithoutUserInput = {
-    bookId?: IntFieldUpdateOperationsInput | number
+    bookId?: StringFieldUpdateOperationsInput | string
     status?: EnumReadingStatusFieldUpdateOperationsInput | $Enums.ReadingStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

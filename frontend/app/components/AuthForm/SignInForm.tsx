@@ -3,7 +3,8 @@
 import { useState } from "react";
 import styles from "./Form.module.css";
 
-import { auth } from "@/app/firebase/config";
+import { auth } from "@/app/firebase/firebase-config";
+import { setCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 export default function SignInForm() {
@@ -27,6 +28,15 @@ export default function SignInForm() {
       setPassword("");
 
       if (res?.user) {
+        // get secure JWT token
+        const token = await res.user.getIdToken();
+
+        setCookie("auth-token", token, {
+          maxAge: 60 * 60 * 24,
+          path: "/",
+          secure: true, // only send over HTTPs
+          sameSite: "strict",
+        });
         router.push("/");
       }
     } catch (e) {

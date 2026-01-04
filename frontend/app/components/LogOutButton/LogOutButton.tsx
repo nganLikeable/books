@@ -1,5 +1,5 @@
 "use client";
-import { auth } from "@/app/firebase/config";
+import { auth } from "@/app/firebase/firebase-config";
 import { signOut } from "firebase/auth";
 import styles from "./LogOutButton.module.css";
 export default function LogOutButton() {

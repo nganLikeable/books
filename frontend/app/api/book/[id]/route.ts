@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -32,6 +33,32 @@ export async function GET(
       status: response.status,
       headers: corsHeaders,
     });
+  } catch (e) {
+    console.error(e);
+    return new NextResponse("Invalid request body", {
+      status: 400,
+      headers: corsHeaders,
+    });
+  }
+}
+
+// add book to db
+export async function POST(request: NextRequest) {
+  try {
+    const { id, title, authors, cover } = await request.json();
+
+    if (!id || !title || !authors) {
+      return new NextResponse("Missing body", {
+        status: 400,
+        headers: corsHeaders,
+      });
+    }
+    const newBook = await prisma.book.upsert({
+      where: { id },
+      update: {},
+      create: { id, title, authors, cover },
+    });
+    return NextResponse.json(newBook, { status: 201, headers: corsHeaders });
   } catch (e) {
     console.error(e);
     return new NextResponse("Invalid request body", {

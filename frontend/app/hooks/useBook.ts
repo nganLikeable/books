@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 export function useBook(bookId: string) {
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [cover, setCover] = useState("");
   const [authorIds, setAuthorIds] = useState<string[]>([]);
