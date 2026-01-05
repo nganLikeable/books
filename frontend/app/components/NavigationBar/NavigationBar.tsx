@@ -21,6 +21,9 @@ export default function NavBar() {
           <Link className="hover:text-blue-950  hover:font-bold" href="/browse">
             Browse
           </Link>
+          <Link className={styles.link} href="/library">
+            Your Library
+          </Link>
           {user ? (
             <LogOutButton />
           ) : (
