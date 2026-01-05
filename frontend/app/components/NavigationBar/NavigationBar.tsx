@@ -27,6 +27,9 @@ export default function NavBar() {
           <Link className={styles.link} href="/browse">
             Browse
           </Link>
+          <Link className={styles.link} href="/library">
+            Your Library
+          </Link>
           {user ? (
             <LogOutButton />
           ) : (
