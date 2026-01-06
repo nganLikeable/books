@@ -54,7 +54,7 @@ export default function ShelfModal({
         body: JSON.stringify({
           id: bookId,
           title: title,
-          authors: authors,
+          authors: Array.isArray(authors) ? authors : [authors], // ensure authors passed as an array to match db
           cover: cover,
         }),
       });
