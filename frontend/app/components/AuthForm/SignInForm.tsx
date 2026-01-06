@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./Form.module.css";
 
 import { auth } from "@/app/firebase/firebase-config";
 import { setCookie } from "cookies-next/client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+
 export default function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,20 +46,21 @@ export default function SignInForm() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="w-full max-w-100 ">
       <form
-        className={styles.form}
+        className=" bg-white border border-0.5 border-gray-100 rounded-2xl p-3"
         onSubmit={(e) => {
           e.preventDefault(); // prevent page reload
           handleSignIn();
         }}
       >
-        <h2 className={styles.title}>Sign In</h2>
-
-        <div className={styles.formGroup}>
+        <h2 className=" text-center text-2xl font-semibold mb-4 p-4">
+          Welcome
+        </h2>
+        <div className="m-0.5">
           <input
             id="email"
-            className={styles.formInput}
+            className="w-full p-3.5 mt-1 bg-[#f7f7f7] focus:bg-[#f7f7f7f5]"
             placeholder="Email"
             type="email"
             value={email}
@@ -66,11 +68,10 @@ export default function SignInForm() {
             required
           />
         </div>
-
-        <div className={styles.formGroup}>
+        <div className="mb-[1.4rem]">
           <input
             id="password"
-            className={styles.formInput}
+            className="w-full p-3.5 mt-1 bg-[#f7f7f7] focus:bg-[#f7f7f7f5]"
             placeholder="Password"
             type="password"
             value={password}
@@ -78,16 +79,23 @@ export default function SignInForm() {
             required
           />
         </div>
-
         <button
-          className={styles.submitButton}
+          className="w-full p-1 cursor-pointer bg-[#ffde39] rounded-sm hover:bg-[#ffe666]"
           type="submit"
           disabled={loading}
         >
           {loading ? "Logging in...." : "Sign In"}
         </button>
-
-        {error && <p className={styles.errorText}>{error}</p>}
+        {error && <p className="mt-1 text-red-800 text-xl">{error}</p>}{" "}
+        <p className="text-center text-xs m-4">
+          Don't have an account?{" "}
+          <Link
+            className="font-semibold underline hover:text-gray-600"
+            href="/sign-up"
+          >
+            Sign up
+          </Link>{" "}
+        </p>
       </form>
     </div>
   );
