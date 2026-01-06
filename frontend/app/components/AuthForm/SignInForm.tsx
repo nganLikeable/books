@@ -54,8 +54,8 @@ export default function SignInForm() {
           handleSignIn();
         }}
       >
-        <h2 className=" text-center text-2xl font-semibold mb-4 p-4">
-          Welcome
+        <h2 className="text-center text-2xl font-semibold mb-4 p-4">
+          Welcome back
         </h2>
         <div className="m-0.5">
           <input
@@ -79,6 +79,7 @@ export default function SignInForm() {
             required
           />
         </div>
+        {error && <p className="mt-1 text-red-800 text-xl">{error}</p>}{" "}
         <button
           className="w-full p-1 cursor-pointer bg-[#ffde39] rounded-sm hover:bg-[#ffe666]"
           type="submit"
@@ -86,7 +87,6 @@ export default function SignInForm() {
         >
           {loading ? "Logging in...." : "Sign In"}
         </button>
-        {error && <p className="mt-1 text-red-800 text-xl">{error}</p>}{" "}
         <p className="text-center text-xs m-4">
           Don't have an account?{" "}
           <Link
