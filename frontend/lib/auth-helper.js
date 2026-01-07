@@ -9,13 +9,24 @@ export async function getAuthenticatedId() {
   const token = cookieStore.get("auth-token")?.value;
 
   if (!token) {
-    throw new Error("UNAUTHORIZED");
-  } // retrieve user id from firebase admin
+    return {
+      error: new NextResponse(
+        JSON.stringify({ error: "Unauthorized - No token" }),
+        { status: 401, headers: corsHeaders }
+      ),
+    };
+  }
+
   try {
     const decodedToken = await adminAuth.verifyIdToken(token);
-    return decodedToken.uid;
+    return { userId: decodedToken.uid };
   } catch (e) {
-    console.error("Firebase admin  verify error", e);
-    throw new Error("INVALID_TOKEN");
+    console.error("Token verify error:", e);
+    return {
+      error: new NextResponse(JSON.stringify({ error: "Invalid token" }), {
+        status: 401,
+        headers: corsHeaders,
+      }),
+    };
   }
 }

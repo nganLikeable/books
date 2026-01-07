@@ -1,5 +1,4 @@
 "use client";
-import { NextResponse } from "next/server";
 import { useState } from "react";
 import styles from "./ShelfModal.module.css";
 
@@ -32,13 +31,13 @@ export default function ShelfModal({
         }),
       });
       if (!response.ok) {
-        return new NextResponse("Failed to delete book");
+        throw new Error("Failed to delete book");
       }
       console.log(response);
       console.log("Successfully deleted book ");
     } catch (e) {
       console.error(e);
-      return new NextResponse("Error deleting book");
+      throw new Error("Error deleting book");
     } finally {
       setLoading(false);
     }
@@ -60,7 +59,7 @@ export default function ShelfModal({
       });
       console.log(responseBook);
       if (!responseBook.ok) {
-        return new NextResponse("Failed to add book to database");
+        throw new Error("Failed to add book to database");
       }
       console.log("Successfully added book to database");
 
@@ -72,7 +71,7 @@ export default function ShelfModal({
       });
       console.log(response);
       if (!response.ok) {
-        return new NextResponse("Failed to add book to user's shelf");
+        throw new Error("Failed to add book to user's shelf");
       }
       const data = await response.json();
       console.log("Book added to/modified in user's library:", data);
