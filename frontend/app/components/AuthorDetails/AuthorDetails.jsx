@@ -63,9 +63,13 @@ export default function AuthorDetail() {
       : data.bio?.value || "Bio not available";
   const birthdate = data.birth_date || "Unknown";
   const deathdate = data.death_date || "";
+  const authorPhotos = data.photos;
+
+  //  check for covers exist on open lib or not
   const authorCover =
-    `https://covers.openlibrary.org/a/olid/${authorId}-L.jpg` ||
-    "/no_avatar.jpeg";
+    authorPhotos && authorPhotos[0].toString.length > 1 && authorPhotos[0] > 0
+      ? `https://covers.openlibrary.org/a/id/${data.photos[0]}-L.jpg`
+      : "/no_avatar.jpeg";
   console.log(authorCover);
 
   return (
