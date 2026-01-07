@@ -6,7 +6,8 @@ export default function BookCard({ book }: { book: Book }) {
 
   const coverURL = book.cover_i
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-    : "no_cover.jpg";
+    : "/no_cover.jpg";
+  // console.log(coverURL);
   return (
     <div className={styles.card}>
       <div className={styles.item}>

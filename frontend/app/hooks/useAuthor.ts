@@ -4,7 +4,7 @@ export function useAuthor(id: string) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   useEffect(() => {
-    if (id) {
+    if (!id || id === "undefined") {
       return;
     }
     const getAuthor = async () => {
