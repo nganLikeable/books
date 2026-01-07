@@ -24,7 +24,7 @@ export default function AuthorDetail() {
           return;
         }
         const parsedBooks = data.entries.map((item) => {
-          console.log("work item:", item);
+          //   console.log("work item:", item);
           return {
             key: item.key,
             title: item.title,
@@ -53,14 +53,22 @@ export default function AuthorDetail() {
   }
 
   const name = data.name;
-  const bio = data.bio.value || "Bio not available";
-  const birthdate = data.birthdate || "Unknown";
-  const cover =
+  const bio = data.bio || "Bio not available";
+  const birthdate = data.birth_date || "Unknown";
+  const deathdate = data.death_date || "";
+  const authorCover =
     `https://covers.openlibrary.org/a/olid/${authorId}-L.jpg` ||
-    "no_avatar.jpeg";
+    "/no_avatar.jpeg";
 
   return (
     <div>
+      <div>
+        <img src={authorCover}></img>
+        <h1>{name}</h1>
+        <p>Born: {birthdate}</p>
+        {deathdate && <p>Died on: {deathdate}</p>}
+        <p>{bio}</p>
+      </div>
       <BookList books={books} />
     </div>
   );
