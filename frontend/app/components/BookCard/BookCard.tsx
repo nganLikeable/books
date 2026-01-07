@@ -26,7 +26,19 @@ export default function BookCard({ book }: { book: Book }) {
           >
             {book.title}{" "}
           </Link>
-          <p>{book.author_name && `by ${book.author_name}`}</p>
+          <p>
+            {book.author_name && (
+              <>
+                by{" "}
+                <Link
+                  className="hover:underline"
+                  href={`/author/${book.author_key}`}
+                >
+                  {book.author_name}
+                </Link>{" "}
+              </>
+            )}
+          </p>
         </div>
       </div>
     </div>

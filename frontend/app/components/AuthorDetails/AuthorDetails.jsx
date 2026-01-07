@@ -35,6 +35,7 @@ export default function AuthorDetail() {
               key: item.key,
               title: item.title,
               author_name: data.name,
+              author_key: data.key ? data.key.split("/")[2] : null,
               cover_i: String(item.covers[0]),
             };
           }
