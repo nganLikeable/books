@@ -54,14 +54,19 @@ export default function AuthorDetail() {
   if (loading || !data) {
     return <div className="p-10 text-center">Loading Author...</div>;
   }
+  console.log(data);
 
   const name = data.name;
-  const bio = data.bio || "Bio not available";
+  const bio =
+    typeof data.bio === "string"
+      ? data.bio
+      : data.bio?.value || "Bio not available";
   const birthdate = data.birth_date || "Unknown";
   const deathdate = data.death_date || "";
   const authorCover =
     `https://covers.openlibrary.org/a/olid/${authorId}-L.jpg` ||
     "/no_avatar.jpeg";
+  console.log(authorCover);
 
   return (
     <div className="m-20">
@@ -69,7 +74,7 @@ export default function AuthorDetail() {
         {/* prevent shrinking when image still loading*/}
         <div className="shrink-0 w-40">
           <img
-            className="sticky object-scale-down max-h-full drop-shadow-md rounded-md m-auto "
+            className=" object-scale-down max-h-full drop-shadow-md rounded-md m-auto "
             src={authorCover}
             alt="author image"
           ></img>

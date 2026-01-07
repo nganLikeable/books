@@ -20,7 +20,12 @@ export default function BookCard({ book }: { book: Book }) {
       <div className={styles.item}>
         <div className={styles.info}>
           {" "}
-          <Link href={`/book/${book.key.split("/")[2]}`}>{book.title} </Link>
+          <Link
+            className="hover:underline"
+            href={`/book/${book.key.split("/")[2]}`}
+          >
+            {book.title}{" "}
+          </Link>
           <p>{book.author_name && `by ${book.author_name}`}</p>
         </div>
       </div>
