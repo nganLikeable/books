@@ -20,12 +20,13 @@ export async function getAuthenticatedId() {
         { status: 401, headers: corsHeaders }
       ),
     };
-  } // retrieve user id from firebase admin
+  }
+
   try {
     const decodedToken = await adminAuth.verifyIdToken(token);
-    return decodedToken.uid;
+    return { userId: decodedToken.uid };
   } catch (e) {
-    console.error(e);
+    console.error("Token verify error:", e);
     return {
       error: new NextResponse(
         JSON.stringify({ error: "Invalid or expired token" }),

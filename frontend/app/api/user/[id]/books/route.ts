@@ -61,7 +61,10 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const authenticatedId = await getAuthenticatedId();
+    const auth = await getAuthenticatedId();
+    if (auth.error) return auth.error;
+
+    const authenticatedId = auth.userId;
 
     // get id in url to compare
     const { id } = await params;
@@ -109,7 +112,10 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const authenticatedId = await getAuthenticatedId();
+    const auth = await getAuthenticatedId();
+    if (auth.error) return auth.error;
+
+    const authenticatedId = auth.userId;
 
     // get id in url to compare
     const { id } = await params;
