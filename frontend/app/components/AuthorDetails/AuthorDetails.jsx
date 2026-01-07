@@ -61,15 +61,48 @@ export default function AuthorDetail() {
     "/no_avatar.jpeg";
 
   return (
-    <div>
-      <div>
-        <img src={authorCover}></img>
-        <h1>{name}</h1>
-        <p>Born: {birthdate}</p>
-        {deathdate && <p>Died on: {deathdate}</p>}
-        <p>{bio}</p>
+    <div className="m-20">
+      <div className="flex flex-row gap-5">
+        <div>
+          <img
+            className="object-scale-down max-h-full drop-shadow-md rounded-md m-auto "
+            src={authorCover}
+            alt="author image"
+          ></img>
+        </div>
+        <div className="flex flex-col w-full m-2">
+          <div className="">
+            <h1 className="text-3xl font-bold">{name}</h1>
+            <hr className="border-gray-300"></hr>
+          </div>
+          <div className="mb-5">
+            <table className="table-auto w-full text-sm ">
+              <tbody>
+                <tr className="align-top">
+                  <th className="text-left font-semibold text-slate-600 pr-8 py-1">
+                    Born
+                  </th>
+                  <td className="text-slate-800 py-1">{birthdate}</td>
+                </tr>
+                {deathdate && (
+                  <tr className="align-top">
+                    <th className="text-left font-semibold text-slate-600 pr-8 py-1">
+                      Died
+                    </th>
+                    <td className="text-slate-800 py-1">{deathdate}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <p className="text-justify">{bio}</p>
+          </div>
+        </div>
       </div>
-      <BookList books={books} />
+      <div>
+        <BookList books={books} />
+      </div>
     </div>
   );
 }
