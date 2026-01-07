@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import BackButton from "../BackButton/BackButton";
 import ShelfModal from "../ShelfModal/ShelfModal";
 
 import { useState } from "react";
@@ -24,10 +23,6 @@ export default function BookDetails() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.col}>
-        <BackButton />
-      </div>
-
       <div className={styles.col}>
         <div className={styles.item}>
           {loading ? (
