@@ -31,7 +31,9 @@ export default function AuthorDetail() {
             author_name: data.name,
             // some books covers arrays are available yet the values are not in the right form, for ex: -1
             cover_i:
-              item.covers && item.covers[0].length > 1 ? item.covers[0] : "",
+              item.covers && item.covers[0].toString().length > 1
+                ? item.covers[0]
+                : "",
           };
         });
 
