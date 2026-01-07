@@ -12,12 +12,14 @@ export async function OPTIONS() {
 }
 
 export async function GET(
-  response: NextResponse,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const authenticatedId = await getAuthenticatedId();
+    const auth = await getAuthenticatedId();
+    if (auth.error) return auth.error;
 
+    const authenticatedId = auth.userId;
     // get id in url to compare
     const { id } = await params;
 
@@ -32,7 +34,7 @@ export async function GET(
       );
     }
 
-    const { status } = await response.json();
+    const { status } = await request.json();
 
     if (!status) {
       return new NextResponse("Missing body - book status", {
