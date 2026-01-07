@@ -8,6 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import ShelfModal from "../ShelfModal/ShelfModal";
 
+import Link from "next/link";
 import { useState } from "react";
 import SaveToShelfButton from "../SaveToShelfButton/SaveToShelfButton";
 import styles from "./BookDetails.module.css";
@@ -52,7 +53,17 @@ export default function BookDetails() {
         ) : (
           <h2>
             {authors.map((a: string, index: number) => (
-              <span key={`${a}-${index}`}>{a}</span>
+              <div key={`${a}-${index}`}>
+                <span>
+                  <Link
+                    className="font-semibold hover:underline"
+                    href={`/author/${authorIds[index]}`}
+                  >
+                    {a}
+                  </Link>
+                </span>
+                <br></br>
+              </div>
             ))}
           </h2>
         )}
