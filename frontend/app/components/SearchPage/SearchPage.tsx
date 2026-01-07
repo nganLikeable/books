@@ -21,7 +21,9 @@ export default function SearchPage() {
           ))}
         </div>
       ) : (
-        <BookList books={results} />
+        <div className="my-16 mx-auto px-20">
+          <BookList books={results} />
+        </div>
       )}
     </div>
   );

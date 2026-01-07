@@ -3,6 +3,8 @@ import { useAuthor } from "@/app/hooks/useAuthor";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import "react-loading-skeleton/dist/skeleton.css";
+import BookCardSkeleton from "../BookCardSkeleton/BookCardSkeleton";
 import BookList from "../BookList/BookList";
 
 export default function AuthorDetail() {
@@ -25,16 +27,17 @@ export default function AuthorDetail() {
         }
         const parsedBooks = data.entries.map((item) => {
           //   console.log("work item:", item);
-          return {
-            key: item.key,
-            title: item.title,
-            author_name: data.name,
-            // some books covers arrays are available yet the values are not in the right form, for ex: -1
-            cover_i:
-              item.covers && item.covers[0].toString().length > 1
-                ? item.covers[0]
-                : "",
-          };
+          //  only save books with covers available
+          //  some books covers arrays are available yet the values are not in the right form, for ex: -1
+          const covers = item.covers;
+          if (covers && covers[0].toString().length > 1 && covers[0] > 0) {
+            return {
+              key: item.key,
+              title: item.title,
+              author_name: data.name,
+              cover_i: String(item.covers[0]),
+            };
+          }
         });
 
         setBooks(parsedBooks);
@@ -63,33 +66,34 @@ export default function AuthorDetail() {
   return (
     <div className="m-20">
       <div className="flex flex-row gap-5">
-        <div>
+        {/* prevent shrinking when image still loading*/}
+        <div className="shrink-0 w-40">
           <img
-            className="object-scale-down max-h-full drop-shadow-md rounded-md m-auto "
+            className="sticky object-scale-down max-h-full drop-shadow-md rounded-md m-auto "
             src={authorCover}
             alt="author image"
           ></img>
         </div>
         <div className="flex flex-col w-full m-2">
           <div className="">
-            <h1 className="text-3xl font-bold">{name}</h1>
+            <h1 className="text-3xl font-bold mb-2">{name}</h1>
             <hr className="border-gray-300"></hr>
           </div>
           <div className="mb-5">
             <table className="table-auto w-full text-sm ">
               <tbody>
-                <tr className="align-top">
-                  <th className="text-left font-semibold text-slate-600 pr-8 py-1">
+                <tr className="">
+                  <th className="text-left font-semibold text-slate-600 pr-8">
                     Born
                   </th>
-                  <td className="text-slate-800 py-1">{birthdate}</td>
+                  <td className=" py-1">{birthdate}</td>
                 </tr>
                 {deathdate && (
-                  <tr className="align-top">
-                    <th className="text-left font-semibold text-slate-600 pr-8 py-1">
+                  <tr className="">
+                    <th className="text-left font-semibold text-slate-600 pr-8">
                       Died
                     </th>
-                    <td className="text-slate-800 py-1">{deathdate}</td>
+                    <td className=" py-1">{deathdate}</td>
                   </tr>
                 )}
               </tbody>
@@ -98,10 +102,22 @@ export default function AuthorDetail() {
           <div>
             <p className="text-justify">{bio}</p>
           </div>
+          <div className="mt-10 mb-2">
+            <h2 className="text-0.7 font-semibold">{name}'s books</h2>
+            <hr className="border-gray-300"></hr>
+          </div>
+          <div>
+            {loadingBooks ? (
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-7.5  w-full">
+                {Array.from({ length: 40 }).map((_, i) => (
+                  <BookCardSkeleton key={i} />
+                ))}
+              </div>
+            ) : (
+              <BookList books={books} />
+            )}{" "}
+          </div>
         </div>
-      </div>
-      <div>
-        <BookList books={books} />
       </div>
     </div>
   );
