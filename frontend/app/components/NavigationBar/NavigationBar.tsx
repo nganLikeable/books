@@ -3,28 +3,22 @@ import { auth } from "@/app/firebase/firebase-config";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LogOutButton from "../LogOutButton/LogOutButton";
-import styles from "./NavigationBar.module.css";
 
 export default function NavBar() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <nav className={styles.nav}>
-      <div className={styles.container}>
-        <Link href="/" className={styles.logo}>
-          <img
-            src="/logo_yel.png"
-            alt="NganBooks logo"
-            width={150}
-            height={40}
-          />
+    <nav className="w-full sticky top-0 shadow-2xs bg-white text-black m-2">
+      <div className="flex flex-row justify-around items-center  ">
+        <Link href="/" className="cursor-pointer">
+          <img src="/logo_yel.png" alt="NganBooks logo" className="w-40 " />
         </Link>
 
-        <div className={styles.links}>
-          <Link className={styles.link} href="/about">
+        <div className="flex flex-row justify-around gap-10 items-center ">
+          <Link className="hover:text-blue-950  hover:font-bold" href="/about">
             About
           </Link>
-          <Link className={styles.link} href="/browse">
+          <Link className="hover:text-blue-950  hover:font-bold" href="/browse">
             Browse
           </Link>
           <Link className={styles.link} href="/library">
@@ -33,14 +27,20 @@ export default function NavBar() {
           {user ? (
             <LogOutButton />
           ) : (
-            <div className={styles.authLinks}>
-              <Link className={styles.link} href="/sign-up">
+            <>
+              <Link
+                className="hover:text-blue-950  hover:font-bold"
+                href="/sign-up"
+              >
                 Sign Up
               </Link>
-              <Link className={styles.link} href="/sign-in">
+              <Link
+                className="hover:text-blue-950  hover:font-bold"
+                href="/sign-in"
+              >
                 Sign In
               </Link>
-            </div>
+            </>
           )}
         </div>
       </div>

@@ -1,7 +1,6 @@
 "use client";
 import { auth } from "@/app/firebase/firebase-config";
 import { signOut } from "firebase/auth";
-import styles from "./LogOutButton.module.css";
 export default function LogOutButton() {
   const handleSignOut = async () => {
     try {
@@ -13,8 +12,11 @@ export default function LogOutButton() {
   };
 
   return (
-    <div className={styles.logOutBtn}>
-      <button onClick={handleSignOut}>Log Out</button>
-    </div>
+    <button
+      className="py-1 px-2 rounded-xl cursor-pointer border border-[#ccc] bg-white  hover:bg-[#f5f5f5] "
+      onClick={handleSignOut}
+    >
+      Log Out
+    </button>
   );
 }
