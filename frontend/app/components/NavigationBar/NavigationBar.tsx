@@ -9,7 +9,7 @@ export default function NavBar() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <nav className="w-full sticky top-0 shadow-2xs  text-sm">
+    <nav className="w-full sticky top-0 bg-background text-foreground border-b border-gray-200 dark:border-gray-800 shadow-sm z-50">
       <div className="flex flex-row justify-around items-center  ">
         <Link href="/" className="cursor-pointer">
           <img src="/logo_yel.png" alt="NganBooks logo" className="w-40 " />
