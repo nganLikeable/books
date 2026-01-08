@@ -19,6 +19,16 @@
   }
 }
 
+html.dark {
+  --background: #00061a;
+  --foreground: #d2d7ff;
+}
+
+html.light {
+  --background: #ffffff;
+  --foreground: #00061a;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

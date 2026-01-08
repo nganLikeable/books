@@ -7,7 +7,7 @@ export default function App() {
           src="/home.png"
           alt="home page photo"
         />
-        <h1 className="text-5xl md:text-6xl font-bold text-slate-800 text-center">
+        <h1 className="text-5xl md:text-6xl font-bold text-center">
           Welcome to <span className="text-amber-600">Bookie</span>
         </h1>
         <p className="text-lg md:text-xl text-slate-600 text-center max-w-2xl">
