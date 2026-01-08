@@ -35,18 +35,9 @@ export async function GET(
     }
     console.log("Authenticated");
 
-    const { status } = await request.json();
-
-    if (!status) {
-      return new NextResponse("Missing body - book status", {
-        status: 400,
-        headers: corsHeaders,
-      });
-    }
-
     const books = await prisma.userBook.findMany({
       where: {
-        status: status,
+        userId: id,
       },
     });
     return NextResponse.json(books, { status: 200, headers: corsHeaders });
