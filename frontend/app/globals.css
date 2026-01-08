@@ -3,15 +3,18 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --form-bg: #fffbe9;
 }
 
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-form-bg: var(--form-bg);
 }
 html.dark {
   --background: #00061a;
   --foreground: #d7d7d7;
+  --form-bg: #1c1733;
 }
 
 html.light {

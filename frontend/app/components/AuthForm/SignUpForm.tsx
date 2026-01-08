@@ -48,7 +48,7 @@ export default function SignUpForm() {
   return (
     <div className="w-full max-w-100 ">
       <form
-        className=" bg-white border border-0.5 border-gray-100 rounded-2xl p-3"
+        className="  bg-form-bg rounded-2xl p-3"
         onSubmit={(e) => {
           e.preventDefault(); // prevent page reload
           handleSignUp();
@@ -58,7 +58,7 @@ export default function SignUpForm() {
         <div className="m-0.5">
           <input
             id="email"
-            className="w-full p-3.5 mt-1 bg-[#f7f7f7] focus:bg-[#f7f7f7f5]"
+            className="w-full p-3.5 mt-1  "
             placeholder="Email"
             type="email"
             value={email}
@@ -69,7 +69,7 @@ export default function SignUpForm() {
         <div className="mb-[1.4rem]">
           <input
             id="password"
-            className="w-full p-3.5 mt-1 bg-[#f7f7f7] focus:bg-[#f7f7f7f5]"
+            className="w-full p-3.5 mt-1  "
             placeholder="Password"
             type="password"
             value={password}
@@ -79,7 +79,7 @@ export default function SignUpForm() {
         </div>
         {error && <p className={styles.errorText}>{error.message}</p>}
         <button
-          className="w-full p-1 cursor-pointer bg-[#ffde39] rounded-sm hover:bg-[#ffe666]"
+          className="w-full p-1 cursor-pointer bg-[#ffde39] rounded-sm hover:bg-[#ffe666] text-black"
           type="submit"
           disabled={loading}
         >
