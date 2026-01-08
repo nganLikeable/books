@@ -21,7 +21,10 @@ export default function NavBar() {
           <Link className="hover:text-blue-950  hover:font-bold" href="/browse">
             Browse
           </Link>
-          <Link className={styles.link} href="/library">
+          <Link
+            className="hover:text-blue-950  hover:font-bold"
+            href="/library"
+          >
             Your Library
           </Link>
           {user ? (
