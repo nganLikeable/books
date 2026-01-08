@@ -1,4 +1,8 @@
 import SignUpForm from "../components/AuthForm/SignUpForm";
 export default function SignUpPage() {
-  return <SignUpForm />;
+  return (
+    <div className="flex h-[calc(100vh-70px)] justify-center items-center  bg-slate-50 ">
+      <SignUpForm />
+    </div>
+  );
 }
