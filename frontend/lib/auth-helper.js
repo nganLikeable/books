@@ -1,5 +1,11 @@
 import { adminAuth } from "@/lib/firebase-admin-config";
 import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
 
 export async function getAuthenticatedId() {
   // get token from cookie
