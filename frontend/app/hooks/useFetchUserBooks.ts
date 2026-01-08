@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { UserBook } from "../types/userBook";
-export default function useFetchUserBooks(userId: string) {
+import useGetUser from "./useGetUser";
+export default function useFetchUserBooks() {
   const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState<UserBook[]>([]);
+  const { userId } = useGetUser();
 
   useEffect(() => {
-    if (!userId || userId === "undefined") {
+    if (!userId || userId === null) {
       return;
     }
     const fetchBooks = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/users/${userId}/books`);
+        const res = await fetch(`/api/user/${userId}/books`);
         if (!res.ok) {
           return;
         }
