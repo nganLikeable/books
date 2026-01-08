@@ -38,8 +38,8 @@ export default function SignInForm() {
           secure: true, // only send over HTTPs
           sameSite: "strict",
         });
-        router.push("/");
       }
+      router.push("/");
     } catch (e) {
       console.error(e);
     }
