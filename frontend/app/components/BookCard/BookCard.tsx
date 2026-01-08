@@ -7,7 +7,7 @@ export default function BookCard({ book }: { book: Book }) {
   const coverURL = book.cover_i
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
     : "/no_cover.jpg";
-  // console.log(coverURL);
+  console.log(coverURL);
 
   // get author names and keys to map and display accordingly
   const authorKeys = Array.isArray(book.author_key) ? book.author_key : [];

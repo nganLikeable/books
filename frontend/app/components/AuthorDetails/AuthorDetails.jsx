@@ -26,19 +26,26 @@ export default function AuthorDetail() {
           return;
         }
         const parsedBooks = data.entries.map((item) => {
-          //   console.log("work item:", item);
+          console.log("work item:", item);
           //  only save books with covers available
           //  some books covers arrays are available yet the values are not in the right form, for ex: -1
           const covers = item.covers;
-          if (covers && covers[0].toString().length > 1 && covers[0] > 0) {
-            return {
-              key: item.key,
-              title: item.title,
-              author_name: data.name,
-              author_key: data.key ? data.key.split("/")[2] : null,
-              cover_i: String(item.covers[0]),
-            };
-          }
+          const coverId =
+            covers && covers.length > 0 && covers[0] > 0
+              ? String(covers[0])
+              : null;
+          console.log(`Book: ${item.title} | Cover ID: ${coverId}`);
+
+          // if (covers && covers[0].toString().length > 1 && covers[0] > 0) {
+          return {
+            key: item.key,
+            title: item.title,
+            author_name: data.name,
+            author_key: data.key ? data.key.split("/")[2] : null,
+            cover_i: coverId,
+          };
+
+          // }
         });
 
         setBooks(parsedBooks);
