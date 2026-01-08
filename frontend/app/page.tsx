@@ -8,7 +8,10 @@ export default function App() {
           alt="home page photo"
         />
         <h1 className="text-5xl md:text-6xl font-bold text-center">
-          Welcome to <span className="text-amber-600">Bookie</span>
+          Welcome to{" "}
+          <span className="tracking-tighter bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent transition-all duration-300 group-hover:from-orange-500 group-hover:to-amber-600">
+            Bookie
+          </span>
         </h1>
         <p className="text-lg md:text-xl text-slate-600 text-center max-w-2xl">
           Discover, track, and organize your reading journey

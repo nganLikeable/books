@@ -9,10 +9,14 @@ export default function NavBar() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <nav className="w-full sticky top-0 bg-background text-foreground border-b border-gray-200 dark:border-gray-800 shadow-sm z-50">
+    <nav className="w-full sticky top-0 bg-background text-foreground border-b border-gray-200 dark:border-gray-800 shadow-sm z-50 p-1">
       <div className="flex flex-row justify-around items-center  ">
-        <Link href="/" className="cursor-pointer">
-          <img src="/logo_yel.png" alt="NganBooks logo" className="w-40 " />
+        <Link
+          href="/"
+          className="cursor-pointer tracking-tighter bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent transition-all duration-300 group-hover:from-orange-500 group-hover:to-amber-600 font-bold text-2xl"
+        >
+          {/* <img src="/logo_yel.png" alt="NganBooks logo" className="w-40 " /> */}
+          Bookie
         </Link>
 
         <div className="flex flex-row justify-around gap-6 items-center ">
