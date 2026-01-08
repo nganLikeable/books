@@ -39,6 +39,9 @@ export async function GET(
       where: {
         userId: id,
       },
+      include: {
+        book: true, // join book
+      },
     });
     return NextResponse.json(books, { status: 200, headers: corsHeaders });
   } catch (e) {
