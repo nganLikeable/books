@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Book } from "../types/book";
-export default function useGetUserBooks(userId: string) {
+import { UserBook } from "../types/userBook";
+export default function useFetchUserBooks(userId: string) {
   const [loading, setLoading] = useState(false);
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<UserBook[]>([]);
 
   useEffect(() => {
     if (!userId || userId === "undefined") {
