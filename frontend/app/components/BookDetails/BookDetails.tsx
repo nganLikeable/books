@@ -2,10 +2,10 @@
 import { useAuthors } from "@/app/hooks/useAuthors";
 import { useBook } from "@/app/hooks/useBook";
 import useGetUser from "@/app/hooks/useGetUser";
+import { Author } from "@/app/types/author";
 import { usePathname } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
 import ShelfModal from "../ShelfModal/ShelfModal";
 
 import Link from "next/link";
@@ -52,14 +52,14 @@ export default function BookDetails() {
           <Skeleton />
         ) : (
           <h2>
-            {authors.map((a: string, index: number) => (
+            {authors.map((a: Author, index: number) => (
               <div key={`${a}-${index}`}>
                 <span>
                   <Link
                     className="font-semibold hover:underline"
                     href={`/author/${authorIds[index]}`}
                   >
-                    {a}
+                    {a.name}
                   </Link>
                 </span>
                 <br></br>
