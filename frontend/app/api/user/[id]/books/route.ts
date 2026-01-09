@@ -122,7 +122,7 @@ export async function POST(
         status: status,
       },
     });
-    console.log("Successfully added user-book to db");
+    console.log(book, "Successfully added user-book to db");
 
     return NextResponse.json(newUserBook, {
       status: 201,

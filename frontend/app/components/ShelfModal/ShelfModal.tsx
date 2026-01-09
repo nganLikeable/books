@@ -2,11 +2,8 @@
 import { useState } from "react";
 import styles from "./ShelfModal.module.css";
 
-interface Author {
-  id: string;
-  name: string;
-  authorCover?: string;
-}
+import { Author } from "@/app/types/author";
+
 interface ShelfModalProps {
   bookId: string;
   userId: string;
