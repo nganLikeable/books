@@ -1,15 +1,15 @@
 export default function App() {
   return (
     <div className="max-h-screen flex flex-col items-center justify-center p-10 ">
-      <div className=" w-full flex flex-col items-center gap-8">
+      <div className=" w-full flex flex-col items-center gap-8 text-5xl">
         <img
           className="w-full max-w-sm rounded-2xl shadow-2xl"
           src="/home.png"
           alt="home page photo"
         />
-        <h1 className="text-5xl md:text-6xl font-bold text-center">
+        <h1 className=" md:text-6xl font-bold text-center">
           Welcome to{" "}
-          <span className="tracking-tighter bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent transition-all duration-300 group-hover:from-orange-500 group-hover:to-amber-600">
+          <span className=" font-black tracking-tighter  bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent ">
             Bookie
           </span>
         </h1>

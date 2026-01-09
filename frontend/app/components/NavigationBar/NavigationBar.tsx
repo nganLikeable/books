@@ -13,10 +13,10 @@ export default function NavBar() {
       <div className="flex flex-row justify-around items-center  ">
         <Link
           href="/"
-          className="cursor-pointer tracking-tighter bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent transition-all duration-300 group-hover:from-orange-500 group-hover:to-amber-600 font-bold text-2xl"
+          className="text-2xl font-black tracking-tighter cursor-pointer bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent transition-all duration-300 group-hover:from-orange-500 group-hover:to-amber-600"
         >
-          {/* <img src="/logo_yel.png" alt="NganBooks logo" className="w-40 " /> */}
           Bookie
+          {/* <img src="/logo_yel.png" alt="NganBooks logo" className="w-40 " /> */}
         </Link>
 
         <div className="flex flex-row justify-around gap-6 items-center ">
