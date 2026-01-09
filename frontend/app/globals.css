@@ -4,17 +4,20 @@
   --background: #ffffff;
   --foreground: #171717;
   --form-bg: #fffbe9;
+  --navBar-bg: #ffe789;
 }
 
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-form-bg: var(--form-bg);
+  --color-navBar-bg: var(--navBar-bg);
 }
 html.dark {
   --background: #00061a;
   --foreground: #d7d7d7;
   --form-bg: #1c1733;
+  --navBar-bg: #281886;
 }
 
 html.light {
