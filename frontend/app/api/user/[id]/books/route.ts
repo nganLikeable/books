@@ -53,6 +53,9 @@ export async function GET(
   }
 }
 
+// Add book and author to the according table
+// Create User Book
+
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -77,7 +80,9 @@ export async function POST(
       );
     }
 
-    const { bookId, status } = await request.json();
+    // authors stored as objs: [id: '01293', name:'Oliver', .....] - authors: Author[]
+    const { bookId, title, authors, cover, authorCover, status } =
+      await request.json();
 
     if (!authenticatedId || !bookId) {
       return new NextResponse("Missing body", {
@@ -85,12 +90,40 @@ export async function POST(
         headers: corsHeaders,
       });
     }
+
+    // add book and author to the according table
+    const book = await prisma.book.upsert({
+      where: { id: bookId },
+      update: {},
+      create: {
+        id: bookId,
+        title: title,
+        cover: cover,
+        authors: {
+          connectOrCreate: authors.map(
+            (a: { id: string; name: string; cover: string }) => ({
+              where: { id: a.id },
+              create: { id: a.id, name: a.name, cover: a.cover },
+            })
+          ),
+        },
+      },
+    });
+    console.log("Successfully added book and author to db");
+
+    // create user book or update if already exist
     const newUserBook = await prisma.userBook.upsert({
       where: { userId_bookId: { userId: authenticatedId, bookId } },
       // composite key pattern
       update: { status: status }, // if exist, update
-      create: { userId: authenticatedId, bookId, status: status },
+      create: {
+        userId: authenticatedId,
+        bookId: bookId,
+        status: status,
+      },
     });
+    console.log("Successfully added user-book to db");
+
     return NextResponse.json(newUserBook, {
       status: 201,
       headers: corsHeaders,

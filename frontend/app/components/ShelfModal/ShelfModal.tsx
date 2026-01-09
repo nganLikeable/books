@@ -2,11 +2,16 @@
 import { useState } from "react";
 import styles from "./ShelfModal.module.css";
 
+interface Author {
+  id: string;
+  name: string;
+  authorCover?: string;
+}
 interface ShelfModalProps {
   bookId: string;
   userId: string;
   title: string;
-  authors: string[];
+  authors: Author[];
   cover: string;
   onClose: () => void;
 }
@@ -42,32 +47,33 @@ export default function ShelfModal({
       setLoading(false);
     }
   };
+
   const handleAddToShelf = async (status: string) => {
     setLoading(true);
 
     // add book info to the db
     try {
-      const responseBook = await fetch(`/api/book/${bookId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: bookId,
-          title: title,
-          authors: authors,
-          cover: cover,
-        }),
-      });
-      console.log(responseBook);
-      if (!responseBook.ok) {
-        throw new Error("Failed to add book to database");
-      }
-      console.log("Successfully added book to database");
+      // const responseBook = await fetch(`/api/book/${bookId}`, {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({
+      //     id: bookId,
+      //     title: title,
+      //     authors: authors,
+      //     cover: cover,
+      //   }),
+      // });
+      // console.log(responseBook);
+      // if (!responseBook.ok) {
+      //   throw new Error("Failed to add book to database");
+      // }
+      // console.log("Successfully added book to database");
 
-      // save user-book relationship
+      // save book, author and user-book relationship
       const response = await fetch(`/api/user/${userId}/books`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookId, status }),
+        body: JSON.stringify({ bookId, title, cover, authors, status }),
       });
       console.log(response);
       if (!response.ok) {
