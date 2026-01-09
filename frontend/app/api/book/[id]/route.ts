@@ -42,7 +42,7 @@ export async function GET(
   }
 }
 
-// add book to db
+// add book and author to db
 export async function POST(request: NextRequest) {
   try {
     const { id, title, authors, cover } = await request.json();

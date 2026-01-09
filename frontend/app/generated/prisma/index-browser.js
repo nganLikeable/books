@@ -123,14 +123,22 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  name: 'name',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.BookScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  authors: 'authors',
   cover: 'cover'
+};
+
+exports.Prisma.AuthorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  cover: 'cover',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.UserBookScalarFieldEnum = {
@@ -164,6 +172,7 @@ exports.ReadingStatus = exports.$Enums.ReadingStatus = {
 exports.Prisma.ModelName = {
   User: 'User',
   Book: 'Book',
+  Author: 'Author',
   UserBook: 'UserBook'
 };
 
