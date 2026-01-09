@@ -6,7 +6,6 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
-
 export async function getAuthenticatedId() {
   // get token from cookie
   const cookieStore = await cookies();
@@ -17,7 +16,7 @@ export async function getAuthenticatedId() {
   if (!token) {
     return {
       error: new NextResponse(
-        JSON.stringify({ error: "Unauthorized - No token" }),
+        JSON.stringify({ error: "Unauthorized - No token provided" }),
         { status: 401, headers: corsHeaders }
       ),
     };
