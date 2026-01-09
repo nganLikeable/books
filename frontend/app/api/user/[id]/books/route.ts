@@ -40,7 +40,10 @@ export async function GET(
         userId: id,
       },
       include: {
-        book: true, // join book
+        // join book
+        book: {
+          include: { authors: true }, // join authors
+        },
       },
     });
     return NextResponse.json(books, { status: 200, headers: corsHeaders });
