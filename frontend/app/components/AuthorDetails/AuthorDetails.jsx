@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import BookCardSkeleton from "../BookCardSkeleton/BookCardSkeleton";
 import BookList from "../BookList/BookList";
+import Spinner from "../Spinner/Spinner";
 
 export default function AuthorDetail() {
   const pathname = usePathname();
@@ -60,7 +61,11 @@ export default function AuthorDetail() {
 
   // safeguard, preventing data.name running when data is still null - fetching
   if (loading || !data) {
-    return <div className="p-10 text-center">Loading Author...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-[80vh]">
+        <Spinner />
+      </div>
+    );
   }
   console.log(data);
 
