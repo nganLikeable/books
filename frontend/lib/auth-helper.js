@@ -28,10 +28,10 @@ export async function getAuthenticatedId() {
   } catch (e) {
     console.error("Token verify error:", e);
     return {
-      error: new NextResponse(
-        JSON.stringify({ error: "Invalid or expired token" }),
-        { status: 401, headers: corsHeaders }
-      ),
+      error: new NextResponse(JSON.stringify({ error: "Invalid token" }), {
+        status: 401,
+        headers: corsHeaders,
+      }),
     };
   }
 }
