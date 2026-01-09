@@ -94,7 +94,15 @@ export async function POST(
     // add book and author to the according table
     const book = await prisma.book.upsert({
       where: { id: bookId },
-      update: {},
+      // add authors to fill data gaps in case
+      update: {
+        authors: {
+          connectOrCreate: authors.map((a: any) => ({
+            where: { id: a.id },
+            create: { id: a.id, name: a.name, cover: a.cover },
+          })),
+        },
+      },
       create: {
         id: bookId,
         title: title,
