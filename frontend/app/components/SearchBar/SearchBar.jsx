@@ -15,7 +15,7 @@ export default function SearchBar() {
   return (
     <div className="flex flex-row text-sm ">
       <form
-        className="w-full max-w-xl flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/70 shadow-sm transition focus-within:border-amber-400 focus-within:shadow-md"
+        className="w-full max-w-xl flex items-center gap-2 rounded-2xl border border-gray-200 shadow-sm transition focus-within:border-amber-400 focus-within:shadow-md"
         onSubmit={handleSubmit}
       >
         <input

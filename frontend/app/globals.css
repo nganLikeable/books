@@ -3,20 +3,23 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --form-bg: #fffbe9;
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-form-bg: var(--form-bg);
+}
+html.dark {
+  --background: #00061a;
+  --foreground: #d7d7d7;
+  --form-bg: #1c1733;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html.light {
+  --background: #ffffff;
+  --foreground: #00061a;
 }
 
 body {

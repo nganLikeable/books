@@ -53,9 +53,6 @@ export async function GET(
   }
 }
 
-// Add book and author to the according table
-// Create User Book
-
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
