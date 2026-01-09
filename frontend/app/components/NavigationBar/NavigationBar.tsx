@@ -1,5 +1,6 @@
 "use client";
 import { auth } from "@/app/firebase/firebase-config";
+import useGetUser from "@/app/hooks/useGetUser";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LogOutButton from "../LogOutButton/LogOutButton";
@@ -8,6 +9,8 @@ import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 export default function NavBar() {
   const [user, loading, error] = useAuthState(auth);
+
+  const userId = useGetUser().userId;
 
   return (
     <nav className="w-full sticky top-4 z-50 px-4">
@@ -36,7 +39,11 @@ export default function NavBar() {
           <Link className=" hover:font-bold whitespace-nowrap" href="/browse">
             Browse
           </Link>
-          <Link className="  hover:font-bold whitespace-nowrap" href="/library">
+          {/* add safeguard later  */}
+          <Link
+            className="  hover:font-bold whitespace-nowrap"
+            href={`/user/${userId}/library`}
+          >
             Your Library
           </Link>
           <div className="flex items-center gap-4 border-l border-white/10 pl-4 min-w-30 justify-end">

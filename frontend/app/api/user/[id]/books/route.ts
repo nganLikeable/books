@@ -119,7 +119,7 @@ export async function POST(
       create: {
         userId: authenticatedId,
         bookId: bookId,
-        status: status,
+        status: status.trim(),
       },
     });
     console.log(book, "Successfully added user-book to db");

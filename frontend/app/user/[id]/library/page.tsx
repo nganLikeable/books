@@ -3,6 +3,17 @@
 import useFetchUserBooks from "@/app/hooks/useFetchUserBooks";
 
 export default function Library() {
-  const books = useFetchUserBooks();
+  const { books, loading } = useFetchUserBooks();
   console.log(books);
+
+  // fetch books of each status
+  const wantToRead = books.filter(
+    (book: any) => book.status === "WANT_TO_READ"
+  );
+  const reading = books.filter(
+    (book: any) => book.status === "CURRENTLY_READING"
+  );
+  const read = books.filter((book: any) => book.status === "READ");
+
+  console.log("WANT: ", wantToRead, "READING:", reading, "READ:", read);
 }
