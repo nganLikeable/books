@@ -1,7 +1,7 @@
 "use client";
 
+import Spinner from "@/app/components/Spinner/Spinner";
 import useFetchUserBooks from "@/app/hooks/useFetchUserBooks";
-
 export default function Library() {
   const { books, loading } = useFetchUserBooks();
   console.log(books);
@@ -16,4 +16,5 @@ export default function Library() {
   const read = books.filter((book: any) => book.status === "READ");
 
   console.log("WANT: ", wantToRead, "READING:", reading, "READ:", read);
+  if (loading) return <Spinner />;
 }
