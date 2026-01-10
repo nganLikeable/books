@@ -36,7 +36,7 @@ export default function Library() {
   return (
     <div>
       {sections.map((s, sIndex) => (
-        <div key={`${s.title}-${Date.now()}`}>
+        <div key={`${s.title}`}>
           <div>
             <h2>{s.title}</h2>
             <span>Count: {s.data.length}</span>
