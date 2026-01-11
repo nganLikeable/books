@@ -1,4 +1,4 @@
-import { Book } from "@/app/types/book";
+import { Book } from "@/app/types/database";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -24,7 +24,16 @@ export default function useSearchBooks() {
       // if cached
       if (cachedData) {
         const parsed = JSON.parse(cachedData); // parse to obj
-        setResults(parsed.docs as Book[]);
+        // setResults(parsed.docs as Book[]);
+        setResults(
+          parsed.docs.map((b: any): Book => {
+            return {
+              id: b.key.split("/")[2],
+              title: b.title,
+              cover: b.key.split("/"[2]),
+            };
+          })
+        );
         setCount(parsed.numFound);
         setLoading(false);
         return;
@@ -35,7 +44,16 @@ export default function useSearchBooks() {
         const res = await fetch(`/api/search/?q=${encodeURIComponent(q)}`); // encode term, handling characters like spaces, &, ?, =
         if (res.ok) {
           const data = await res.json();
-          setResults(data.docs as Book[]);
+          setResults(
+            data.docs.map((b: any): Book => {
+              return {
+                id: b.key.split("/")[2],
+                title: b.title,
+                cover: b.key.split("/")[2],
+              };
+            })
+          );
+          // setResults(data.docs as Book[]);
           setCount(data.numFound);
           setLoading(false);
 
