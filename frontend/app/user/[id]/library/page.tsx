@@ -41,7 +41,7 @@ export default function Library() {
             <h2 className="text-2xl font-bold text-orange-500  tracking-tight">
               {s.title}
             </h2>
-            <span className="text-sm font-medium px-3 py-1 bg-white/5 rounded-full border border-white/10 opacity-70">
+            <span className="text-sm font-medium px-3 py-1  ">
               {s.data.length} book(s)
             </span>
           </div>
@@ -57,11 +57,11 @@ export default function Library() {
                 console.log(authors);
                 return (
                   <div key={b.bookId} className="group flex flex-col gap-3">
-                    <div className="relative aspect-2/3 w-full overflow-hidden rounded-xl shadow-lgtransition-transform duration-300 group-hover:scale-[1.03] group-hover:shadow-orange-500/10">
+                    <div className="relative aspect-2/3 w-full overflow-hidden rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-[1.03] group-hover:shadow-orange-500/10">
                       <img
                         src={book.cover}
                         alt="Book cover"
-                        className="mt-3   aspect-2/3  rounded"
+                        className="mt-3 w-full object-fill  aspect-2/3  rounded"
                         loading="lazy"
                       ></img>
                     </div>
@@ -78,7 +78,7 @@ export default function Library() {
                             <div key={`${a.id}`}>
                               <Link
                                 href={`/author/${a.id}`}
-                                className="hover:text-white hover:underline transition-colors "
+                                className="hover:font-bold hover:underline transition-colors "
                               >
                                 {a.name}
                               </Link>
