@@ -46,10 +46,14 @@ export default function useSearchBooks() {
           const data = await res.json();
           setResults(
             data.docs.map((b: any): Book => {
+              const id = b.key.split("/")[2];
+              const cover_i = b.cover_i;
               return {
-                id: b.key.split("/")[2],
+                id: id ? id : null,
                 title: b.title,
-                cover: b.key.split("/")[2],
+                cover: cover_i
+                  ? `https://covers.openlibrary.org/b/id/${cover_i}-L.jpg`
+                  : "/no_cover.jpg",
               };
             })
           );
