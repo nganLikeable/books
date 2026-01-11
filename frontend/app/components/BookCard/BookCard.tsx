@@ -23,8 +23,8 @@ export default function BookCard({ book }: { book: Book }) {
             {authors.length > 0 && (
               <>
                 by <br></br>{" "}
-                {authors.map((author: Author) => (
-                  <span key={author.id}>
+                {authors.map((author: Author, index: number) => (
+                  <span key={`${author.id}-${book.id}-${index}`}>
                     <Link
                       className="hover:underline"
                       href={`/author/${author.id}`}
