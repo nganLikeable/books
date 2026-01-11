@@ -3,6 +3,7 @@ import useSearchBooks from "@/app/hooks/useSearchBooks";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import BookCardSkeleton from "../BookCardSkeleton/BookCardSkeleton";
+import BookList from "../BookList/BookList";
 
 export default function SearchPage() {
   const { loading, results } = useSearchBooks();
@@ -18,7 +19,7 @@ export default function SearchPage() {
         </div>
       ) : (
         <div className="my-16 mx-auto px-20">
-          {/* <BookList books={results} /> */}
+          <BookList books={results} />
         </div>
       )}
     </div>
