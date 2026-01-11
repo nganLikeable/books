@@ -29,6 +29,7 @@ model Book {
   authors Author[]
   cover String?
   userBooks UserBook[]
+  authorBooks AuthorBook[]
 }
 
 model Author {
@@ -36,6 +37,7 @@ model Author {
   name String
   cover String?
   works Book[]
+  authorBooks AuthorBook[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
 }
@@ -55,6 +57,20 @@ model UserBook {
   @@id([userId, bookId]) // composite key
 }
 
+
+// relation/join table to represent m-n relationship between books and authors
+model AuthorBook {
+  bookId String 
+  book Book @relation(fields: [bookId], references: [id])
+
+  authorId String 
+  author Author @relation(fields: [authorId], references: [id])
+
+  // composite key 
+  @@id([bookId,authorId])
+  
+
+}
 
 enum ReadingStatus {
   WANT_TO_READ

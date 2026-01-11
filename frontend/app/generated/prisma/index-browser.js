@@ -149,6 +149,11 @@ exports.Prisma.UserBookScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AuthorBookScalarFieldEnum = {
+  bookId: 'bookId',
+  authorId: 'authorId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -173,7 +178,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Book: 'Book',
   Author: 'Author',
-  UserBook: 'UserBook'
+  UserBook: 'UserBook',
+  AuthorBook: 'AuthorBook'
 };
 
 /**

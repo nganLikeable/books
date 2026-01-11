@@ -22,22 +22,24 @@ model User {
 }
 
 model Book {
-  id        String     @id
-  title     String
+  id          String       @id
+  title       String
   // authors String[] 
   // // description String? 
-  authors   Author[]
-  cover     String?
-  userBooks UserBook[]
+  authors     Author[]
+  cover       String?
+  userBooks   UserBook[]
+  authorBooks AuthorBook[]
 }
 
 model Author {
-  id        String   @id
-  name      String
-  cover     String?
-  works     Book[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String       @id
+  name        String
+  cover       String?
+  works       Book[]
+  authorBooks AuthorBook[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model UserBook {
@@ -53,6 +55,18 @@ model UserBook {
   updatedAt DateTime @updatedAt
 
   @@id([userId, bookId]) // composite key
+}
+
+// relation/join table to represent m-n relationship between books and authors
+model AuthorBook {
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id])
+
+  authorId String
+  author   Author @relation(fields: [authorId], references: [id])
+
+  // composite key 
+  @@id([bookId, authorId])
 }
 
 enum ReadingStatus {

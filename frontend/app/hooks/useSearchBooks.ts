@@ -1,4 +1,4 @@
-import { Book } from "@/app/types/database";
+import { Author, Book } from "@/app/types/database";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -48,12 +48,24 @@ export default function useSearchBooks() {
             data.docs.map((b: any): Book => {
               const id = b.key.split("/")[2];
               const cover_i = b.cover_i;
+              const authorKeys = b.author_key || [];
+              const authors: Author[] = (b.author_name || []).map(
+                (name: string, index: number) => ({
+                  id: b.author_key?.[index],
+                  name: name || "unknown",
+                  cover: null,
+                  createdAT: new Date(),
+                  updatedAt: new Date(),
+                })
+              );
+
               return {
                 id: id ? id : null,
                 title: b.title,
                 cover: cover_i
                   ? `https://covers.openlibrary.org/b/id/${cover_i}-L.jpg`
                   : "/no_cover.jpg",
+                authors: authors,
               };
             })
           );
