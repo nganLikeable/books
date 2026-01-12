@@ -1,11 +1,10 @@
 // return an array of Author objects
 
 import { useEffect, useState } from "react";
+import { Author } from "../types/database";
 
 export function useAuthors(authorIds: string[]) {
-  const [authors, setAuthors] = useState<
-    { id: string; name: string; cover?: string }[]
-  >([]);
+  const [authors, setAuthors] = useState<Author[]>([]);
   const [loading_a, setLoading_a] = useState(false);
 
   useEffect(() => {
@@ -19,15 +18,15 @@ export function useAuthors(authorIds: string[]) {
           authorIds.map(async (id) => {
             const res = await fetch(`/api/author/${id}`);
             if (!res.ok)
-              return { id, name: "Unknow", cover: "/no_avatar.jpeg" };
+              return { id, name: "Unknown", cover: "/no_avatar.jpeg" };
             const data = await res.json();
+
+            const name = data?.name || null;
+            const cover = data?.cover || null;
             return {
               id: id,
-              name: data.name,
-              cover:
-                data.photos && data.photos[0] > 0
-                  ? `https://covers.openlibrary.org/a/id/${data.photos[0]}-L.jpg`
-                  : "/no_avatar.jpeg",
+              name: name,
+              cover: cover,
             };
           })
         );

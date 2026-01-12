@@ -38,8 +38,8 @@ model Author {
   cover       String?
   works       Book[]
   authorBooks AuthorBook[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  // createdAt DateTime? @default(now())
+  // updatedAt DateTime? @updatedAt 
 }
 
 model UserBook {

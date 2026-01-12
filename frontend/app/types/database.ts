@@ -14,3 +14,8 @@ export type UserBookWithDetails = PrismaUserBook & {
 export type Book = PrismaBook;
 
 export type Author = PrismaAuthor;
+
+export type BookWithDetails = PrismaBook & {
+  authorIds?: string[];
+  description?: string;
+};

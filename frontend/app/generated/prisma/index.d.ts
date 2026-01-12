@@ -3534,24 +3534,18 @@ export namespace Prisma {
     id: string | null
     name: string | null
     cover: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type AuthorMaxAggregateOutputType = {
     id: string | null
     name: string | null
     cover: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type AuthorCountAggregateOutputType = {
     id: number
     name: number
     cover: number
-    createdAt: number
-    updatedAt: number
     _all: number
   }
 
@@ -3560,24 +3554,18 @@ export namespace Prisma {
     id?: true
     name?: true
     cover?: true
-    createdAt?: true
-    updatedAt?: true
   }
 
   export type AuthorMaxAggregateInputType = {
     id?: true
     name?: true
     cover?: true
-    createdAt?: true
-    updatedAt?: true
   }
 
   export type AuthorCountAggregateInputType = {
     id?: true
     name?: true
     cover?: true
-    createdAt?: true
-    updatedAt?: true
     _all?: true
   }
 
@@ -3657,8 +3645,6 @@ export namespace Prisma {
     id: string
     name: string
     cover: string | null
-    createdAt: Date
-    updatedAt: Date
     _count: AuthorCountAggregateOutputType | null
     _min: AuthorMinAggregateOutputType | null
     _max: AuthorMaxAggregateOutputType | null
@@ -3682,8 +3668,6 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     cover?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
     works?: boolean | Author$worksArgs<ExtArgs>
     authorBooks?: boolean | Author$authorBooksArgs<ExtArgs>
     _count?: boolean | AuthorCountOutputTypeDefaultArgs<ExtArgs>
@@ -3693,27 +3677,21 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     cover?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
   }, ExtArgs["result"]["author"]>
 
   export type AuthorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     cover?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
   }, ExtArgs["result"]["author"]>
 
   export type AuthorSelectScalar = {
     id?: boolean
     name?: boolean
     cover?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
   }
 
-  export type AuthorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cover" | "createdAt" | "updatedAt", ExtArgs["result"]["author"]>
+  export type AuthorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "cover", ExtArgs["result"]["author"]>
   export type AuthorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     works?: boolean | Author$worksArgs<ExtArgs>
     authorBooks?: boolean | Author$authorBooksArgs<ExtArgs>
@@ -3732,8 +3710,6 @@ export namespace Prisma {
       id: string
       name: string
       cover: string | null
-      createdAt: Date
-      updatedAt: Date
     }, ExtArgs["result"]["author"]>
     composites: {}
   }
@@ -4162,8 +4138,6 @@ export namespace Prisma {
     readonly id: FieldRef<"Author", 'String'>
     readonly name: FieldRef<"Author", 'String'>
     readonly cover: FieldRef<"Author", 'String'>
-    readonly createdAt: FieldRef<"Author", 'DateTime'>
-    readonly updatedAt: FieldRef<"Author", 'DateTime'>
   }
     
 
@@ -6747,9 +6721,7 @@ export namespace Prisma {
   export const AuthorScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    cover: 'cover',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    cover: 'cover'
   };
 
   export type AuthorScalarFieldEnum = (typeof AuthorScalarFieldEnum)[keyof typeof AuthorScalarFieldEnum]
@@ -6970,8 +6942,6 @@ export namespace Prisma {
     id?: StringFilter<"Author"> | string
     name?: StringFilter<"Author"> | string
     cover?: StringNullableFilter<"Author"> | string | null
-    createdAt?: DateTimeFilter<"Author"> | Date | string
-    updatedAt?: DateTimeFilter<"Author"> | Date | string
     works?: BookListRelationFilter
     authorBooks?: AuthorBookListRelationFilter
   }
@@ -6980,8 +6950,6 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     cover?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     works?: BookOrderByRelationAggregateInput
     authorBooks?: AuthorBookOrderByRelationAggregateInput
   }
@@ -6993,8 +6961,6 @@ export namespace Prisma {
     NOT?: AuthorWhereInput | AuthorWhereInput[]
     name?: StringFilter<"Author"> | string
     cover?: StringNullableFilter<"Author"> | string | null
-    createdAt?: DateTimeFilter<"Author"> | Date | string
-    updatedAt?: DateTimeFilter<"Author"> | Date | string
     works?: BookListRelationFilter
     authorBooks?: AuthorBookListRelationFilter
   }, "id">
@@ -7003,8 +6969,6 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     cover?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     _count?: AuthorCountOrderByAggregateInput
     _max?: AuthorMaxOrderByAggregateInput
     _min?: AuthorMinOrderByAggregateInput
@@ -7017,8 +6981,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Author"> | string
     name?: StringWithAggregatesFilter<"Author"> | string
     cover?: StringNullableWithAggregatesFilter<"Author"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Author"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Author"> | Date | string
   }
 
   export type UserBookWhereInput = {
@@ -7235,8 +7197,6 @@ export namespace Prisma {
     id: string
     name: string
     cover?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
     works?: BookCreateNestedManyWithoutAuthorsInput
     authorBooks?: AuthorBookCreateNestedManyWithoutAuthorInput
   }
@@ -7245,8 +7205,6 @@ export namespace Prisma {
     id: string
     name: string
     cover?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
     works?: BookUncheckedCreateNestedManyWithoutAuthorsInput
     authorBooks?: AuthorBookUncheckedCreateNestedManyWithoutAuthorInput
   }
@@ -7255,8 +7213,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     cover?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     works?: BookUpdateManyWithoutAuthorsNestedInput
     authorBooks?: AuthorBookUpdateManyWithoutAuthorNestedInput
   }
@@ -7265,8 +7221,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     cover?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     works?: BookUncheckedUpdateManyWithoutAuthorsNestedInput
     authorBooks?: AuthorBookUncheckedUpdateManyWithoutAuthorNestedInput
   }
@@ -7275,24 +7229,18 @@ export namespace Prisma {
     id: string
     name: string
     cover?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type AuthorUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     cover?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AuthorUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     cover?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserBookCreateInput = {
@@ -7562,24 +7510,18 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     cover?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type AuthorMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     cover?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type AuthorMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     cover?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type EnumReadingStatusFilter<$PrismaModel = never> = {
@@ -8160,8 +8102,6 @@ export namespace Prisma {
     id: string
     name: string
     cover?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
     authorBooks?: AuthorBookCreateNestedManyWithoutAuthorInput
   }
 
@@ -8169,8 +8109,6 @@ export namespace Prisma {
     id: string
     name: string
     cover?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
     authorBooks?: AuthorBookUncheckedCreateNestedManyWithoutAuthorInput
   }
 
@@ -8244,8 +8182,6 @@ export namespace Prisma {
     id?: StringFilter<"Author"> | string
     name?: StringFilter<"Author"> | string
     cover?: StringNullableFilter<"Author"> | string | null
-    createdAt?: DateTimeFilter<"Author"> | Date | string
-    updatedAt?: DateTimeFilter<"Author"> | Date | string
   }
 
   export type UserBookUpsertWithWhereUniqueWithoutBookInput = {
@@ -8485,8 +8421,6 @@ export namespace Prisma {
     id: string
     name: string
     cover?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
     works?: BookCreateNestedManyWithoutAuthorsInput
   }
 
@@ -8494,8 +8428,6 @@ export namespace Prisma {
     id: string
     name: string
     cover?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
     works?: BookUncheckedCreateNestedManyWithoutAuthorsInput
   }
 
@@ -8546,8 +8478,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     cover?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     works?: BookUpdateManyWithoutAuthorsNestedInput
   }
 
@@ -8555,8 +8485,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     cover?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     works?: BookUncheckedUpdateManyWithoutAuthorsNestedInput
   }
 
@@ -8603,8 +8531,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     cover?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorBooks?: AuthorBookUpdateManyWithoutAuthorNestedInput
   }
 
@@ -8612,8 +8538,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     cover?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorBooks?: AuthorBookUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
@@ -8621,8 +8545,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     cover?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserBookUpdateWithoutBookInput = {

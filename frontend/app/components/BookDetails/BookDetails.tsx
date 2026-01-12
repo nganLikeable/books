@@ -2,22 +2,30 @@
 import { useAuthors } from "@/app/hooks/useAuthors";
 import { useBook } from "@/app/hooks/useBook";
 import useGetUser from "@/app/hooks/useGetUser";
-import { Author } from "@/app/types/author";
+import { Author } from "@/app/types/database";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import styles from "../BookDetails/BookDetails.module.css";
+import SaveToShelfButton from "../SaveToShelfButton/SaveToShelfButton";
 import ShelfModal from "../ShelfModal/ShelfModal";
 
-import Link from "next/link";
-import { useState } from "react";
-import SaveToShelfButton from "../SaveToShelfButton/SaveToShelfButton";
-import styles from "./BookDetails.module.css";
 export default function BookDetails() {
   const pathname = usePathname();
   const bookId = pathname ? pathname.split("/")[2] : "";
 
-  const { title, description, cover, authorIds, loading } = useBook(bookId);
-  const { authors, loading_a } = useAuthors(authorIds);
+  const { bookWithDetails, loading } = useBook(bookId);
+  console.log(bookWithDetails);
+
+  const title = bookWithDetails?.title;
+
+  const authorIds = bookWithDetails?.authorIds || [];
+
+  const { authors, loading_a } = useAuthors(authorIds || []);
+  console.log(authors);
+
   const { user, userId, userLoading } = useGetUser();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +37,13 @@ export default function BookDetails() {
           {loading ? (
             <Skeleton height={500} />
           ) : (
-            cover && <img src={cover} alt="Book cover" loading="lazy"></img>
+            bookWithDetails?.cover && (
+              <img
+                src={bookWithDetails.cover}
+                alt="Book cover"
+                loading="lazy"
+              ></img>
+            )
           )}
         </div>
         <div className={styles.item}>
@@ -39,15 +53,15 @@ export default function BookDetails() {
           <ShelfModal
             bookId={bookId}
             userId={userId}
-            title={title}
+            title={title || ""}
             authors={authors}
-            cover={cover}
+            cover={bookWithDetails?.cover || ""}
             onClose={() => setIsModalOpen(false)}
           />
         )}
       </div>
       <div className={styles.col}>
-        {loading ? <Skeleton height={70} /> : <h1>{title}</h1>}
+        {loading ? <Skeleton height={70} /> : <h1>{bookWithDetails?.title}</h1>}
         {loading_a ? (
           <Skeleton />
         ) : (
@@ -67,7 +81,11 @@ export default function BookDetails() {
             ))}
           </h2>
         )}
-        {loading ? <Skeleton count={8} height={50} /> : <p>{description}</p>}
+        {loading ? (
+          <Skeleton count={8} height={50} />
+        ) : (
+          <p>{bookWithDetails?.description}</p>
+        )}
       </div>
     </div>
   );
