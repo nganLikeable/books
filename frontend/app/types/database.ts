@@ -19,3 +19,9 @@ export type BookWithDetails = PrismaBook & {
   authorIds?: string[];
   description?: string;
 };
+
+export type AuthorWithDetails = PrismaAuthor & {
+  bio?: string;
+  birthdate?: string;
+  deathdate?: string;
+};

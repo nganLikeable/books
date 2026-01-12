@@ -1,8 +1,9 @@
 "use client";
-import { useAuthor } from "@/app/hooks/useAuthor";
+import { useAuthors } from "@/app/hooks/useAuthors";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
+import { useFetchAuthorWorks } from "@/app/hooks/useFetchAuthorWorks";
 import "react-loading-skeleton/dist/skeleton.css";
 import BookCardSkeleton from "../BookCardSkeleton/BookCardSkeleton";
 import BookList from "../BookList/BookList";
@@ -11,81 +12,28 @@ import Spinner from "../Spinner/Spinner";
 export default function AuthorDetail() {
   const pathname = usePathname();
   const authorId = pathname ? pathname.split("/")[2] : "";
-  const { data, loading } = useAuthor(authorId);
-  const [books, setBooks] = useState([]);
+
+  // convert id to string to use as parameter
+  // useMemo to ensure array stay the same, preventing re-renders infinitely
+  const arr = useMemo(() => [authorId], [authorId]);
+  const { authors, loading } = useAuthors(arr);
+  const author = authors.length > 0 ? authors[0] : [];
+
+  // const [books, setBooks] = useState([]);
+
   const [loadingBooks, setLoadingBooks] = useState(false);
 
-  // get books of author
-  useEffect(() => {
-    if (!authorId || authorId === "undefined" || !data) return;
-    async function fetchBooks() {
-      try {
-        setLoadingBooks(true);
-        const response = await fetch(`/api/author/${authorId}/works`);
-        const data = await response.json();
-        if (!data.entries) {
-          return;
-        }
-        const parsedBooks = data.entries.map((item) => {
-          // console.log("work item:", item);
-          //  only save books with covers available
-          //  some books covers arrays are available yet the values are not in the right form, for ex: -1
-          const covers = item.covers;
-          const coverId =
-            covers && covers.length > 0 && covers[0] > 0
-              ? String(covers[0])
-              : null;
-          // console.log(`Book: ${item.title} | Cover ID: ${coverId}`);
-
-          // if (covers && covers[0].toString().length > 1 && covers[0] > 0) {
-          return {
-            key: item.key,
-            title: item.title,
-            author_name: data.name,
-            author_key: data.key ? data.key.split("/")[2] : null,
-            cover_i: coverId,
-          };
-
-          // }
-        });
-
-        setBooks(parsedBooks);
-      } catch (e) {
-        console.error("Failed to fetch works", e);
-      } finally {
-        setLoadingBooks(false);
-      }
-    }
-    fetchBooks();
-  }, [authorId, data]);
+  const { books, isLoadingBooks } = useFetchAuthorWorks(authorId);
 
   // safeguard, preventing data.name running when data is still null - fetching
-  if (loading || !data) {
+  if (loading || !author) {
     return (
       <div className="flex justify-center items-center min-h-[80vh]">
         <Spinner />
       </div>
     );
   }
-  console.log(data);
-
-  const name = data.name;
-  const bio =
-    typeof data.bio === "string"
-      ? data.bio
-      : data.bio?.value || "Bio not available";
-  const birthdate = data.birth_date || "Unknown";
-  const deathdate = data.death_date || "";
-  const authorPhotos = data.photos;
-
-  console.log(authorPhotos);
-
-  //  check for covers exist on open lib or not
-  const authorCover =
-    authorPhotos && authorPhotos[0] > 0
-      ? `https://covers.openlibrary.org/a/id/${data.photos[0]}-L.jpg`
-      : "/no_avatar.jpeg";
-  console.log(authorCover);
+  console.log(author);
 
   return (
     <div className="m-20">
@@ -94,13 +42,13 @@ export default function AuthorDetail() {
         <div className="shrink-0 w-40">
           <img
             className=" object-scale-down max-h-full drop-shadow-md rounded-md m-auto "
-            src={authorCover}
+            src={author.cover}
             alt="author image"
           ></img>
         </div>
         <div className="flex flex-col w-full m-2">
           <div className="">
-            <h1 className="text-3xl font-bold mb-2">{name}</h1>
+            <h1 className="text-3xl font-bold mb-2">{author.name}</h1>
             <hr className="border-gray-300"></hr>
           </div>
           <div className="mb-5">
@@ -110,24 +58,24 @@ export default function AuthorDetail() {
                   <th className="text-left font-semibold text-slate-600 pr-8">
                     Born
                   </th>
-                  <td className=" py-1">{birthdate}</td>
+                  <td className=" py-1">{author.birthdate}</td>
                 </tr>
-                {deathdate && (
+                {author.deathdate && (
                   <tr className="">
                     <th className="text-left font-semibold text-slate-600 pr-8">
                       Died
                     </th>
-                    <td className=" py-1">{deathdate}</td>
+                    <td className=" py-1">{author.deathdate}</td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
           <div>
-            <p className="text-justify">{bio}</p>
+            <p className="text-justify">{author.bio}</p>
           </div>
           <div className="mt-10 mb-2">
-            <h2 className="text-0.7 font-semibold">{name}'s books</h2>
+            <h2 className="text-0.7 font-semibold">{author.name}'s books</h2>
             <hr className="border-gray-300"></hr>
           </div>
           <div>
