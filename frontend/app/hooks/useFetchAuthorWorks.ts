@@ -35,7 +35,10 @@ export function useFetchAuthorWorks(authorId: string) {
           const cover = coverId
             ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
             : "/no_cover.jpg";
-          const authorIds = item.authors.map((a: any) => a.key);
+
+          const authorIds = item.authors.map(
+            (a: any) => a.author.key.split("/")[2]
+          );
 
           return {
             id: item.key.split("/")[2],
@@ -46,6 +49,7 @@ export function useFetchAuthorWorks(authorId: string) {
         });
 
         setBooks(parsedBooks);
+        console.log(parsedBooks);
       } catch (e) {
         console.error("Failed to fetch works", e);
       } finally {
