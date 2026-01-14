@@ -55,6 +55,6 @@ export function useAuthors(authorIds: string[]) {
       }
     };
     getAuthors();
-  }, [authorIds]);
+  }, [JSON.stringify(authorIds)]); // because authorIds is an array - reference type, storing memory address only => looks new in every render
   return { authors, loading_a };
 }

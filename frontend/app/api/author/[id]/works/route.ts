@@ -1,3 +1,4 @@
+import { BookWithDetails } from "@/app/types/database";
 import { NextRequest, NextResponse } from "next/server";
 
 const corsHeaders = {
@@ -39,7 +40,30 @@ export async function GET(
       });
     }
     const data = await res.json();
-    return NextResponse.json(data, { headers: corsHeaders });
+
+    const books = data.entries.map((book: any): BookWithDetails => {
+      const covers = book.covers;
+      const coverId =
+        covers && covers.length > 0 && covers[0] > 0 ? String(covers[0]) : null;
+      // console.log(`Book: ${item.title} | Cover ID: ${coverId}`);
+
+      // if (covers && covers[0].toString().length > 1 && covers[0] > 0) {
+      const cover = coverId
+        ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
+        : "/no_cover.jpg";
+
+      const authorIds = book.authors.map(
+        (a: any) => a.author.key.split("/")[2]
+      );
+      return {
+        id: book.key.split("/")[2],
+        title: book.title,
+        cover: cover,
+        authorIds: authorIds,
+      };
+    });
+
+    return NextResponse.json(books, { headers: corsHeaders });
   } catch (e) {
     console.error(e);
     return new NextResponse("Invalid request body", {
