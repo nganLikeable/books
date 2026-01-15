@@ -41,6 +41,31 @@ export async function GET(
     }
     const data = await res.json();
 
+    // get unique author Ids
+    const authorIds = data.entries
+      .flatMap(
+        (book: any) =>
+          book.authors?.map((a: any) => a.author.key.split("/")[2]) || []
+      )
+      .filter(Boolean); // remove null or undefined
+    const uniqueAuthorIds = new Set<string>(authorIds);
+    const aIds = Array.from(uniqueAuthorIds);
+
+    // preventing fetching for the same authors
+    const authorCache: Record<string, { id: string; name: string }> = {};
+
+    await Promise.all(
+      aIds.map(async (id) => {
+        try {
+          const res = await fetch(`https://openlibrary.org/authors/${id}.json`);
+          const data = await res.json();
+          authorCache[id] = { id, name: data.name || "Unknown" };
+        } catch (e) {
+          console.error(e);
+        }
+      })
+    );
+
     const books = data.entries.map((book: any): BookWithDetails => {
       const covers = book.covers;
       const coverId =
@@ -52,14 +77,18 @@ export async function GET(
         ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
         : "/no_cover.jpg";
 
-      const authorIds = book.authors.map(
-        (a: any) => a.author.key.split("/")[2]
-      );
+      const thisBookAuthorIds: string[] =
+        book.authors?.map((a: any) => a.author.key.split("/")[2]) || [];
+
       return {
         id: book.key.split("/")[2],
         title: book.title,
         cover: cover,
-        authorIds: authorIds,
+        authors: thisBookAuthorIds.map((id) => ({
+          id: id,
+          name: authorCache[id]?.name || "Unknown",
+          cover: null,
+        })),
       };
     });
 

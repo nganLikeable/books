@@ -15,6 +15,7 @@ export function useFetchAuthorWorks(authorId: string) {
         setLoadingBooks(true);
         const response = await fetch(`/api/author/${authorId}/works`);
         const books = await response.json();
+        console.log(books);
         setBooks(books);
       } catch (e) {
         console.error("Failed to fetch works", e);
