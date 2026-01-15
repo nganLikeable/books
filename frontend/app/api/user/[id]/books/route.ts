@@ -40,7 +40,10 @@ export async function GET(
         userId: id,
       },
       include: {
-        book: true, // join book
+        // join book
+        book: {
+          include: { authors: true }, // join authors
+        },
       },
     });
     return NextResponse.json(books, { status: 200, headers: corsHeaders });
@@ -91,7 +94,15 @@ export async function POST(
     // add book and author to the according table
     const book = await prisma.book.upsert({
       where: { id: bookId },
-      update: {},
+      // add authors to fill data gaps in case
+      update: {
+        authors: {
+          connectOrCreate: authors.map((a: any) => ({
+            where: { id: a.id },
+            create: { id: a.id, name: a.name, cover: a.cover },
+          })),
+        },
+      },
       create: {
         id: bookId,
         title: title,
@@ -116,7 +127,7 @@ export async function POST(
       create: {
         userId: authenticatedId,
         bookId: bookId,
-        status: status,
+        status: status.trim(),
       },
     });
     console.log(book, "Successfully added user-book to db");

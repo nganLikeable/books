@@ -2,7 +2,7 @@
 import { useState } from "react";
 import styles from "./ShelfModal.module.css";
 
-import { Author } from "@/app/types/author";
+import { Author } from "@/app/types/database";
 
 interface ShelfModalProps {
   bookId: string;
@@ -50,22 +50,6 @@ export default function ShelfModal({
 
     // add book info to the db
     try {
-      // const responseBook = await fetch(`/api/book/${bookId}`, {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({
-      //     id: bookId,
-      //     title: title,
-      //     authors: authors,
-      //     cover: cover,
-      //   }),
-      // });
-      // console.log(responseBook);
-      // if (!responseBook.ok) {
-      //   throw new Error("Failed to add book to database");
-      // }
-      // console.log("Successfully added book to database");
-
       // save book, author and user-book relationship
       const response = await fetch(`/api/user/${userId}/books`, {
         method: "POST",
