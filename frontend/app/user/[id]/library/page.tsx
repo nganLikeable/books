@@ -1,8 +1,9 @@
 "use client";
 
+import LibraryBookCard from "@/app/components/LibraryBookCard/LibraryBookCard";
 import Spinner from "@/app/components/Spinner/Spinner";
 import useFetchUserBooks from "@/app/hooks/useFetchUserBooks";
-import Link from "next/link";
+import { LibraryUserBook } from "@/app/types/database";
 export default function Library() {
   const { books, loading } = useFetchUserBooks();
 
@@ -17,12 +18,12 @@ export default function Library() {
 
   // fetch books of each status
   const wantToRead = books.filter(
-    (book: any) => book.status === "WANT_TO_READ"
+    (book: LibraryUserBook) => book.status === "WANT_TO_READ"
   );
   const reading = books.filter(
-    (book: any) => book.status === "CURRENTLY_READING"
+    (book: LibraryUserBook) => book.status === "CURRENTLY_READING"
   );
-  const read = books.filter((book: any) => book.status === "READ");
+  const read = books.filter((book: LibraryUserBook) => book.status === "READ");
 
   console.log("WANT: ", wantToRead, "READING:", reading, "READ:", read);
 
@@ -55,40 +56,8 @@ export default function Library() {
                 const book = b.book ?? b; // support either nested book or flat
                 const authors = book?.authors || [];
                 console.log(authors);
-                return (
-                  <div key={b.bookId} className="group flex flex-col gap-3">
-                    <div className="relative aspect-2/3 w-full overflow-hidden rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-[1.03] group-hover:shadow-orange-500/10">
-                      <img
-                        src={book.cover}
-                        alt="Book cover"
-                        className="mt-3 w-full object-fill  aspect-2/3  rounded"
-                        loading="lazy"
-                      ></img>
-                    </div>
-                    <div className="flex flex-col">
-                      <Link
-                        href={`/book/${b.bookId}`}
-                        className="font-bold  cursor-pointer hover:underline  hover:text-orange-600 transition-colors line-clamp-2"
-                      >
-                        {book.title}
-                      </Link>
-                      <div className="mt-1 text-xs text-gray-400 font-medium">
-                        {authors.map((a: any, aIndex: number) => {
-                          return (
-                            <div key={`${a.id}`}>
-                              <Link
-                                href={`/author/${a.id}`}
-                                className="hover:font-bold hover:underline transition-colors "
-                              >
-                                {a.name}
-                              </Link>
-                            </div>
-                          );
-                        })}{" "}
-                      </div>
-                    </div>
-                  </div>
-                );
+
+                return <LibraryBookCard key={b.bookId} {...b} />;
               })}
             </div>
           )}

@@ -11,6 +11,8 @@ export type UserBookWithDetails = PrismaUserBook & {
   };
 };
 
+export type UserBook = PrismaUserBook;
+
 export type Book = PrismaBook;
 
 export type Author = PrismaAuthor;
@@ -25,4 +27,8 @@ export type AuthorWithDetails = PrismaAuthor & {
   bio?: string;
   birthdate?: string;
   deathdate?: string;
+};
+
+export type LibraryUserBook = PrismaUserBook & {
+  book: Book;
 };
