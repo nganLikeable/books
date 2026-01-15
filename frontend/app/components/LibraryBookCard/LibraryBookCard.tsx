@@ -1,8 +1,14 @@
 import { LibraryUserBook } from "@/app/types/database";
 import Link from "next/link";
 
-export default function LibraryBookCard(userBook: LibraryUserBook) {
-  const book = userBook.book ?? userBook; // support either nested book or flat
+export default function LibraryBookCard({
+  userBook,
+}: {
+  userBook: LibraryUserBook;
+}) {
+  if (!userBook) return null;
+
+  const book = userBook.book ?? userBook.book; // support either nested book or flat
   const authors = (book as any)?.authors || [];
 
   return (
