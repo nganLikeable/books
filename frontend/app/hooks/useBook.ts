@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
+
+import { BookWithDetails } from "../types/database";
+
 export function useBook(bookId: string) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [cover, setCover] = useState("");
-  const [authorIds, setAuthorIds] = useState<string[]>([]);
+  // const [title, setTitle] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [cover, setCover] = useState("");
+  // const [authorIds, setAuthorIds] = useState<string[]>([]);
+
+  const [bookWithDetails, setBookWithDetails] =
+    useState<BookWithDetails | null>(null);
   const [loading, setLoading] = useState(false);
   // fetch automatically when id changes/component loads
 
@@ -28,24 +34,32 @@ export function useBook(bookId: string) {
           ) {
             desc = data.description.value;
           }
-          setDescription(desc);
+          // setDescription(desc);
 
           // get cover url
           const coverId = data?.covers?.[0];
           const coverURL = coverId
-            ? `https://covers.openlibrary.org/b/id/${data.covers[0]}-M.jpg`
+            ? `https://covers.openlibrary.org/b/id/${data.covers[0]}-L.jpg`
             : "/no_cover.jpg";
-          setCover(coverURL);
+          // setCover(coverURL);
 
           // get author
           const authorIds = (data.authors || []).map((a: any) =>
             a.author.key.split("/").pop()
           );
-          setAuthorIds(authorIds);
+          // setAuthorIds(authorIds);
 
           // get title
-          const book_title = data.title || "Error loading title";
-          setTitle(book_title);
+          const bookTitle = data.title || "Error loading title";
+          // setTitle(book_title);
+
+          setBookWithDetails({
+            id: bookId,
+            title: bookTitle,
+            cover: coverURL,
+            authorIds: authorIds,
+            description: desc,
+          });
         }
       } catch (e) {
         console.error("Error fetching book details", e);
@@ -56,5 +70,5 @@ export function useBook(bookId: string) {
     fetchBook();
   }, [bookId]);
 
-  return { title, description, cover, authorIds, loading };
+  return { bookWithDetails, loading };
 }

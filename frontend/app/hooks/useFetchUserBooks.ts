@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { UserBook } from "../types/userBook";
+import { LibraryUserBook } from "../types/database";
 import useGetUser from "./useGetUser";
 export default function useFetchUserBooks() {
   const [loading, setLoading] = useState(false);
-  const [books, setBooks] = useState<UserBook[]>([]);
+  const [books, setBooks] = useState<LibraryUserBook[]>([]);
   const { userId } = useGetUser();
 
   useEffect(() => {

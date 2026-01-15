@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Author } from "../types/database";
 
 export function useAuthor(id: string) {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(null);
+
+  const [author, setAuthor] = useState(<Author | null>null);
   useEffect(() => {
     if (!id || id === "undefined") {
       return;
@@ -14,8 +16,12 @@ export function useAuthor(id: string) {
         if (!res.ok) {
           return;
         }
-        const dataRes = await res.json();
-        setData(dataRes);
+        const data = await res.json();
+
+        const name = data?.name || null;
+        const cover = data?.cover || null;
+
+        setAuthor({ id: id, name: name, cover: cover });
       } catch (e) {
         console.log("error fetching author details");
       } finally {
@@ -24,5 +30,5 @@ export function useAuthor(id: string) {
     };
     getAuthor();
   }, [id]);
-  return { data, loading };
+  return { author, loading };
 }

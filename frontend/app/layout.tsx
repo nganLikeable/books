@@ -44,7 +44,7 @@ export default function RootLayout({
           enableSystem={true}
         >
           <NavBar />
-          {children}
+          <main className="pt-25 min-h-screen">{children}</main>
         </ThemeProvider>
       </body>
     </html>

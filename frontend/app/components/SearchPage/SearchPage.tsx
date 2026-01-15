@@ -7,6 +7,7 @@ import BookList from "../BookList/BookList";
 
 export default function SearchPage() {
   const { loading, results } = useSearchBooks();
+  console.log(results);
 
   return (
     <div>
