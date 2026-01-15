@@ -1,11 +1,10 @@
 "use client";
 import { useAuthors } from "@/app/hooks/useAuthors";
 import { usePathname } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { useFetchAuthorWorks } from "@/app/hooks/useFetchAuthorWorks";
 import "react-loading-skeleton/dist/skeleton.css";
-import BookCardSkeleton from "../BookCardSkeleton/BookCardSkeleton";
 import BookList from "../BookList/BookList";
 import Spinner from "../Spinner/Spinner";
 
@@ -16,17 +15,17 @@ export default function AuthorDetail() {
   // convert id to string to use as parameter
   // useMemo to ensure array stay the same, preventing re-renders infinitely
   const arr = useMemo(() => [authorId], [authorId]);
-  const { authors, loading } = useAuthors(arr);
+  const { authors, loading: isLoadingAuthors } = useAuthors(arr);
   const author = authors.length > 0 ? authors[0] : [];
 
   // const [books, setBooks] = useState([]);
 
-  const [loadingBooks, setLoadingBooks] = useState(false);
+  // const [loadingBooks, setLoadingBooks] = useState(false);
 
   const { books, isLoadingBooks } = useFetchAuthorWorks(authorId);
 
   // safeguard, preventing data.name running when data is still null - fetching
-  if (loading || !author) {
+  if (isLoadingAuthors || isLoadingBooks || !author) {
     return (
       <div className="flex justify-center items-center min-h-[80vh]">
         <Spinner />
@@ -79,15 +78,7 @@ export default function AuthorDetail() {
             <hr className="border-gray-300"></hr>
           </div>
           <div>
-            {loadingBooks ? (
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-7.5  w-full">
-                {Array.from({ length: 40 }).map((_, i) => (
-                  <BookCardSkeleton key={i} />
-                ))}
-              </div>
-            ) : (
-              <BookList books={books} />
-            )}{" "}
+            <BookList books={books} />
           </div>
         </div>
       </div>
