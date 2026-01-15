@@ -6,11 +6,10 @@ import { Author } from "@/app/types/database";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import styles from "../BookDetails/BookDetails.module.css";
 import SaveToShelfButton from "../SaveToShelfButton/SaveToShelfButton";
 import ShelfModal from "../ShelfModal/ShelfModal";
+import Spinner from "../Spinner/Spinner";
 
 export default function BookDetails() {
   const pathname = usePathname();
@@ -26,29 +25,42 @@ export default function BookDetails() {
   const { authors, loading_a } = useAuthors(authorIds || []);
   console.log(authors);
 
-  const { user, userId, userLoading } = useGetUser();
+  const { userId } = useGetUser();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  if (loading || loading_a) {
+    return (
+      <div className="flex justify-center items-center min-h-[80vh]">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
-    <div className={styles.container}>
-      <div className={styles.col}>
-        <div className={styles.item}>
-          {loading ? (
-            <Skeleton height={500} />
-          ) : (
-            bookWithDetails?.cover && (
+    <main className="max-w-5xl mx-auto px-4 py-8">
+      <div className="flex flex-col md:flex-row gap-10 items-start">
+        {/*left col - sticky*/}
+        <aside className="w-full md:w-64 lg:w-72 md:sticky md:top-10 flex flex-col gap-5">
+          <div className="relative aspect-2/3 w-full rounded-lg overflow-hidden shadow-xl border border-gray-100 bg-gray-50">
+            {bookWithDetails?.cover ? (
               <img
                 src={bookWithDetails.cover}
                 alt="Book cover"
                 loading="lazy"
               ></img>
-            )
-          )}
-        </div>
-        <div className={styles.item}>
-          <SaveToShelfButton onClick={() => setIsModalOpen(true)} />
-        </div>
+            ) : (
+              <div className="flex h-full items-center justify-center text-gray-400 italic text-sm">
+                No cover available
+              </div>
+            )}
+          </div>
+          <div className="w-full">
+            <SaveToShelfButton onClick={() => setIsModalOpen(true)} />
+          </div>
+        </aside>
+
+        {/* Modal Logic */}
         {isModalOpen && userId && (
           <ShelfModal
             bookId={bookId}
@@ -59,34 +71,40 @@ export default function BookDetails() {
             onClose={() => setIsModalOpen(false)}
           />
         )}
-      </div>
-      <div className={styles.col}>
-        {loading ? <Skeleton height={70} /> : <h1>{bookWithDetails?.title}</h1>}
-        {loading_a ? (
-          <Skeleton />
-        ) : (
-          <h2>
+
+        {/* right col */}
+        <section className="flex-1 flex flex-col gap-6">
+          <header className="flex flex-col gap-2">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
+              {bookWithDetails?.title}
+            </h1>
             {authors.map((a: Author, index: number) => (
-              <div key={`${a}-${index}`}>
-                <span>
-                  <Link
-                    className="font-semibold hover:underline"
-                    href={`/author/${authorIds[index]}`}
-                  >
-                    {a.name}
-                  </Link>
-                </span>
+              <span key={`${a}-${index}`}>
+                <Link
+                  className="font-semibold text-orange-600 hover:text-orange-700 transition-colors decoration-orange-200 underline-offset-4 hover:underline"
+                  href={`/author/${authorIds[index]}`}
+                >
+                  {a.name}
+                </Link>
                 <br></br>
-              </div>
+              </span>
             ))}
-          </h2>
-        )}
-        {loading ? (
-          <Skeleton count={8} height={50} />
-        ) : (
-          <p>{bookWithDetails?.description}</p>
-        )}
+          </header>
+          <hr className="border-gray-100" />
+          {/* description */}
+          <article className="flex flex-col gap-3">
+            <h3 className="text-xs uppercase tracking-[0.15em] font-bold text-gray-500">
+              Description
+            </h3>
+            <div className="prose prose-sm md:prose-base text-foreground leading-relaxed max-w-none">
+              <p className="whitespace-pre-line">
+                {bookWithDetails?.description ||
+                  "A detailed description for this work is currently unavailable."}
+              </p>
+            </div>
+          </article>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }
