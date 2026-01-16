@@ -48,6 +48,7 @@ export default function BookDetails() {
                 src={bookWithDetails.cover}
                 alt="Book cover"
                 loading="lazy"
+                className="h-full w-full object-contain transition-transform duration-300 hover:scale-105"
               ></img>
             ) : (
               <div className="flex h-full items-center justify-center text-gray-400 italic text-sm">
@@ -55,7 +56,7 @@ export default function BookDetails() {
               </div>
             )}
           </div>
-          <div className="w-full">
+          <div className="w-full flex justify-center">
             <SaveToShelfButton onClick={() => setIsModalOpen(true)} />
           </div>
         </aside>
