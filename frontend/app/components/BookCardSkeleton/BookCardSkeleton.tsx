@@ -16,7 +16,7 @@ const BookCardSkeleton = () => {
       <div className="flex flex-col flex-1 py-1">
         <div className="flex flex-col gap-1">
           <Skeleton height={25} />
-          <Skeleton count={3} height={50} />
+          <Skeleton count={2} height={50} />
         </div>
       </div>
     </div>

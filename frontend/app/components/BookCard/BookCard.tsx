@@ -27,12 +27,14 @@ export default function BookCard({ book }: { book: Book }) {
           >
             {book.title}{" "}
           </Link>
-          <span className="text-xs uppercase tracking-wider opacity-50">
-            by
-          </span>
+
           <div className="flex flex-wrap gap-x-1.5">
             {authors.length > 0 && (
               <>
+                {" "}
+                <span className="text-xs uppercase tracking-wider opacity-50">
+                  by
+                </span>
                 {authors.map((author: Author, index: number) => (
                   <span key={`${author.id}-${book.id}-${index}`}>
                     <Link

@@ -41,14 +41,16 @@ export default function BookDetails() {
     <main className="max-w-5xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-10 items-start">
         {/*left col - sticky*/}
-        <aside className="w-full md:w-64 lg:w-72 md:sticky md:top-10 flex flex-col gap-5">
+        {/* Change this line */}
+        <aside className="w-full md:w-64 lg:w-72 md:sticky md:top-24 self-start flex flex-col gap-5">
+          {" "}
           <div className="relative aspect-2/3 w-full rounded-lg overflow-hidden shadow-xl border border-gray-100 bg-gray-50">
             {bookWithDetails?.cover ? (
               <img
                 src={bookWithDetails.cover}
                 alt="Book cover"
                 loading="lazy"
-                className="h-full w-full object-contain transition-transform duration-300 hover:scale-105"
+                className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
               ></img>
             ) : (
               <div className="flex h-full items-center justify-center text-gray-400 italic text-sm">
@@ -76,9 +78,9 @@ export default function BookDetails() {
         {/* right col */}
         <section className="flex-1 flex flex-col gap-6">
           <header className="flex flex-col gap-2">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
+            <h1 className="text-xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
               {bookWithDetails?.title}
-            </h1>
+            </h1>{" "}
             {authors.map((a: Author, index: number) => (
               <span key={`${a}-${index}`}>
                 <Link
@@ -97,7 +99,7 @@ export default function BookDetails() {
             <h3 className="text-xs uppercase tracking-[0.15em] font-bold text-gray-500">
               Description
             </h3>
-            <div className="prose prose-sm md:prose-base text-foreground leading-relaxed max-w-none">
+            <div className="prose prose-sm md:prose-base text-foreground leading-relaxed max-w-none text-lg">
               <p className="whitespace-pre-line">
                 {bookWithDetails?.description ||
                   "A detailed description for this work is currently unavailable."}
