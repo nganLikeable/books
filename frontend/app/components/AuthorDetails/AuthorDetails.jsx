@@ -35,22 +35,27 @@ export default function AuthorDetail() {
   console.log(author);
 
   return (
-    <div className="m-20">
-      <div className="flex flex-row gap-5">
+    <main className="max-w-6xl mx-auto px-6 py-12 md:py-20 ">
+      <div className="flex flex-col md:flex-row gap-12 items-start">
         {/* prevent shrinking when image still loading*/}
-        <div className="shrink-0 w-40">
-          <img
-            className=" object-scale-down max-h-full drop-shadow-md rounded-md m-auto "
-            src={author.cover}
-            alt="author image"
-          ></img>
-        </div>
-        <div className="flex flex-col w-full m-2">
-          <div className="">
-            <h1 className="text-3xl font-bold mb-2">{author.name}</h1>
-            <hr className="border-gray-300"></hr>
+        <aside className="w-full md:w-1/3 lg:w-1/4 shrink-0 flex flex-col gap-6 sticky md:top-24">
+          <div className="relative aspect-square md:aspect-3/4 overflow-hidden rounded-2xl shadow-2xl bg-zinc-100 border border-zinc-20">
+            <img
+              className=" w-full h-full object-cover "
+              src={author.cover}
+              alt="author image"
+            ></img>
           </div>
-          <div className="mb-5">
+        </aside>
+
+        <section className="flex-1 min-w-0">
+          <header className="mb-3">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-4">
+              {author.name}
+            </h1>
+            <div className="h-1.5 w-24 bg-orange-600 rounded-full" />{" "}
+          </header>
+          <div className="mb-3">
             <table className="table-auto w-full text-sm ">
               <tbody>
                 <tr className="">
@@ -69,19 +74,19 @@ export default function AuthorDetail() {
                 )}
               </tbody>
             </table>
+            <div>
+              <p className="text-justify">{author.bio}</p>
+            </div>
+            <div className="mt-10 mb-2">
+              <h2 className="text-0.7 font-semibold">{author.name}'s books</h2>
+              <hr className="border-gray-300"></hr>
+            </div>
+            <div>
+              <BookList books={books} />
+            </div>
           </div>
-          <div>
-            <p className="text-justify">{author.bio}</p>
-          </div>
-          <div className="mt-10 mb-2">
-            <h2 className="text-0.7 font-semibold">{author.name}'s books</h2>
-            <hr className="border-gray-300"></hr>
-          </div>
-          <div>
-            <BookList books={books} />
-          </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }
