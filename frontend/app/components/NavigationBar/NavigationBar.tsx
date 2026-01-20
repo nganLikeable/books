@@ -10,7 +10,7 @@ import ThemeToggle from "../ThemeToggle/ThemeToggle";
 export default function NavBar() {
   const [user, loading, error] = useAuthState(auth);
 
-  const userId = useGetUser().userId;
+  const { userId } = useGetUser();
 
   return (
     <nav className="w-full fixed top-4 z-50 px-4">
@@ -42,7 +42,7 @@ export default function NavBar() {
           {/* add safeguard later  */}
           <Link
             className="  hover:font-bold whitespace-nowrap"
-            href={`/user/${userId}/library`}
+            href={userId ? `/user/${userId}/library` : "/sign-in"}
           >
             Your Library
           </Link>

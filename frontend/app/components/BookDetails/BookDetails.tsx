@@ -4,7 +4,7 @@ import { useBook } from "@/app/hooks/useBook";
 import useGetUser from "@/app/hooks/useGetUser";
 import { Author } from "@/app/types/database";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import SaveToShelfButton from "../SaveToShelfButton/SaveToShelfButton";
@@ -14,6 +14,8 @@ import Spinner from "../Spinner/Spinner";
 export default function BookDetails() {
   const pathname = usePathname();
   const bookId = pathname ? pathname.split("/")[2] : "";
+
+  const router = useRouter();
 
   const { bookWithDetails, loading } = useBook(bookId);
   console.log(bookWithDetails);
@@ -28,6 +30,15 @@ export default function BookDetails() {
   const { userId } = useGetUser();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // redirect immediately
+  function handleSaveClick() {
+    if (!userId) {
+      router.push("/sign-in");
+      return;
+    }
+    setIsModalOpen(true);
+  }
 
   if (loading || loading_a) {
     return (
@@ -59,7 +70,7 @@ export default function BookDetails() {
             )}
           </div>
           <div className="w-full flex justify-center">
-            <SaveToShelfButton onClick={() => setIsModalOpen(true)} />
+            <SaveToShelfButton onClick={handleSaveClick} />
           </div>
         </aside>
 

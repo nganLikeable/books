@@ -14,6 +14,10 @@ export default function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 
+// protect these routes if no token
 export const config = {
-  matcher: "/user/:userId([a-zA-Z0-9]+)/library",
+  matcher: [
+    "/user/:userId([a-zA-Z0-9]+)/library",
+    "/api/user/:userId([a-zA-Z0-9]+)/books",
+  ],
 };
