@@ -7,9 +7,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LogOutButton from "../LogOutButton/LogOutButton";
-import HamburgerMenu from "../Menu/HamburgerMenu";
 import SearchBar from "../SearchBar/SearchBar";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import HamburgerMenu from "./HamburgerMenu";
 
 export default function NavBar() {
   const [user, loading, error] = useAuthState(auth);

@@ -13,7 +13,7 @@ export async function OPTIONS() {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const auth = await getAuthenticatedId();
@@ -30,7 +30,7 @@ export async function GET(
         {
           status: 403,
           headers: corsHeaders,
-        }
+        },
       );
     }
     console.log("Authenticated");
@@ -58,7 +58,7 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const auth = await getAuthenticatedId();
@@ -76,7 +76,7 @@ export async function POST(
         {
           status: 403,
           headers: corsHeaders,
-        }
+        },
       );
     }
 
@@ -112,7 +112,7 @@ export async function POST(
             (a: { id: string; name: string; cover: string }) => ({
               where: { id: a.id },
               create: { id: a.id, name: a.name, cover: a.cover },
-            })
+            }),
           ),
         },
       },
@@ -147,7 +147,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const auth = await getAuthenticatedId();
@@ -165,7 +165,7 @@ export async function DELETE(
         {
           status: 403,
           headers: corsHeaders,
-        }
+        },
       );
     }
 
@@ -187,6 +187,57 @@ export async function DELETE(
   } catch (e) {
     console.error(e);
     return new NextResponse("Invalid request body", {
+      status: 400,
+      headers: corsHeaders,
+    });
+  }
+}
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  try {
+    const auth = await getAuthenticatedId();
+    if (auth.error) return auth.error;
+
+    const authenticatedId = auth.userId;
+
+    // get id in url to compare
+    const { id } = await params;
+
+    // security check: url id must match token id from firebase
+    if (id !== authenticatedId) {
+      return new NextResponse(
+        "Forbidden: You cannot modify another user's profile",
+        {
+          status: 403,
+          headers: corsHeaders,
+        },
+      );
+    }
+
+    const { bookId, status } = await request.json();
+
+    if (!authenticatedId || !bookId || !status) {
+      return new NextResponse("Missing body", {
+        status: 400,
+        headers: corsHeaders,
+      });
+    }
+
+    const updatedBook = await prisma.userBook.update({
+      where: { userId_bookId: { userId: authenticatedId, bookId } },
+      data: { status: status },
+    });
+    console.log("Updated userBook successfully");
+    return NextResponse.json(updatedBook, {
+      status: 200,
+      headers: corsHeaders,
+    });
+  } catch (e) {
+    console.error(e);
+    return new NextResponse("Error updating book", {
       status: 400,
       headers: corsHeaders,
     });
