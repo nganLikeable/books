@@ -3,7 +3,7 @@ import useGetUser from "@/app/hooks/useGetUser";
 import { LibraryUserBook } from "@/app/types/database";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import LibraryBookCard from "../LibraryBookCard/LibraryBookCard";
+import LibraryBookCard from "../LibraryBookCard/";
 
 export default function LibraryView({ books }: { books: LibraryUserBook[] }) {
   const router = useRouter();
@@ -21,13 +21,13 @@ export default function LibraryView({ books }: { books: LibraryUserBook[] }) {
 
   // fetch books of each status
   const wantToRead = books.filter(
-    (book: LibraryUserBook) => book.status === ReadingStatus.WANT_TO_READ
+    (book: LibraryUserBook) => book.status === ReadingStatus.WANT_TO_READ,
   );
   const reading = books.filter(
-    (book: LibraryUserBook) => book.status === ReadingStatus.CURRENTLY_READING
+    (book: LibraryUserBook) => book.status === ReadingStatus.CURRENTLY_READING,
   );
   const read = books.filter(
-    (book: LibraryUserBook) => book.status === ReadingStatus.READ
+    (book: LibraryUserBook) => book.status === ReadingStatus.READ,
   );
 
   console.log("WANT: ", wantToRead, "READING:", reading, "READ:", read);

@@ -52,7 +52,6 @@ export default function BookDetails() {
     <main className="max-w-5xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-10 items-start">
         {/*left col - sticky*/}
-        {/* Change this line */}
         <aside className="w-full md:w-64 lg:w-72 md:sticky md:top-24 self-start flex flex-col gap-5">
           {" "}
           <div className="relative aspect-2/3 w-full rounded-lg overflow-hidden shadow-xl border border-gray-100 bg-gray-50">
@@ -74,7 +73,7 @@ export default function BookDetails() {
           </div>
         </aside>
 
-        {/* Modal Logic */}
+        {/* modal logic */}
         {isModalOpen && userId && (
           <ShelfModal
             mode="add"

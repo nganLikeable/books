@@ -28,7 +28,7 @@ export default function LibraryBookCard({
             loading="lazy"
           ></img>{" "}
           <button
-            className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-xl text-white font-bold hover:cursor-pointer"
+            className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 text-xl text-foreground font-bold hover:cursor-pointer"
             onClick={() => setIsModalOpen(true)}
           >
             Edit
