@@ -51,6 +51,7 @@ export default function ShelfModal(props: ShelfModalProps) {
       }
       console.log(response);
       console.log("Successfully deleted book ");
+      location.reload();
     } catch (e) {
       console.error(e);
       throw new Error("Error deleting book");
@@ -113,6 +114,7 @@ export default function ShelfModal(props: ShelfModalProps) {
         body: JSON.stringify({ bookId, status: newStatus }),
       });
       if (response.ok) {
+        location.reload(); // reload to update status
         onClose();
       }
     } catch (e) {
