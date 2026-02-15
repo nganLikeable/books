@@ -77,6 +77,7 @@ export default function BookDetails() {
         {/* Modal Logic */}
         {isModalOpen && userId && (
           <ShelfModal
+            mode="add"
             bookId={bookId}
             userId={userId}
             title={title || ""}

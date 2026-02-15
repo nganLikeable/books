@@ -5,31 +5,43 @@ import { Author } from "@/app/types/database";
 import { TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { ReadingStatus } from "@/app/generated/prisma";
+import useGetUser from "@/app/hooks/useGetUser";
 
-interface ShelfModalProps {
+type ShelfModalProps = {
   bookId: string;
   userId: string;
-  title: string;
-  authors: Author[];
-  cover: string;
   onClose: () => void;
-}
+} & (
+  | { mode: "add"; title: string; authors: Author[]; cover: string }
+  | { mode: "update" }
+);
 
-export default function ShelfModal({
-  bookId,
-  userId,
-  title,
-  authors,
-  cover,
-  onClose,
-}: ShelfModalProps) {
+export default function ShelfModal(props: ShelfModalProps) {
+  // destructure
+  const { bookId, userId, onClose, mode } = props;
+
   const [loading, setLoading] = useState<string | null>(null);
+  const { user } = useGetUser();
+
+  const getToken = async () => {
+    if (!user) {
+      console.error("User not found");
+      return null;
+    }
+    return await user.getIdToken();
+  };
+
   const handleRemove = async () => {
     setLoading("removing");
     try {
+      const token = await getToken();
+      if (!token) return;
       const response = await fetch(`/api/user/${userId}/books`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           bookId,
         }),
@@ -48,15 +60,28 @@ export default function ShelfModal({
   };
 
   const handleAddToShelf = async (status: string) => {
+    if (mode !== "add") return;
     setLoading(status);
 
     // add book info to the db
     try {
+      const token = await getToken();
+      if (!token) return;
+
       // save book, author and user-book relationship
       const response = await fetch(`/api/user/${userId}/books`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookId, title, cover, authors, status }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          bookId,
+          title: props.title,
+          cover: props.cover,
+          authors: props.authors,
+          status,
+        }),
       });
       console.log(response);
       if (!response.ok) {
@@ -71,6 +96,35 @@ export default function ShelfModal({
       setLoading(null);
     }
   };
+
+  const handleEdit = async (newStatus: string) => {
+    if (mode !== "update") return;
+    setLoading(newStatus);
+    try {
+      const token = await getToken();
+      if (!token) return;
+
+      const response = await fetch(`/api/user/${userId}/books`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ bookId, status: newStatus }),
+      });
+      if (response.ok) {
+        onClose();
+      }
+    } catch (e) {
+      console.error("Update failed: ", e);
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  // dont render if user is not loaded
+  if (!user) return;
+
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
       <div
@@ -92,13 +146,22 @@ export default function ShelfModal({
         <div className="flex flex-col p-4 gap-2">
           {[
             { id: ReadingStatus.WANT_TO_READ, label: "Want to read" },
-            { id: ReadingStatus.CURRENTLY_READING, label: "Currently reading" },
+            {
+              id: ReadingStatus.CURRENTLY_READING,
+              label: "Currently reading",
+            },
             { id: ReadingStatus.READ, label: "Read" },
           ].map((shelf) => (
             <button
               key={shelf.id}
               disabled={!!loading}
-              onClick={() => handleAddToShelf(shelf.id)}
+              onClick={() => {
+                if (mode === "add") {
+                  handleAddToShelf(shelf.id);
+                } else {
+                  handleEdit(shelf.id);
+                }
+              }}
               className="group flex items-center justify-between rounded-xl px-4 py-3 text-left text-sm font-semibold text-foreground hover:bg-form-bg hover:cursor-pointer
               disabled:opacity-50"
             >
