@@ -22,9 +22,11 @@ export async function GET(
     const authenticatedId = auth.userId;
     // get id in url to compare
     const { userId, bookId } = await params;
+    console.log(userId, bookId);
 
     // security check: url id must match token id from firebase
     if (userId !== authenticatedId) {
+      console.log("UserId", userId, "bookId", bookId);
       return new NextResponse(
         "Forbidden: You cannot modify another user's profile",
         {
@@ -63,12 +65,12 @@ export async function POST(
 
     // get id in url to compare
     const { userId, bookId } = await params;
+    console.log(userId, bookId);
 
     const { rating, content } = await request.json();
     if (typeof rating !== "number" || rating < 1 || rating > 5) {
       return new NextResponse("Invalid rating", { status: 400 });
     }
-
     // security check: url id must match token id from firebase
     if (userId !== authenticatedId) {
       return new NextResponse(
@@ -79,6 +81,8 @@ export async function POST(
         },
       );
     }
+    console.log("Authenticated");
+
     const review = await prisma.review.upsert({
       where: { bookId_userId: { bookId, userId: authenticatedId } },
       update: { rating, content, updatedAt: new Date() },

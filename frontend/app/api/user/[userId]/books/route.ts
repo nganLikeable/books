@@ -13,7 +13,7 @@ export async function OPTIONS() {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ userId: string }> },
 ) {
   try {
     const auth = await getAuthenticatedId();
@@ -21,10 +21,10 @@ export async function GET(
 
     const authenticatedId = auth.userId;
     // get id in url to compare
-    const { id } = await params;
+    const { userId } = await params;
 
     // security check: url id must match token id from firebase
-    if (id !== authenticatedId) {
+    if (userId !== authenticatedId) {
       return new NextResponse(
         "Forbidden: You cannot modify another user's profile",
         {
@@ -37,7 +37,7 @@ export async function GET(
 
     const books = await prisma.userBook.findMany({
       where: {
-        userId: id,
+        userId: userId,
       },
       include: {
         // join book
@@ -58,7 +58,7 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ userId: string }> },
 ) {
   try {
     const auth = await getAuthenticatedId();
@@ -67,10 +67,10 @@ export async function POST(
     const authenticatedId = auth.userId;
 
     // get id in url to compare
-    const { id } = await params;
+    const { userId } = await params;
 
     // security check: url id must match token id from firebase
-    if (id !== authenticatedId) {
+    if (userId !== authenticatedId) {
       return new NextResponse(
         "Forbidden: You cannot modify another user's profile",
         {

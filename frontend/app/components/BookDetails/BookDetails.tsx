@@ -1,4 +1,5 @@
 "use client";
+import { ReadingStatus } from "@/app/generated/prisma";
 import { useAuthors } from "@/app/hooks/useAuthors";
 import { useBook } from "@/app/hooks/useBook";
 import useGetUser from "@/app/hooks/useGetUser";
@@ -7,6 +8,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
+import ReviewForm from "../ReviewForm";
 import SaveToShelfButton from "../SaveToShelfButton/SaveToShelfButton";
 import ShelfModal from "../ShelfModal/ShelfModal";
 import Spinner from "../Spinner/Spinner";
@@ -30,6 +32,9 @@ export default function BookDetails() {
   const { userId } = useGetUser();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [readingStatus, setReadingStatus] = useState<ReadingStatus | null>(
+    null,
+  );
 
   // redirect immediately
   function handleSaveClick() {
@@ -38,6 +43,11 @@ export default function BookDetails() {
       return;
     }
     setIsModalOpen(true);
+  }
+
+  function handleStatusSelect(status: string) {
+    setReadingStatus(status);
+    setIsModalOpen(false);
   }
 
   if (loading || loading_a) {
@@ -83,6 +93,15 @@ export default function BookDetails() {
             authors={authors}
             cover={bookWithDetails?.cover || ""}
             onClose={() => setIsModalOpen(false)}
+            onStatusChange={(status: ReadingStatus) => setReadingStatus(status)}
+          />
+        )}
+        {readingStatus === ReadingStatus.READ && userId && (
+          <ReviewForm
+            bookId={bookId}
+            userId={userId}
+            title={title || ""}
+            cover={bookWithDetails?.cover || ""}
           />
         )}
 

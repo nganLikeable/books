@@ -11,6 +11,7 @@ type ShelfModalProps = {
   bookId: string;
   userId: string;
   onClose: () => void;
+  onStatusChange?: (status: ReadingStatus) => void;
 } & (
   | { mode: "add"; title: string; authors: Author[]; cover: string }
   | { mode: "update" }
@@ -51,7 +52,6 @@ export default function ShelfModal(props: ShelfModalProps) {
       }
       console.log(response);
       console.log("Successfully deleted book ");
-      location.reload();
     } catch (e) {
       console.error(e);
       throw new Error("Error deleting book");
@@ -60,7 +60,7 @@ export default function ShelfModal(props: ShelfModalProps) {
     }
   };
 
-  const handleAddToShelf = async (status: string) => {
+  const handleAddToShelf = async (status: ReadingStatus) => {
     if (mode !== "add") return;
     setLoading(status);
 
@@ -90,6 +90,10 @@ export default function ShelfModal(props: ShelfModalProps) {
       }
       const data = await response.json();
       console.log("Book added to/modified in user's library:", data);
+
+      if (props.onStatusChange) {
+        props.onStatusChange(status);
+      }
       onClose();
     } catch (e) {
       console.error("Error adding book-user", e);
@@ -98,7 +102,7 @@ export default function ShelfModal(props: ShelfModalProps) {
     }
   };
 
-  const handleEdit = async (newStatus: string) => {
+  const handleEdit = async (newStatus: ReadingStatus) => {
     if (mode !== "update") return;
     setLoading(newStatus);
     try {
@@ -114,7 +118,6 @@ export default function ShelfModal(props: ShelfModalProps) {
         body: JSON.stringify({ bookId, status: newStatus }),
       });
       if (response.ok) {
-        location.reload(); // reload to update status
         onClose();
       }
     } catch (e) {
