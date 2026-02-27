@@ -1,6 +1,7 @@
 import {
   Author as PrismaAuthor,
   Book as PrismaBook,
+  Review as PrismaReview,
   UserBook as PrismaUserBook,
 } from "../generated/prisma";
 // using aliased names to prevent name conflicts btw ts types and Prisma models
@@ -30,5 +31,9 @@ export type AuthorWithDetails = PrismaAuthor & {
 };
 
 export type LibraryUserBook = PrismaUserBook & {
+  book: Book;
+};
+
+export type Review = PrismaReview & {
   book: Book;
 };
