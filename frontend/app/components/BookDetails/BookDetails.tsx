@@ -6,7 +6,7 @@ import useGetUser from "@/app/hooks/useGetUser";
 import { Author } from "@/app/types/database";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import ReviewForm from "../ReviewForm";
 import SaveToShelfButton from "../SaveToShelfButton/SaveToShelfButton";
@@ -35,6 +35,7 @@ export default function BookDetails() {
   const [readingStatus, setReadingStatus] = useState<ReadingStatus | null>(
     null,
   );
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   // redirect immediately
   function handleSaveClick() {
@@ -45,10 +46,16 @@ export default function BookDetails() {
     setIsModalOpen(true);
   }
 
-  function handleStatusSelect(status: string) {
+  function handleStatusSelect(status: ReadingStatus) {
     setReadingStatus(status);
     setIsModalOpen(false);
   }
+
+  useEffect(() => {
+    if (readingStatus === ReadingStatus.READ) {
+      setIsReviewOpen(true);
+    }
+  }, [readingStatus]);
 
   if (loading || loading_a) {
     return (
@@ -96,12 +103,13 @@ export default function BookDetails() {
             onStatusChange={(status: ReadingStatus) => setReadingStatus(status)}
           />
         )}
-        {readingStatus === ReadingStatus.READ && userId && (
+        {readingStatus === ReadingStatus.READ && userId && isReviewOpen && (
           <ReviewForm
             bookId={bookId}
             userId={userId}
             title={title || ""}
             cover={bookWithDetails?.cover || ""}
+            onClose={() => setIsReviewOpen(false)}
           />
         )}
 
