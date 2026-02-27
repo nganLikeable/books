@@ -36,19 +36,20 @@ export async function GET(
     }
     console.log("Authenticated");
 
-    const reviews = await prisma.user.findMany({
-      select: {
-        reviews: {
-          include: {
-            book: { select: { title: true, cover: true } },
-          },
+    // get flat reviews
+    const reviews = await prisma.review.findMany({
+      where: { userId },
+      include: {
+        book: {
+          select: { title: true, cover: true },
         },
       },
+      orderBy: { updatedAt: "desc" },
     });
 
     console.log("Review retrieved successfully");
 
-    return NextResponse.json(reviews, { status: 201, headers: corsHeaders });
+    return NextResponse.json(reviews, { status: 200, headers: corsHeaders });
   } catch (e) {
     console.error(e);
     return new NextResponse("Error fetching book review", {
