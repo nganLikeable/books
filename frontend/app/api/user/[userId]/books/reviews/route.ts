@@ -36,7 +36,15 @@ export async function GET(
     }
     console.log("Authenticated");
 
-    const reviews = await prisma.user.findMany({ select: { reviews: true } });
+    const reviews = await prisma.user.findMany({
+      select: {
+        reviews: {
+          include: {
+            book: { select: { title: true, cover: true } },
+          },
+        },
+      },
+    });
 
     console.log("Review retrieved successfully");
 

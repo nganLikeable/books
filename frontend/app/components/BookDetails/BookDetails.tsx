@@ -8,7 +8,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
-import ReviewForm from "../ReviewForm";
+import ReviewForm from "../Reviews/ReviewForm";
 import SaveToShelfButton from "../SaveToShelfButton/SaveToShelfButton";
 import ShelfModal from "../ShelfModal/ShelfModal";
 import Spinner from "../Spinner/Spinner";

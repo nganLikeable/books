@@ -43,7 +43,7 @@ export default function NavBar() {
           <div className="hidden lg:flex items-center justify-end gap-6 text-sm shrink-0">
             {links.slice(1).map((link) => (
               <Link
-                key={link.href}
+                key={`${link.href}-${link.label}`}
                 href={link.href}
                 className="hover:font-bold whitespace-nowrap"
               >

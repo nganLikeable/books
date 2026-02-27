@@ -42,7 +42,7 @@ export default function HamburgerMenu({
           <nav className="flex flex-col gap-6 mt-10">
             {links.map((link) => (
               <Link
-                key={link.href}
+                key={`${link.href}-${link.label}`}
                 onClick={onClose}
                 href={link.href}
                 className="text-xl font-medium hover:text-orange-500 transition-colors"
