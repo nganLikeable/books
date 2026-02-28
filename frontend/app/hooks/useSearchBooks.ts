@@ -1,9 +1,9 @@
-import { Author, Book } from "@/app/types/database";
+import { Author, BookWithDetails } from "@/app/types/database";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 // take raw docs and map to book and authors
-const mapToBook = (b: any): Book => {
+const mapToBook = (b: any): BookWithDetails => {
   const id = b.key.split("/")[2];
   const cover_i = b.cover_i;
   const authorKeys = b.author_key || [];
@@ -14,7 +14,7 @@ const mapToBook = (b: any): Book => {
       cover: null,
       createdAT: new Date(),
       updatedAt: new Date(),
-    })
+    }),
   );
 
   return {
@@ -30,7 +30,7 @@ const mapToBook = (b: any): Book => {
 export default function useSearchBooks() {
   const [loading, setLoading] = useState(false);
   //   const [error, setError] = useState(null);
-  const [results, setResults] = useState<Book[]>([]);
+  const [results, setResults] = useState<BookWithDetails[]>([]);
   const [query, setQuery] = useState("");
   const [count, setCount] = useState(0); // n.o results
 
