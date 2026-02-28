@@ -6,8 +6,8 @@ export default function ReviewCard({ review }: { review: Review }) {
   const book = review?.book;
 
   return (
-    <div className="flex gap-4 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-      <div className="w-16 h-24 flex-shrink:0 bg-gray-50 rounded-lg overflow-hidden border border-gray-100 shadow-inner">
+    <div className="flex gap-4 p-4 bg-background rounded-2xl border border-line-bg shadow-sm hover:shadow-md transition-all">
+      <div className="w-16 h-24 flex-shrink:0 bg-gray-50 rounded-lg overflow-hidden border border-line-bg shadow-inner">
         <img src={book?.cover}></img>
       </div>
 
@@ -22,7 +22,7 @@ export default function ReviewCard({ review }: { review: Review }) {
           Last Updated: {new Date(review.updatedAt).toLocaleDateString()}
         </span>
         {review.content && (
-          <p className="text-xs text-gray-600 line-clamp-2 italic leading-relaxed">
+          <p className="text-xs text-foreground line-clamp-2 italic leading-relaxed">
             {review.content}
           </p>
         )}{" "}
