@@ -1,6 +1,6 @@
-import { Author, Book } from "@/app/types/database";
+import { Author, BookWithDetails } from "@/app/types/database";
 import Link from "next/link";
-export default function BookCard({ book }: { book: Book }) {
+export default function BookCard({ book }: { book: BookWithDetails }) {
   const authors = book.authors || [];
 
   return (
