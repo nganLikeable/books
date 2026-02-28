@@ -17,16 +17,19 @@ export default function SearchBar() {
       <form
         className="w-full max-w-xl flex items-center gap-2 rounded-2xl border border-gray-200 shadow-sm transition focus-within:border-amber-400 focus-within:shadow-md"
         onSubmit={handleSubmit}
+        suppressHydrationWarning
       >
         <input
           className="w-150 px-4 py-[0.6rem] border-0 focus:outline-none focus:ring-0"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search books..."
+          suppressHydrationWarning
         />
         <button
           className=" cursor-pointer px-4 py-[0.6rem] transition  ease-in-out "
           type="submit"
+          suppressHydrationWarning
         >
           <CiSearch size={20} />
         </button>
