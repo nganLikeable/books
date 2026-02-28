@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./Form.module.css";
 
 import { auth } from "@/app/firebase/firebase-config";
 import Link from "next/link";
@@ -82,7 +81,7 @@ export default function SignUpForm() {
             required
           />
         </div>
-        {error && <p className={styles.errorText}>{error.message}</p>}
+        {error && <p className="mt-1 text-red-800 text-xl">{error.message}</p>}
         <button
           className="w-full p-1 cursor-pointer bg-[#ffde39] rounded-sm hover:bg-[#ffe666] text-black"
           type="submit"
