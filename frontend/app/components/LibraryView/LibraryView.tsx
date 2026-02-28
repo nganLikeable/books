@@ -1,17 +1,33 @@
 import { ReadingStatus } from "@/app/generated/prisma";
+import useGetUser from "@/app/hooks/useGetUser";
 import { LibraryUserBook } from "@/app/types/database";
-import LibraryBookCard from "../LibraryBookCard/LibraryBookCard";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import LibraryBookCard from "../LibraryBookCard/";
 
 export default function LibraryView({ books }: { books: LibraryUserBook[] }) {
+  const router = useRouter();
+  const { user, userLoading } = useGetUser();
+
+  // remove url with usserId from browser history stack => protected pages
+  useEffect(() => {
+    if (!user && !userLoading) {
+      router.replace("/sign-in");
+    }
+  }, [user, userLoading]);
+
+  if (userLoading) return null;
+  if (!user) return null;
+
   // fetch books of each status
   const wantToRead = books.filter(
-    (book: LibraryUserBook) => book.status === ReadingStatus.WANT_TO_READ
+    (book: LibraryUserBook) => book.status === ReadingStatus.WANT_TO_READ,
   );
   const reading = books.filter(
-    (book: LibraryUserBook) => book.status === ReadingStatus.CURRENTLY_READING
+    (book: LibraryUserBook) => book.status === ReadingStatus.CURRENTLY_READING,
   );
   const read = books.filter(
-    (book: LibraryUserBook) => book.status === ReadingStatus.READ
+    (book: LibraryUserBook) => book.status === ReadingStatus.READ,
   );
 
   console.log("WANT: ", wantToRead, "READING:", reading, "READ:", read);

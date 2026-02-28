@@ -9,8 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@prisma/adapter-pg": "^7.2.0",
-    "@prisma/client": "^7.2.0",
+    "@prisma/client": "^7.4.0",
     "cookies-next": "^6.1.1",
     "dotenv": "^17.2.3",
     "firebase-admin": "^13.6.0",
@@ -26,14 +27,14 @@
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^20",
     "@types/pg": "^8.16.0",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "baseline-browser-mapping": "^2.9.14",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "prisma": "^7.2.0",
     "tailwindcss": "^4.1.18",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "5.9.3"
   }
 }

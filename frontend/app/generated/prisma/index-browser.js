@@ -152,6 +152,16 @@ exports.Prisma.AuthorBookScalarFieldEnum = {
   authorId: 'authorId'
 };
 
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  bookId: 'bookId',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -177,7 +187,8 @@ exports.Prisma.ModelName = {
   Book: 'Book',
   Author: 'Author',
   UserBook: 'UserBook',
-  AuthorBook: 'AuthorBook'
+  AuthorBook: 'AuthorBook',
+  Review: 'Review'
 };
 
 /**

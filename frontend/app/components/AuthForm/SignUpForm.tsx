@@ -30,9 +30,14 @@ export default function SignUpForm() {
 
       // if created successfully, added user to db
       if (res?.user) {
+        // get token for bearer authorization
+        const token = await res.user.getIdToken();
         await fetch(`${APIURL}/api/user`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({
             uid: res.user.uid,
             email: res.user.email,

@@ -1,3 +1,5 @@
+import StarRating from "./components/StarRating";
+
 export default function App() {
   return (
     <div className="max-h-screen flex flex-col items-center justify-center p-10 ">
@@ -17,6 +19,7 @@ export default function App() {
           Discover, track, and organize your reading journey
         </p>
       </div>
+      <StarRating />
     </div>
   );
 }
