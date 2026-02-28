@@ -8,7 +8,7 @@ export default function ReviewCard({ review }: { review: Review }) {
   return (
     <div className="flex gap-4 p-4 bg-background rounded-2xl border border-line-bg shadow-sm hover:shadow-md transition-all">
       <div className="w-16 h-24 flex-shrink:0 bg-gray-50 rounded-lg overflow-hidden border border-line-bg shadow-inner">
-        <img src={book?.cover}></img>
+        <img src={book?.cover || "no_cover.jpg"}></img>
       </div>
 
       <div className="flex flex-col flex-1 min-w-0">
