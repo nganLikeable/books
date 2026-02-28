@@ -147,7 +147,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ userId: string }> },
 ) {
   try {
     const auth = await getAuthenticatedId();
@@ -156,10 +156,10 @@ export async function DELETE(
     const authenticatedId = auth.userId;
 
     // get id in url to compare
-    const { id } = await params;
+    const { userId } = await params;
 
     // security check: url id must match token id from firebase
-    if (id !== authenticatedId) {
+    if (userId !== authenticatedId) {
       return new NextResponse(
         "Forbidden: You cannot modify another user's profile",
         {
@@ -195,7 +195,7 @@ export async function DELETE(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ userId: string }> },
 ) {
   try {
     const auth = await getAuthenticatedId();
@@ -204,10 +204,10 @@ export async function PATCH(
     const authenticatedId = auth.userId;
 
     // get id in url to compare
-    const { id } = await params;
+    const { userId } = await params;
 
     // security check: url id must match token id from firebase
-    if (id !== authenticatedId) {
+    if (userId !== authenticatedId) {
       return new NextResponse(
         "Forbidden: You cannot modify another user's profile",
         {
