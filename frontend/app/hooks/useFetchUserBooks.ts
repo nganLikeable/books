@@ -6,26 +6,26 @@ export default function useFetchUserBooks() {
   const [books, setBooks] = useState<LibraryUserBook[]>([]);
   const { userId } = useGetUser();
 
-  useEffect(() => {
-    if (!userId || userId === null) {
-      return;
-    }
-    const fetchBooks = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(`/api/user/${userId}/books`);
-        if (!res.ok) {
-          return;
-        }
-        const data = await res.json();
-        setBooks(data);
-      } catch (e) {
-        console.log("Error fetching user's library");
-      } finally {
-        setLoading(false);
+  const fetchBooks = async () => {
+    if (!userId) return;
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/user/${userId}/books`, {
+        cache: "no-store",
+      });
+      if (!res.ok) {
+        return;
       }
-    };
+      const data = await res.json();
+      setBooks(data);
+    } catch (e) {
+      console.log("Error fetching user's library");
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchBooks();
   }, [userId]);
-  return { books, loading };
+  return { books, loading, refetch: fetchBooks };
 }

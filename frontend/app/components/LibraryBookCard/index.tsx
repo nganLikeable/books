@@ -6,8 +6,10 @@ import ShelfModal from "../ShelfModal/ShelfModal";
 
 export default function LibraryBookCard({
   userBook,
+  refetch,
 }: {
   userBook: LibraryUserBook;
+  refetch: () => void;
 }) {
   if (!userBook) return null;
 
@@ -42,6 +44,10 @@ export default function LibraryBookCard({
           userId={userId}
           bookId={book.id}
           onClose={() => setIsModalOpen(false)}
+          onStatusChange={() => {
+            refetch();
+            setIsModalOpen(false);
+          }}
         />
       )}
 

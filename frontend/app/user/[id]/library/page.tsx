@@ -4,7 +4,7 @@ import LibraryView from "@/app/components/LibraryView/LibraryView";
 import Spinner from "@/app/components/Spinner/Spinner";
 import useFetchUserBooks from "@/app/hooks/useFetchUserBooks";
 export default function Library() {
-  const { books, loading } = useFetchUserBooks();
+  const { books, loading, refetch } = useFetchUserBooks();
 
   if (loading)
     return (
@@ -15,5 +15,5 @@ export default function Library() {
 
   console.log(books);
 
-  return <LibraryView books={books} />;
+  return <LibraryView books={books} refetch={refetch} />;
 }
