@@ -12,7 +12,7 @@ type ShelfModalProps = {
   bookId: string;
   userId: string;
   onClose: () => void;
-  onStatusChange?: () => void;
+  onStatusChange?: (status: ReadingStatus | null) => void;
 } & (
   | { mode: "add"; title: string; authors: Author[]; cover: string }
   | { mode: "update" }
@@ -53,7 +53,7 @@ export default function ShelfModal(props: ShelfModalProps) {
       if (!response.ok) {
         throw new Error("Failed to delete book");
       }
-      props.onStatusChange?.();
+      props.onStatusChange?.(null);
 
       console.log(response);
       console.log("Successfully deleted book ");
@@ -97,7 +97,7 @@ export default function ShelfModal(props: ShelfModalProps) {
       console.log("Book added to/modified in user's library:", data);
 
       if (props.onStatusChange) {
-        props.onStatusChange();
+        props.onStatusChange(status);
       }
       onClose();
     } catch (e) {
@@ -123,7 +123,7 @@ export default function ShelfModal(props: ShelfModalProps) {
         body: JSON.stringify({ bookId, status: newStatus }),
       });
       if (response.ok) {
-        props.onStatusChange?.();
+        props.onStatusChange?.(newStatus);
         onClose();
       }
     } catch (e) {

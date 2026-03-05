@@ -100,7 +100,9 @@ export default function BookDetails() {
             authors={authors}
             cover={bookWithDetails?.cover || ""}
             onClose={() => setIsModalOpen(false)}
-            onStatusChange={(status: ReadingStatus) => setReadingStatus(status)}
+            onStatusChange={(status: ReadingStatus | null) =>
+              setReadingStatus(status)
+            }
           />
         )}
         {readingStatus === ReadingStatus.READ && userId && isReviewOpen && (
