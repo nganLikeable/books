@@ -6,12 +6,13 @@ import { TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { ReadingStatus } from "@/app/generated/prisma";
 import useGetUser from "@/app/hooks/useGetUser";
+import { useRouter } from "next/navigation";
 
 type ShelfModalProps = {
   bookId: string;
   userId: string;
   onClose: () => void;
-  onStatusChange?: (status: ReadingStatus) => void;
+  onStatusChange?: () => void;
 } & (
   | { mode: "add"; title: string; authors: Author[]; cover: string }
   | { mode: "update" }
@@ -23,6 +24,8 @@ export default function ShelfModal(props: ShelfModalProps) {
 
   const [loading, setLoading] = useState<string | null>(null);
   const { user } = useGetUser();
+
+  const router = useRouter();
 
   const getToken = async () => {
     if (!user) {
@@ -50,6 +53,8 @@ export default function ShelfModal(props: ShelfModalProps) {
       if (!response.ok) {
         throw new Error("Failed to delete book");
       }
+      props.onStatusChange?.();
+
       console.log(response);
       console.log("Successfully deleted book ");
     } catch (e) {
@@ -92,7 +97,7 @@ export default function ShelfModal(props: ShelfModalProps) {
       console.log("Book added to/modified in user's library:", data);
 
       if (props.onStatusChange) {
-        props.onStatusChange(status);
+        props.onStatusChange();
       }
       onClose();
     } catch (e) {
@@ -118,6 +123,7 @@ export default function ShelfModal(props: ShelfModalProps) {
         body: JSON.stringify({ bookId, status: newStatus }),
       });
       if (response.ok) {
+        props.onStatusChange?.();
         onClose();
       }
     } catch (e) {
@@ -128,7 +134,7 @@ export default function ShelfModal(props: ShelfModalProps) {
   };
 
   // dont render if user is not loaded
-  if (!user) return;
+  if (!user) return null;
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4">

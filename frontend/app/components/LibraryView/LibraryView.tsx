@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import LibraryBookCard from "../LibraryBookCard/";
 
-export default function LibraryView({ books }: { books: LibraryUserBook[] }) {
+export default function LibraryView({
+  books,
+  refetch,
+}: {
+  books: LibraryUserBook[];
+  refetch: () => void;
+}) {
   const router = useRouter();
   const { user, userLoading } = useGetUser();
 
@@ -58,7 +64,13 @@ export default function LibraryView({ books }: { books: LibraryUserBook[] }) {
           ) : (
             <div className="grid grid-cols-3  sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
               {s.data.map((b: any) => {
-                return <LibraryBookCard key={b.bookId} userBook={b} />;
+                return (
+                  <LibraryBookCard
+                    key={b.bookId}
+                    userBook={b}
+                    refetch={refetch}
+                  />
+                );
               })}
             </div>
           )}
