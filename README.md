@@ -1,6 +1,6 @@
 # Bookie: Full-Stack Library & Book Review Manager
 
-Live Demo: 👉 [View the project on Vercel](https://books-vplo-n102bg9mb-nganlikeables-projects.vercel.app/user/M7L1LwHH1HZwMqdMiGJ9dFCggmu2/library)
+Live Demo: 👉 [View the project on Vercel](https://books-vplo-n102bg9mb-nganlikeables-projects.vercel.app/)
 
 > **Test Account:** `test3@gmail.com` / `123456`
 
