@@ -49,7 +49,7 @@ export default function LibraryView({
     <div className="max-w-6xl mx-auto px-4 py-8">
       {sections.map((s, sIndex) => (
         <div key={`${s.title}`} className="mb-12 last:mb-2">
-          <div className="flex items-center justify-between mb-6 border-b border-gray-300 pb-2">
+          <div className="flex items-center justify-between mb-6 border-b border-line-bg pb-2">
             <h2 className="text-2xl font-bold text-orange-500  tracking-tight">
               {s.title}
             </h2>

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Geist, Geist_Mono, Poppins, Roboto } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono, Poppins, Roboto } from "next/font/google";
 
+import Footer from "./components/Footer/Footer";
 import NavBar from "./components/NavigationBar/NavigationBar";
+import PageTransition from "./components/PageTransition/PageTransition";
 import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +30,11 @@ const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
 });
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["SOFT", "WONK"],
+});
 
 export default function RootLayout({
   children,
@@ -36,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={poppins.className}>
+      <body className={fraunces.className}>
         {" "}
         <ThemeProvider
           attribute="class"
@@ -44,7 +51,10 @@ export default function RootLayout({
           enableSystem={true}
         >
           <NavBar />
-          <main className="pt-25 min-h-screen">{children}</main>
+          <main className="pt-25 min-h-screen">
+            <PageTransition>{children}</PageTransition>
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

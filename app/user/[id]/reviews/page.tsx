@@ -13,15 +13,26 @@ export default function Reviews() {
       </div>
     );
   }
+  const filtered = reviews.filter((r) => r.content && r.rating);
+
   return (
-    <div className="max-w-6xl mx-auto p- md:p-10">
-      {reviews
-        .filter((r) => r.content && r.rating)
-        .map((r: Review) => (
-          <div key={r.id} className="grid grid-cols-1">
-            <ReviewCard review={r} />
-          </div>
-        ))}
+    <div className="max-w-6xl mx-auto px-4 md:p-10">
+      {filtered.length === 0 ? (
+        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3 text-center">
+          <p className="text-lg font-semibold text-foreground">
+            No reviews yet
+          </p>
+          <p className="text-sm text-gray-400">
+            Books you've marked as Read can be reviewed from the book page
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-4">
+          {filtered.map((r: Review) => (
+            <ReviewCard key={r.id} review={r} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

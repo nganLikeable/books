@@ -1,6 +1,6 @@
 export default function App() {
   return (
-    <div className="max-h-screen flex flex-col items-center justify-center p-10 ">
+    <div className="min-h-screen flex flex-col items-center justify-center p-10">
       <div className=" w-full flex flex-col items-center gap-8 text-5xl">
         <img
           className="w-full max-w-sm rounded-2xl shadow-2xl"
@@ -9,7 +9,7 @@ export default function App() {
         />
         <h1 className=" md:text-6xl font-bold text-center">
           Welcome to{" "}
-          <span className=" font-black tracking-tighter  bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent ">
+          <span className="font-black tracking-tighter bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent pr-1">
             Bookie
           </span>
         </h1>
