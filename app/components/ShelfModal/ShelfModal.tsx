@@ -6,7 +6,6 @@ import { TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { ReadingStatus } from "@/app/generated/prisma";
 import useGetUser from "@/app/hooks/useGetUser";
-import { useRouter } from "next/navigation";
 
 type ShelfModalProps = {
   bookId: string;
@@ -19,23 +18,19 @@ type ShelfModalProps = {
 );
 
 export default function ShelfModal(props: ShelfModalProps) {
-  // destructure
   const { bookId, userId, onClose, mode } = props;
 
   const [loading, setLoading] = useState<string | null>(null);
+  const [error, setError] = useState("");
   const { user } = useGetUser();
 
-  const router = useRouter();
-
   const getToken = async () => {
-    if (!user) {
-      console.error("User not found");
-      return null;
-    }
+    if (!user) return null;
     return await user.getIdToken();
   };
 
   const handleRemove = async () => {
+    setError("");
     setLoading("removing");
     try {
       const token = await getToken();
@@ -46,20 +41,12 @@ export default function ShelfModal(props: ShelfModalProps) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          bookId,
-        }),
+        body: JSON.stringify({ bookId }),
       });
-      if (!response.ok) {
-        throw new Error("Failed to delete book");
-      }
+      if (!response.ok) throw new Error("Failed to remove book");
       props.onStatusChange?.(null);
-
-      console.log(response);
-      console.log("Successfully deleted book ");
     } catch (e) {
-      console.error(e);
-      throw new Error("Error deleting book");
+      setError("Failed to remove book. Please try again.");
     } finally {
       setLoading(null);
     }
@@ -67,14 +54,12 @@ export default function ShelfModal(props: ShelfModalProps) {
 
   const handleAddToShelf = async (status: ReadingStatus) => {
     if (mode !== "add") return;
+    setError("");
     setLoading(status);
-
-    // add book info to the db
     try {
       const token = await getToken();
       if (!token) return;
 
-      // save book, author and user-book relationship
       const response = await fetch(`/api/user/${userId}/books`, {
         method: "POST",
         headers: {
@@ -89,19 +74,11 @@ export default function ShelfModal(props: ShelfModalProps) {
           status,
         }),
       });
-      console.log(response);
-      if (!response.ok) {
-        throw new Error("Failed to add book to user's shelf");
-      }
-      const data = await response.json();
-      console.log("Book added to/modified in user's library:", data);
-
-      if (props.onStatusChange) {
-        props.onStatusChange(status);
-      }
+      if (!response.ok) throw new Error("Failed to add book to shelf");
+      props.onStatusChange?.(status);
       onClose();
     } catch (e) {
-      console.error("Error adding book-user", e);
+      setError("Failed to save to shelf. Please try again.");
     } finally {
       setLoading(null);
     }
@@ -109,6 +86,7 @@ export default function ShelfModal(props: ShelfModalProps) {
 
   const handleEdit = async (newStatus: ReadingStatus) => {
     if (mode !== "update") return;
+    setError("");
     setLoading(newStatus);
     try {
       const token = await getToken();
@@ -122,18 +100,16 @@ export default function ShelfModal(props: ShelfModalProps) {
         },
         body: JSON.stringify({ bookId, status: newStatus }),
       });
-      if (response.ok) {
-        props.onStatusChange?.(newStatus);
-        onClose();
-      }
+      if (!response.ok) throw new Error("Failed to update shelf");
+      props.onStatusChange?.(newStatus);
+      onClose();
     } catch (e) {
-      console.error("Update failed: ", e);
+      setError("Failed to update shelf. Please try again.");
     } finally {
       setLoading(null);
     }
   };
 
-  // dont render if user is not loaded
   if (!user) return null;
 
   return (
@@ -146,21 +122,17 @@ export default function ShelfModal(props: ShelfModalProps) {
         <div className="flex items-center justify-between border-b border-line-bg px-6 py-4">
           <h3 className="text-2xl font-bold text-foreground">CHOOSE A SHELF</h3>
           <button
-            className="rounded-full p-1 text-foreground hover:bg-gray-100 hover:text-gray-600 hover:cursor-pointer transition-colors"
+            className="rounded-full p-1 text-foreground hover:bg-form-bg hover:cursor-pointer transition-colors"
             onClick={onClose}
           >
             <XMarkIcon className="h-6 w-6" />
           </button>
         </div>
 
-        {/* button lists */}
         <div className="flex flex-col p-4 gap-2">
           {[
             { id: ReadingStatus.WANT_TO_READ, label: "Want to read" },
-            {
-              id: ReadingStatus.CURRENTLY_READING,
-              label: "Currently reading",
-            },
+            { id: ReadingStatus.CURRENTLY_READING, label: "Currently reading" },
             { id: ReadingStatus.READ, label: "Read" },
           ].map((shelf) => (
             <button
@@ -173,16 +145,15 @@ export default function ShelfModal(props: ShelfModalProps) {
                   handleEdit(shelf.id);
                 }
               }}
-              className="group flex items-center justify-between rounded-xl px-4 py-3 text-left text-sm font-semibold text-foreground hover:bg-form-bg hover:cursor-pointer
-              disabled:opacity-50"
+              className="group flex items-center justify-between rounded-xl px-4 py-3 text-left text-sm font-semibold text-foreground hover:bg-form-bg hover:cursor-pointer disabled:opacity-50"
             >
-              {shelf.label}{" "}
+              {shelf.label}
               {loading === shelf.id && (
                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-orange-700 border-t-transparent" />
               )}
             </button>
           ))}
-          <div className="my-2 h-px bg-line-bg " />
+          <div className="my-2 h-px bg-line-bg" />
 
           <button
             disabled={!!loading}
@@ -192,6 +163,10 @@ export default function ShelfModal(props: ShelfModalProps) {
             <TrashIcon className="h-5 w-5 text-red-400 group-hover:text-red-600" />
             {loading === "removing" ? "Removing..." : "Remove from my shelf"}
           </button>
+
+          {error && (
+            <p className="px-4 pb-2 text-xs text-red-500">{error}</p>
+          )}
         </div>
       </div>
     </div>

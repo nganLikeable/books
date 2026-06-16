@@ -24,10 +24,10 @@ export default function NavBar() {
       <nav className="w-full fixed top-4 z-50 px-2 sm:px-4">
         <div className="max-w-6xl mx-auto bg-linear-to-r from-purple-900/40 via-indigo-900/40 to-purple-800/40 backdrop-blur-md border border-white/20 rounded-full px-6 py-2 flex items-center justify-between shadow-2xl">
           {/* Left col */}
-          <div className="shrink-0">
+          <div className="shrink-0 min-w-fit">
             <Link
               href="/"
-              className="text-xl sm:text-2xl font-black tracking-tighter cursor-pointer bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent transition-all duration-300 group-hover:from-orange-500 group-hover:to-amber-600 "
+              className="text-xl sm:text-2xl font-black tracking-tighter whitespace-nowrap cursor-pointer bg-linear-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent transition-all duration-300 pr-1"
             >
               Bookie
             </Link>

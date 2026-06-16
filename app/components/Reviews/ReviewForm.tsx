@@ -3,6 +3,7 @@
 import useGetUser from "@/app/hooks/useGetUser";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import Spinner from "../Spinner/Spinner";
 import StarRating from "../StarRating";
 
 interface ReviewFormProps {
@@ -24,6 +25,8 @@ export default function ReviewForm({
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [isSaving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+  const [saved, setSaved] = useState(false);
 
   const { user } = useGetUser();
 
@@ -46,7 +49,7 @@ export default function ReviewForm({
           }
         }
       } catch (e) {
-        console.error("Error loading review:", e);
+        // silent — form still usable without pre-existing review
       } finally {
         setLoading(false);
       }
@@ -57,13 +60,13 @@ export default function ReviewForm({
 
   const handleSave = async () => {
     if (rating === null) return;
-
+    setError("");
     setSaving(true);
     try {
       const token = await getToken();
       if (!token) return;
 
-      await fetch(`/api/user/${userId}/books/book/${bookId}/review`, {
+      const res = await fetch(`/api/user/${userId}/books/book/${bookId}/review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,9 +75,12 @@ export default function ReviewForm({
         body: JSON.stringify({ rating, content }),
       });
 
-      console.log("Review saved");
+      if (!res.ok) throw new Error("Failed to save");
+
+      setSaved(true);
+      setTimeout(onClose, 800);
     } catch (e) {
-      console.error("Save failed", e);
+      setError("Failed to save your review. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -82,22 +88,27 @@ export default function ReviewForm({
 
   if (loading)
     return (
-      <div className="p-6 text-center animate-pulse text-sm">
-        Loading review...
+      <div className="fixed inset-0 z-100 flex items-end md:items-center p-4 justify-center md:p-4">
+        <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={onClose} />
+        <div className="relative w-full max-w-sm rounded-2xl bg-background shadow-2xl animate-in zoom-in-95 duration-200 overflow-hidden">
+          <div className="flex justify-center items-center py-16">
+            <Spinner />
+          </div>
+        </div>
       </div>
     );
 
   return (
     <div className="fixed inset-0 z-100 flex items-end md:items-center p-4 justify-center md:p-4">
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-[10px] animate-in fade-in duration-300"
+        className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm animate-in fade-in duration-300"
         onClick={onClose}
       />
-      <div className="relative w-full max-w-sm  rounded-2xl bg-background shadow-2xl animate-in zoom-in-95 duration-200 overflow-hidden p-2">
-        <div className="flex items-center justify-between px-6 py-1 border-b border-line-bg">
+      <div className="relative w-full max-w-sm rounded-2xl bg-background shadow-2xl animate-in zoom-in-95 duration-200 overflow-hidden p-2">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-line-bg">
           <h1 className="text-lg font-bold uppercase">Review</h1>
           <button
-            className="rounded-full p-1 text-foreground hover:bg-gray-100 hover:text-gray-600 hover:cursor-pointer transition-colors"
+            className="rounded-full p-1 text-foreground hover:bg-form-bg hover:cursor-pointer transition-colors"
             onClick={onClose}
           >
             <XMarkIcon className="h-6 w-6" />
@@ -115,8 +126,8 @@ export default function ReviewForm({
             )}
             <h2 className="text-sm font-semibold">{title}</h2>
           </div>
-          <div className="mb-6 flex gap-4">
-            <label className="block text-sm font-semibold mb-2">
+          <div className="mb-6 flex gap-4 items-center">
+            <label className="block text-sm font-semibold">
               Your Rating
             </label>
             <StarRating
@@ -132,17 +143,29 @@ export default function ReviewForm({
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={6}
-              className="w-full rounded-lg border px-3 py-2 resize-none"
+              className="w-full rounded-lg border border-line-bg bg-form-bg px-3 py-2 resize-none text-foreground placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
               placeholder="Write your thoughts about this book..."
             />
           </div>
+          {error && (
+            <p className="text-sm text-red-500 mb-3">{error}</p>
+          )}
           <div className="flex flex-col gap-2">
             <button
               onClick={handleSave}
-              disabled={isSaving || rating === null}
-              className="w-full bg-orange-600 text-white py-3 rounded-xl font-semibold hover:bg-orange-700 disabled:opacity-50 transition hover:cursor-pointer"
+              disabled={isSaving || rating === null || saved}
+              className="w-full bg-orange-600 text-white py-3 rounded-xl font-semibold hover:bg-orange-700 disabled:opacity-50 transition hover:cursor-pointer flex items-center justify-center gap-2"
             >
-              {isSaving ? "Saving..." : "Save Review"}
+              {saved ? (
+                "Saved!"
+              ) : isSaving ? (
+                <>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  Saving...
+                </>
+              ) : (
+                "Save Review"
+              )}
             </button>
             <button
               onClick={onClose}

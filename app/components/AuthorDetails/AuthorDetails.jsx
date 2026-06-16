@@ -79,7 +79,7 @@ export default function AuthorDetail() {
             </div>
             <div className="mt-10 mb-2">
               <h2 className="text-0.7 font-semibold">{author.name}'s books</h2>
-              <hr className="border-gray-300"></hr>
+              <hr className="border-line-bg"></hr>
             </div>
             <div>
               <BookList books={books} />

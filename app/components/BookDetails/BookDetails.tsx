@@ -71,7 +71,7 @@ export default function BookDetails() {
         {/*left col - sticky*/}
         <aside className="w-full md:w-64 lg:w-72 md:sticky md:top-24 self-start flex flex-col gap-5">
           {" "}
-          <div className="relative aspect-2/3 w-full rounded-lg overflow-hidden shadow-xl border border-gray-100 bg-gray-50">
+          <div className="relative aspect-2/3 w-full rounded-lg overflow-hidden shadow-xl border border-line-bg bg-form-bg">
             {bookWithDetails?.cover ? (
               <img
                 src={bookWithDetails.cover}
@@ -133,7 +133,7 @@ export default function BookDetails() {
               </span>
             ))}
           </header>
-          <hr className="border-gray-100" />
+          <hr className="border-line-bg" />
           {/* description */}
           <article className="flex flex-col gap-3">
             <h3 className="text-xs uppercase tracking-[0.15em] font-bold text-gray-500">
