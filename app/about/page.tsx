@@ -105,7 +105,7 @@ export default function AboutPage() {
                 I've been a bookworm since a kid. I love laying hands on old,
                 yellowish, dog-eared books I could find at the thrift stores
                 whenever I go on a hunt. There's just something about the smell
-                and feel of well-loved books that never always bring me joy.
+                and feel of well-loved books that never fail to bring me joy.
               </p>
             </FadeIn>
             <FadeIn delay={280}>
